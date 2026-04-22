@@ -1,15 +1,16 @@
 #include "widget.h"
 #include "ui_widget.h"
 #include <QDateTime>
-#include "inc/Link.h"
-#include "inc/Protocol.h"
-#include "inc/SerialThread.h"
 #include <QMessageBox>
 #include <QFile>
 #include <QDir>
 #include <QFileDialog>
 #include <QTextStream>
 
+
+#include "inc/Link.h"
+#include "inc/Protocol.h"
+#include "inc/SerialThread.h"
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
@@ -1154,3 +1155,17 @@ bool Widget::set_home_para(uint16_t slaveIndex, int8_t home_mode, int32_t sw_vel
 
     return true;
 }
+
+
+//****************************************************XML****************************************************
+void Widget::on_btn_read_XMLfile_clicked()
+{
+
+}
+
+
+void Widget::on_btn_clear_XMLfile_clicked()
+{
+
+}
+

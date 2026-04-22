@@ -52,6 +52,12 @@
     <ClCompile Include="src\SerialThread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\XML.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scope.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="inc\Link.h">
@@ -66,6 +72,9 @@
     <QtMoc Include="inc\SerialThread.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="inc\XML.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="widget.ui">
@@ -74,5 +83,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="程序改动日志.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\Scope.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

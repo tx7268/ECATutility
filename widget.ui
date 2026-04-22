@@ -548,7 +548,7 @@ QPushButton#btn_set:checked:hover
 }</string>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="page_Link">
     <widget class="QGroupBox" name="groupBox_3">
@@ -1159,7 +1159,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <string>读取从站信息</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="btn_clear_slaerror">
+     <widget class="QPushButton" name="btn_clear_slave_error">
       <property name="geometry">
        <rect>
         <x>190</x>

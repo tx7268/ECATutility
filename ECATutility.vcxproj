@@ -202,7 +202,9 @@
     <ClCompile Include="src\Link.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Protocol.cpp" />
+    <ClCompile Include="src\Scope.cpp" />
     <ClCompile Include="src\SerialThread.cpp" />
+    <ClCompile Include="src\XML.cpp" />
     <ClCompile Include="widget.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +222,10 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="inc\SerialThread.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\Scope.h" />
+    <QtMoc Include="inc\XML.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(QtMsBuild)\qt.targets" Condition="Exists('$(QtMsBuild)\qt.targets')" />

@@ -1,11 +1,13 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
+#include <QHash>
 #include <QWidget>
-#include <QSerialPort>
-#include <QSerialPortInfo>
 #include <QString>
 #include <QVector>
+#include <QSerialPort>
+#include <QSerialPortInfo>
+
 
 QT_BEGIN_NAMESPACE
 
@@ -83,6 +85,10 @@ private slots:
     //**********************************************axis界面函数**********************************************//
     void on_btn_clear_alarm_clicked();
 
+    //**********************************************XML函数**********************************************//
+    void on_btn_read_XMLfile_clicked();
+
+    void on_btn_clear_XMLfile_clicked();
 
 private:
     Ui::Widget* ui;

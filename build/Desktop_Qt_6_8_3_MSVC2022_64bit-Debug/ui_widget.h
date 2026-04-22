@@ -102,7 +102,7 @@ public:
     QTextEdit *textEdit_dc;
     QGroupBox *groupBox_5;
     QPushButton *btn_read_slaveinfo;
-    QPushButton *btn_clear_slaerror;
+    QPushButton *btn_clear_slave_error;
     QPushButton *btn_to_op;
     QPushButton *btn_to_safeop;
     QPushButton *btn_read_XMLfile;
@@ -703,9 +703,9 @@ public:
         btn_read_slaveinfo = new QPushButton(groupBox_5);
         btn_read_slaveinfo->setObjectName("btn_read_slaveinfo");
         btn_read_slaveinfo->setGeometry(QRect(20, 110, 111, 71));
-        btn_clear_slaerror = new QPushButton(groupBox_5);
-        btn_clear_slaerror->setObjectName("btn_clear_slaerror");
-        btn_clear_slaerror->setGeometry(QRect(190, 110, 111, 71));
+        btn_clear_slave_error = new QPushButton(groupBox_5);
+        btn_clear_slave_error->setObjectName("btn_clear_slave_error");
+        btn_clear_slave_error->setGeometry(QRect(190, 110, 111, 71));
         btn_to_op = new QPushButton(groupBox_5);
         btn_to_op->setObjectName("btn_to_op");
         btn_to_op->setGeometry(QRect(190, 210, 111, 71));
@@ -2701,7 +2701,7 @@ public:
 
         retranslateUi(Widget);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(Widget);
@@ -2773,7 +2773,7 @@ public:
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:700; color:#0000ff;\">1000us</span></p></body></html>", nullptr));
         groupBox_5->setTitle(QCoreApplication::translate("Widget", "ECAT\346\216\247\345\210\266", nullptr));
         btn_read_slaveinfo->setText(QCoreApplication::translate("Widget", "\350\257\273\345\217\226\344\273\216\347\253\231\344\277\241\346\201\257", nullptr));
-        btn_clear_slaerror->setText(QCoreApplication::translate("Widget", "\346\270\205\351\231\244\344\273\216\347\253\231\351\224\231\350\257\257", nullptr));
+        btn_clear_slave_error->setText(QCoreApplication::translate("Widget", "\346\270\205\351\231\244\344\273\216\347\253\231\351\224\231\350\257\257", nullptr));
         btn_to_op->setText(QCoreApplication::translate("Widget", "\345\210\207\346\215\242\350\207\263OP", nullptr));
         btn_to_safeop->setText(QCoreApplication::translate("Widget", "\345\210\207\346\215\242\350\207\263SAFE-OP", nullptr));
         btn_read_XMLfile->setText(QCoreApplication::translate("Widget", "\345\257\274\345\205\245XML\346\226\207\344\273\266", nullptr));
