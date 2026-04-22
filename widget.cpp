@@ -519,10 +519,12 @@ void Widget::serialReadData(const QByteArray &data)
             {
             case 0x81:
                     appendlog(QString("轴%1使能成功").arg(axis));
+                    ui->checkBox_axis0enable->setChecked(true);
                 break;
 
             case 0x82:
                     appendlog(QString("轴%1失能成功").arg(axis));
+                    ui->checkBox_axis0enable->setChecked(false);
                 break;
 
             case 0x83: // 停止成功
