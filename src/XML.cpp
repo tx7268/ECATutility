@@ -14,6 +14,42 @@ XML::~XML()
 
 }
 
+QString XML::nodeText(QXmlStreamReader& xml)
+{
+	return xml.readElementText(QXmlStreamReader::SkipChildElements).trimmed();
+}
+
+quint32 XML::parseEtherCatNumber(const QString& raw, bool* ok = nullptr)
+{
+	QString text = raw.trimmed();
+	bool parsed = false;
+	quint32 value = 0;
+
+	if (text.startsWith("#x", Qt::CaseInsensitive))
+	{
+		value = text.mid(2).toUInt(&parsed, 16);
+	}
+	else if (text.startsWith("0x", Qt::CaseInsensitive))
+	{
+		value = text.mid(2).toUInt(&parsed, 16);
+	}
+	else
+	{
+		value = text.toUInt(&parsed, 10);
+	}
+
+	if (ok)
+	{
+		*ok = parsed;
+	}
+	return value;
+}
+
+QString XML::safeElementText(const QString& text, const QString& fallback = QString())
+{
+	return text.trimmed().isEmpty() ? fallback : text.trimmed();
+}
+
 /**
  * @brief 生成XML对象唯一键：索引:子索引
  * @param index 对象字典索引
@@ -115,6 +151,79 @@ void XML::applyXmlHintsToSdo(quint16 index, quint8 subIndex, bool isWrite)
 }
 
 
+/**
+ * @brief 核心：加载并解析EtherCAT从站XML描述文件
+ * @param filePath 文件路径
+ * @param errorMessage 输出错误信息
+ * @return 解析成功true，失败false
+ */
+bool XML::loadXmlDescription(const QString& filePath, QString& errorMessage)
+{
+	QFile file(filePath);
+	if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		errorMessage = QString("XML文件打开失败 ：%1").arg(file.errorString());
+		emit logMessage(errorMessage);
+		return false;
+	}
+
+	QXmlStreamReader xml(&file);
+
+	clearXMLData();
+
+	// 临时存储设备信息
+	m_xmlFilePath = filePath;
+	QString deviceType;
+	QString deviceName;
+	QString groupType;
+	QString productCode;
+	QString revisionNo;
+	int slaveCountHint = 1;
+	bool insideDevice = false;
+
+	while (!xml.atEnd() && !xml.hasError())
+	{
+		xml.readNext();
+
+		// 结束Device节点
+		if (xml.isEndElement() && xml.name() == QLatin1String("Device"))
+		{
+			insideDevice = false;
+			continue;
+		}
+		if (!xml.isStartElement())// 跳过非开始元素（注释、文本、结束元素等）
+		{
+			continue;
+		}
+		const QString elementName = xml.name().toString();
+		// 进入Device节点
+		if (elementName == QLatin1String("Device"))
+		{
+			insideDevice = true;
+			continue;
+		}
+		if (!insideDevice)// 只处理Device内部的内容
+		{
+			continue;
+		}
+
+		//设备类型type
+		if (elementName == QLatin1String("Type") && deviceType.isEmpty())
+		{
+			const auto attrs = xml.attributes();
+			if (attrs.hasAttribute("ProductCode"))
+			{
+				productCode = attrs.value("ProductCode").toString();
+			}
+			if (attrs.hasAttribute("RevisionNo"))
+			{
+				revisionNo = attrs.value("RevisionNo").toString();
+			}
+			deviceType = nodeText(xml);
+		}
+
+	}
+}
 
 bool XML::readXMLFile(const QString &filePath, QString &errorMsg)
 {

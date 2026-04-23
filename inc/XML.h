@@ -79,8 +79,15 @@ private:
     QStringList m_xmlRxPdoLines;                    // RxPDO解析结果
     QStringList m_xmlTxPdoLines;                    // TxPDO解析结果
 
+    QString nodeText(QXmlStreamReader& xml);
+    quint32 parseEtherCatNumber(const QString& raw, bool* ok = nullptr);
+    QString safeElementText(const QString& text, const QString& fallback = QString());
+
     QString formatHex(quint32 value, int width) const;                               // 十六进制格式化
     QString makeXmlObjectKey(quint16 index, int subIndex) const;                     // 生成对象唯一键（索引:子索引）
+
+    bool loadXmlDescription(const QString& filePath, QString& errorMessage);//加载并解析EtherCAT从站XML描述文件
+
 
     void parseEcatParamNode(QXmlStreamReader &xml);                                  // 解析ECAT参数节点（核心解析逻辑）
 
