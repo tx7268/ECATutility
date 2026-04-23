@@ -6,16 +6,18 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QTextStream>
-
-
 #include "inc/Link.h"
 #include "inc/Protocol.h"
 #include "inc/SerialThread.h"
+#include "inc/XML.h"
+
+
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
     ,m_link(new Link(this))
     ,proto(new Protocol(this))
+    ,m_xml(new XML(this))
 {
     ui->setupUi(this);
     setWindowTitle("ECATutility");
@@ -1160,12 +1162,56 @@ bool Widget::set_home_para(uint16_t slaveIndex, int8_t home_mode, int32_t sw_vel
 //****************************************************XML****************************************************
 void Widget::on_btn_read_XMLfile_clicked()
 {
+    const QString defaultPath =
+        m_xml->xmlFilePath().isEmpty() ? QDir::currentPath() : QFileInfo(m_xml->xmlFilePath()).absolutePath();
 
+    const QString filePath = QFileDialog::getOpenFileName(
+        this,
+        "选择 EtherCAT XML 文件",
+        defaultPath,
+        "EtherCAT XML (*.xml);;所有文件 (*.*)");
+
+    if (filePath.isEmpty())
+    {
+        return;
+    }
+
+    QString errorMessage;
+    if (!m_xml->loadXmlDescription(filePath, errorMessage))
+    {
+        appendlog(QString("[XML] %1").arg(errorMessage));
+        appendlog(errorMessage);
+        QMessageBox::warning(this, "XML导入失败", errorMessage);
+        return;
+    }
+
+    appendlog("========== XML 摘要 ==========");
+    for (const QString& line : m_xml->xmlSummaryLines())
+    {
+        appendlog(line);
+    }
+
+    appendlog("========== RxPDO ==========");
+    for (const QString& line : m_xml->xmlRxPdoLines())
+    {
+        appendlog(line);
+    }
+
+    appendlog("========== TxPDO ==========");
+    for (const QString& line : m_xml->xmlTxPdoLines())
+    {
+        appendlog(line);
+    }
+
+    appendlog(QString("已导入 XML 文件: %1").arg(filePath));
+    QMessageBox::information(this, "XML导入成功", QString("已成功导入并解析:\n%1").arg(filePath));
 }
 
 
 void Widget::on_btn_clear_XMLfile_clicked()
 {
-
+    m_xml->clearXMLData();
+    appendlog("[XML] 已清除当前导入的 XML 缓存与从站提示信息");
+    appendlog("已清除 XML 文件缓存");
 }
 

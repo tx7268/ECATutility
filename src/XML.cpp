@@ -1,6 +1,7 @@
 #include "inc/XML.h"
 #include <QDateTime>
 #include <QMessageBox>
+#include <qfileinfo.h>
 
 
 XML::XML(QObject* parent)
@@ -14,16 +15,43 @@ XML::~XML()
 
 }
 
+QString XML::xmlFilePath() const
+{
+	return m_xmlFilePath;
+}
+
+QStringList XML::xmlSummaryLines() const
+{
+	return m_xmlSummaryLines;
+}
+
+QStringList XML::xmlRxPdoLines() const
+{
+	return m_xmlRxPdoLines;
+}
+
+QStringList XML::xmlTxPdoLines() const
+{
+	return m_xmlTxPdoLines;
+}
+
+/**
+ * @briefè·å–XMLå…ƒç´ æ ‡ç­¾å†…çš„æ–‡æœ¬å†…å®¹ï¼Œå¹¶è‡ªåŠ¨å»é™¤é¦–å°¾ç©ºç™½å­—ç¬¦ã€‚
+ */
 QString XML::nodeText(QXmlStreamReader& xml)
 {
 	return xml.readElementText(QXmlStreamReader::SkipChildElements).trimmed();
 }
 
-quint32 XML::parseEtherCatNumber(const QString& raw, bool* ok = nullptr)
+/**
+ * @brief è§£æEtherCATè®¾å¤‡æè¿°æ–‡ä»¶ä¸­çš„æ•°å­—æ ¼å¼
+ *
+ **/
+quint32 XML::parseEtherCatNumber(const QString& raw, bool* ok)
 {
-	QString text = raw.trimmed();
-	bool parsed = false;
-	quint32 value = 0;
+	QString text = raw.trimmed(); // å»é™¤è¾“å…¥å­—ç¬¦ä¸²é¦–å°¾çš„ç©ºç™½å­—ç¬¦
+	bool parsed = false;		  // ç”¨äºè®°å½•è§£ææ˜¯å¦æˆåŠŸ
+	quint32 value = 0;			  // å­˜å‚¨è§£æåçš„æ•°å€¼
 
 	if (text.startsWith("#x", Qt::CaseInsensitive))
 	{
@@ -45,29 +73,32 @@ quint32 XML::parseEtherCatNumber(const QString& raw, bool* ok = nullptr)
 	return value;
 }
 
-QString XML::safeElementText(const QString& text, const QString& fallback = QString())
+/**
+ * @brief å®‰å…¨åœ°è·å–å…ƒç´ æ–‡æœ¬ï¼Œå½“æ–‡æœ¬ä¸ºç©ºæ—¶è¿”å›é¢„è®¾çš„é»˜è®¤å€¼ï¼Œ
+ **/
+QString XML::safeElementText(const QString& text, const QString& fallback)
 {
 	return text.trimmed().isEmpty() ? fallback : text.trimmed();
 }
 
 /**
- * @brief Éú³ÉXML¶ÔÏóÎ¨Ò»¼ü£ºË÷Òı:×ÓË÷Òı
- * @param index ¶ÔÏó×ÖµäË÷Òı
- * @param subIndex ×ÓË÷Òı£¨-1´ú±í½öË÷Òı£©
- * @return ¸ñÊ½»¯×Ö·û´®£¨006040:00£©
+ * @brief ç”ŸæˆXMLå¯¹è±¡å”¯ä¸€é”®ï¼šç´¢å¼•:å­ç´¢å¼•
+ * @param index å¯¹è±¡å­—å…¸ç´¢å¼•
+ * @param subIndex å­ç´¢å¼•ï¼ˆ-1ä»£è¡¨ä»…ç´¢å¼•ï¼‰
+ * @return æ ¼å¼åŒ–å­—ç¬¦ä¸²ï¼ˆ006040:00ï¼‰
  */
 QString XML::makeXmlObjectKey(quint16 index, int subIndex) const
 {
 	return QString("%1:%2")
-		.arg(index, 4, 16, QChar('0'))  // Ë÷Òı¹Ì¶¨4Î»Ê®Áù½øÖÆ£¬²¹0
-		.arg(subIndex);                // ×ÓË÷Òı
+		.arg(index, 4, 16, QChar('0')) // ???????4Î»??????????0
+		.arg(subIndex);				   // ??????
 }
 
 /**
- * @brief ÊıÖµ¸ñÊ½»¯ÎªÊ®Áù½øÖÆ×Ö·û´®
- * @param value Ô­Ê¼Öµ
- * @param width ¿í¶È
- * @return 0xXXXX¸ñÊ½´óĞ´×Ö·û´®
+ * @brief æ•°å€¼æ ¼å¼åŒ–ä¸ºåå…­è¿›åˆ¶å­—ç¬¦ä¸²
+ * @param value åŸå§‹å€¼
+ * @param width å®½åº¦
+ * @return 0xXXXXæ ¼å¼å¤§å†™å­—ç¬¦ä¸²
  */
 QString XML::formatHex(quint32 value, int width) const
 {
@@ -75,23 +106,23 @@ QString XML::formatHex(quint32 value, int width) const
 
 }
 
-
 /**
- * @brief ¸ù¾İË÷Òı+×ÓË÷Òı²éÕÒXML¶ÔÏó×Öµä
- * @param index ¶ÔÏóË÷Òı
- * @param subIndex ×ÓË÷Òı
- * @param info Êä³ö²éÕÒµ½µÄ¶ÔÏóĞÅÏ¢
- * @return ÕÒµ½·µ»Øtrue£¬·ñÔòfalse
+ * @brief æ ¹æ®ç´¢å¼•+å­ç´¢å¼•æŸ¥æ‰¾XMLå¯¹è±¡å­—å…¸
+ * @param index å¯¹è±¡ç´¢å¼•
+ * @param subIndex å­ç´¢å¼•
+ * @param info è¾“å‡ºæŸ¥æ‰¾åˆ°çš„å¯¹è±¡ä¿¡æ¯
+ * @return æ‰¾åˆ°è¿”å›trueï¼Œå¦åˆ™false
  */
 bool XML::lookupXmlObject(quint16 index, quint8 subIndex, XmlObjectInfo& info) const
 {
-	// 1. ¾«È·Æ¥Åä£ºË÷Òı+×ÓË÷Òı
+	// 1. ç²¾ç¡®åŒ¹é…ï¼šç´¢å¼•+å­ç´¢å¼•
 	const QString fullkey = makeXmlObjectKey(index, subIndex);
 	if (m_xmlObjectMap.contains(fullkey))
 	{
 		info = m_xmlObjectMap.value(fullkey);
 		return true;
 	}
+	// 2. æ¨¡ç³ŠåŒ¹é…ï¼šä»…ç´¢å¼•ï¼ˆæ— å­ç´¢å¼•ï¼‰
 	const QString objectOnlykey = makeXmlObjectKey(index, -1);
 	if (m_xmlObjectMap.contains(objectOnlykey))
 	{
@@ -103,66 +134,66 @@ bool XML::lookupXmlObject(quint16 index, quint8 subIndex, XmlObjectInfo& info) c
 
 
 /**
- * @brief SDO¶ÁĞ´Ê±£¬Ó¦ÓÃXML×ÖµäÌáÊ¾£¨ÈÕÖ¾Êä³ö¶ÔÏóĞÅÏ¢£©
- * @param index Ë÷Òı
- * @param subIndex ×ÓË÷Òı
- * @param isWrite true=Ğ´Èë£¬false=¶ÁÈ¡
+ * @brief SDOè¯»å†™æ—¶ï¼Œåº”ç”¨XMLå­—å…¸æç¤ºï¼ˆæ—¥å¿—è¾“å‡ºå¯¹è±¡ä¿¡æ¯ï¼‰
+ * @param index ç´¢å¼•
+ * @param subIndex å­ç´¢å¼•
+ * @param isWrite true=å†™å…¥ï¼Œfalse=è¯»å–
  */
 void XML::applyXmlHintsToSdo(quint16 index, quint8 subIndex, bool isWrite)
 {
-	if (!m_xmlLoaded)
-	{
-		return;
-	}
+    if (!m_xmlLoaded)
+    {
+        return;
+    }
 
-	XmlObjectInfo info;
-	if (!lookupXmlObject(index, subIndex, info))
-	{
-		emit logMessage(QString("[XML] Î´ÕÒµ½¶ÔÏó %1:%2")
-			.arg(formatHex(index, 4))
-			.arg(formatHex(subIndex, 2)));
-		return;
-	}
+    XmlObjectInfo info;
+    if (!lookupXmlObject(index, subIndex, info))
+    {
+        emit logMessage(QString("[XML] æœªæ‰¾åˆ°å¯¹åƒ %1:%2")
+                            .arg(formatHex(index, 4))
+                            .arg(formatHex(subIndex, 2)));
+        return;
+    }
 
-	const QString action = isWrite ? "Ğ´Èë" : "¶ÁÈ¡";
-	QStringList details;
-	details << QString("%1 %2:%3").arg(action, formatHex(index, 4), formatHex(subIndex, 2));
-	details << QString("Ãû³Æ=%1").arg(info.name.isEmpty() ? "Î´ÃüÃû¶ÔÏó" : info.name);
+    const QString action = isWrite ? "å†™å…¥" : "è¯»å–";
+    QStringList details;
+    details << QString("%1 %2:%3").arg(action, formatHex(index, 4), formatHex(subIndex, 2));
+    details << QString("åç§°=%1").arg(info.name.isEmpty() ? "unnamed object" : info.name);
 
-	if (!info.typeName.isEmpty())
-	{
-		details << QString("ÀàĞÍ=%1").arg(info.typeName);
-	}
-	if (info.bitSize > 0)
-	{
-		details << QString("Î»¿í=%1").arg(info.bitSize);
-	}
-	if (!info.access.isEmpty())
-	{
-		details << QString("·ÃÎÊ=%1").arg(info.access);
-	}
-	if (!info.pdoMapping.isEmpty())
-	{
-		details << QString("PDOÓ³Éä=%1").arg(info.pdoMapping);
-	}
+    if (!info.typeName.isEmpty())
+    {
+        details << QString("ç±»å‹=%1").arg(info.typeName);
+    }
+    if (info.bitSize > 0)
+    {
+        details << QString("ä½å®½=%1").arg(info.bitSize);
+    }
+    if (!info.access.isEmpty())
+    {
+        details << QString("è®¿é—®=%1").arg(info.access);
+    }
+    if (!info.pdoMapping.isEmpty())
+    {
+        details << QString("PDOæ˜ å°„=%1").arg(info.pdoMapping);
+    }
 
-	emit logMessage(QString("[XML] %1").arg(details.join("  |  ")));
+    emit logMessage(QString("[XML] %1").arg(details.join("  |  ")));
 
 }
 
 
 /**
- * @brief ºËĞÄ£º¼ÓÔØ²¢½âÎöEtherCAT´ÓÕ¾XMLÃèÊöÎÄ¼ş
- * @param filePath ÎÄ¼şÂ·¾¶
- * @param errorMessage Êä³ö´íÎóĞÅÏ¢
- * @return ½âÎö³É¹¦true£¬Ê§°Üfalse
+ * @brief æ ¸å¿ƒï¼šåŠ è½½å¹¶è§£æEtherCATä»ç«™XMLæè¿°æ–‡ä»¶
+ * @param filePath æ–‡ä»¶è·¯å¾„
+ * @param errorMessage è¾“å‡ºé”™è¯¯ä¿¡æ¯
+ * @return è§£ææˆåŠŸtrueï¼Œå¤±è´¥false
  */
 bool XML::loadXmlDescription(const QString& filePath, QString& errorMessage)
 {
 	QFile file(filePath);
-	if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
-		errorMessage = QString("XMLÎÄ¼ş´ò¿ªÊ§°Ü £º%1").arg(file.errorString());
+		errorMessage = QString("XML æ–‡ä»¶æ‰“å¼€å¤±è´¥: %1").arg(file.errorString());
 		emit logMessage(errorMessage);
 		return false;
 	}
@@ -171,7 +202,7 @@ bool XML::loadXmlDescription(const QString& filePath, QString& errorMessage)
 
 	clearXMLData();
 
-	// ÁÙÊ±´æ´¢Éè±¸ĞÅÏ¢
+	// ä¸´æ—¶å­˜å‚¨è®¾å¤‡ä¿¡æ¯
 	m_xmlFilePath = filePath;
 	QString deviceType;
 	QString deviceName;
@@ -185,29 +216,28 @@ bool XML::loadXmlDescription(const QString& filePath, QString& errorMessage)
 	{
 		xml.readNext();
 
-		// ½áÊøDevice½Úµã
+		
 		if (xml.isEndElement() && xml.name() == QLatin1String("Device"))
 		{
 			insideDevice = false;
 			continue;
 		}
-		if (!xml.isStartElement())// Ìø¹ı·Ç¿ªÊ¼ÔªËØ£¨×¢ÊÍ¡¢ÎÄ±¾¡¢½áÊøÔªËØµÈ£©
+		if (!xml.isStartElement()) 
 		{
 			continue;
 		}
 		const QString elementName = xml.name().toString();
-		// ½øÈëDevice½Úµã
+
 		if (elementName == QLatin1String("Device"))
 		{
 			insideDevice = true;
 			continue;
 		}
-		if (!insideDevice)// Ö»´¦ÀíDeviceÄÚ²¿µÄÄÚÈİ
+		if (!insideDevice)
 		{
 			continue;
 		}
 
-		//Éè±¸ÀàĞÍtype
 		if (elementName == QLatin1String("Type") && deviceType.isEmpty())
 		{
 			const auto attrs = xml.attributes();
@@ -221,51 +251,332 @@ bool XML::loadXmlDescription(const QString& filePath, QString& errorMessage)
 			}
 			deviceType = nodeText(xml);
 		}
-
-	}
-}
-
-bool XML::readXMLFile(const QString &filePath, QString &errorMsg)
-{
-	QFile file(filePath);
-	if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-	{
-		errorMsg = QString("XMLÎÄ¼ş´ò¿ªÊ§°Ü £º%1").arg(file.errorString());
-		emit logMessage(errorMsg);
-		return false;
-	}
-
-	QXmlStreamReader xml(&file);
-	clearXMLData();
-
-	while (!xml.atEnd() && !xml.hasError())
-	{
-		QXmlStreamReader::TokenType token = xml.readNext();
-		if (token == QXmlStreamReader::StartDocument)
+		else if (elementName == QLatin1String("Name") && deviceName.isEmpty())
 		{
-			emit logMessage(QString("¿ªÊ¼½âÎöXMLÎÄ¼ş£º%1").arg(filePath));
-			continue;
+			deviceName = nodeText(xml);
 		}
-
-		// todo
-		/*Æ¥Åä¸ù½Úµã£¨Ê¾Àı¸ù½Úµã£º<ECATConfig>£©
-		if (token == QXmlStreamReader::StartElement && xml.name() == "ECATConfig") {
-			parseEcatParamNode(xml);
-		}
-		*/
-
-		if (xml.hasError())
+		else if (elementName == QLatin1String("GroupType") && groupType.isEmpty())
 		{
-			errorMsg = QString("XML½âÎö´íÎó£º%1£¨ĞĞºÅ£º%2£©").arg(xml.errorString()).arg(xml.lineNumber());
-			emit logMessage(errorMsg);
-			file.close();
-			return false;
+			groupType = nodeText(xml);
 		}
 
-		file.close();
-		emit logMessage(QString("XMLÎÄ¼ş½âÎöÍê³É£¬¹²½âÎö%1¸ö´ÓÕ¾²ÎÊı").arg(m_ecatParams.size()));
-		return true;
+		else if (elementName == QLatin1String("DataType"))
+		{
+			XmlDataTypeInfo typeInfo;
+
+			while (!(xml.isEndElement() && xml.name() == QLatin1String("DataType")) && !xml.atEnd())
+			{
+				xml.readNext();
+				if (!xml.isStartElement())
+				{
+					continue;
+				}
+
+				const QString typeChild = xml.name().toString();
+				if (typeChild == QLatin1String("Name") && typeInfo.name.isEmpty())
+				{
+					typeInfo.name = nodeText(xml);
+				}
+				else if (typeChild == QLatin1String("BaseType"))
+				{
+					typeInfo.baseType = nodeText(xml);
+				}
+				else if (typeChild == QLatin1String("BitSize"))
+				{
+					typeInfo.bitSize = nodeText(xml).toInt();
+				}
+				else if (typeChild == QLatin1String("SubItem"))
+				{
+					XmlSubItemInfo subItem;
+					QString access;
+
+					while (!(xml.isEndElement() && xml.name() == QLatin1String("SubItem")) && !xml.atEnd())
+					{
+						xml.readNext();
+						if (!xml.isStartElement())
+						{
+							continue;
+						}
+						const QString subChild = xml.name().toString();
+						if (subChild == QLatin1String("SubIdx"))
+						{
+							subItem.subIndex = nodeText(xml).toInt();
+						}
+						else if (subChild == QLatin1String("Name"))
+						{
+							subItem.name = nodeText(xml);
+						}
+						else if (subChild == QLatin1String("Type"))
+						{
+							subItem.typeName = nodeText(xml);
+						}
+						else if (subChild == QLatin1String("BitSize"))
+						{
+							subItem.bitSize = nodeText(xml).toInt();
+						}
+						else if (subChild == QLatin1String("Flags"))
+						{
+							while (!(xml.isEndElement() && xml.name() == QLatin1String("Flags")) && !xml.atEnd())
+							{
+								xml.readNext();
+								if (xml.isStartElement() && xml.name() == QLatin1String("Access"))
+								{
+									access = nodeText(xml);
+								}
+							}
+						}
+					}
+
+					subItem.access = access;
+					typeInfo.subItems.append(subItem);
+				}
+			}
+			if (!typeInfo.name.isEmpty())
+			{
+				m_xmlDataTypes.insert(typeInfo.name, typeInfo);
+			}
+		}
+
+		else if (elementName == QLatin1String("Object"))
+		{
+			XmlObjectInfo baseObject;
+			QVector<XmlSubItemInfo> infoSubItems;
+
+			while (!(xml.isEndElement() && xml.name() == "Object") && !xml.atEnd())
+			{
+				xml.readNext();
+				if (!xml.isStartElement())
+				{
+					continue;
+				}
+
+				const QString objectChild = xml.name().toString();
+				if (objectChild == QLatin1String("Index"))
+				{
+					baseObject.index = static_cast<quint16>(parseEtherCatNumber(nodeText(xml)));
+				}
+				else if (objectChild == QLatin1String("Name") && baseObject.name.isEmpty())
+				{
+					baseObject.name = nodeText(xml);
+				}
+				else if (objectChild == QLatin1String("Type"))
+				{
+					baseObject.typeName = nodeText(xml);
+				}
+				else if (objectChild == QLatin1String("BitSize"))
+				{
+					baseObject.bitSize = nodeText(xml).toInt();
+				}
+				else if (objectChild == QLatin1String("Info"))
+				{
+					while (!(xml.isEndElement() && xml.name() == QLatin1String("Info")) && !xml.atEnd())
+					{
+						xml.readNext();
+						if (!xml.isStartElement() || xml.name() != QLatin1String("SubItem"))
+						{
+							continue;
+						}
+
+						XmlSubItemInfo subItem;
+						while (!(xml.isEndElement() && xml.name() == QLatin1String("SubItem")) && !xml.atEnd())
+						{
+							xml.readNext();
+							if (!xml.isStartElement())
+							{
+								continue;
+							}
+
+							const QString subChild = xml.name().toString();
+							if (subChild == QLatin1String("Name"))
+							{
+								subItem.name = nodeText(xml);
+							}
+						}
+
+						infoSubItems.append(subItem);
+					}
+				}
+				else if (objectChild == QLatin1String("Flags"))
+				{
+					while (!(xml.isEndElement() && xml.name() == QLatin1String("Flags")) && !xml.atEnd())
+					{
+						xml.readNext();
+						if (!xml.isStartElement())
+						{
+							continue;
+						}
+
+						if (xml.name() == QLatin1String("Access"))
+						{
+							baseObject.access = nodeText(xml);
+						}
+						else if (xml.name() == QLatin1String("PdoMapping"))
+						{
+							baseObject.pdoMapping = nodeText(xml);
+						}
+					}
+				}
+			}
+
+			if (baseObject.index == 0)
+			{
+				continue;
+			}
+			m_xmlObjectMap.insert(makeXmlObjectKey(baseObject.index, -1), baseObject);
+
+			const auto typeIt = m_xmlDataTypes.constFind(baseObject.typeName);
+			if (typeIt != m_xmlDataTypes.constEnd() && !typeIt->subItems.isEmpty())
+			{
+				for (int i = 0; i < typeIt->subItems.size(); ++i)
+				{
+					XmlObjectInfo subObject = baseObject;
+					const XmlSubItemInfo& typeSub = typeIt->subItems.at(i);
+
+					subObject.subIndex = typeSub.subIndex;
+					if (i < infoSubItems.size() && !infoSubItems.at(i).name.isEmpty())
+					{
+						subObject.name = infoSubItems.at(i).name;
+					}
+					else if (!typeSub.name.isEmpty())
+					{
+						subObject.name = typeSub.name;
+					}
+
+					if (!typeSub.typeName.isEmpty())
+					{
+						subObject.typeName = typeSub.typeName;
+					}
+					if (typeSub.bitSize > 0)
+					{
+						subObject.bitSize = typeSub.bitSize;
+					}
+					if (!typeSub.access.isEmpty())
+					{
+						subObject.access = typeSub.access;
+					}
+
+					m_xmlObjectMap.insert(makeXmlObjectKey(baseObject.index, subObject.subIndex), subObject);
+				}
+			}
+		}
+		else if (elementName == QLatin1String("RxPdo") || elementName == QLatin1String("TxPdo"))
+		{
+			const bool isRx = elementName == QLatin1String("RxPdo");
+			const auto attrs = xml.attributes();
+			QString pdoIndex;
+			QStringList entries;
+
+			while (!(xml.isEndElement() && xml.name().toString() == elementName) && !xml.atEnd())
+			{
+				xml.readNext();
+				if (!xml.isStartElement())
+				{
+					continue;
+				}
+
+				if (xml.name() == QLatin1String("Index") && pdoIndex.isEmpty())
+				{
+					pdoIndex = nodeText(xml);
+				}
+				else if (xml.name() == QLatin1String("Entry"))
+				{
+					QString entryIndex;
+					QString entrySub;
+					QString entryBits;
+
+					while (!(xml.isEndElement() && xml.name() == QLatin1String("Entry")) && !xml.atEnd())
+					{
+						xml.readNext();
+						if (!xml.isStartElement())
+						{
+							continue;
+						}
+
+						if (xml.name() == QLatin1String("Index"))
+						{
+							entryIndex = nodeText(xml);
+						}
+						else if (xml.name() == QLatin1String("SubIndex"))
+						{
+							entrySub = nodeText(xml);
+						}
+						else if (xml.name() == QLatin1String("BitLen"))
+						{
+							entryBits = nodeText(xml);
+						}
+					}
+
+					bool okIndex = false;
+					bool okSub = false;
+					const quint16 indexValue = static_cast<quint16>(parseEtherCatNumber(entryIndex, &okIndex));
+					const quint8 subValue = static_cast<quint8>(parseEtherCatNumber(entrySub, &okSub));
+
+					XmlObjectInfo xmlObject;
+					QString objectName;
+					if (okIndex && okSub && lookupXmlObject(indexValue, subValue, xmlObject))
+					{
+						objectName = xmlObject.name;
+					}
+
+					QString entryText = QString("%1:%2")
+						.arg(entryIndex.isEmpty() ? "-" : entryIndex)
+						.arg(entrySub.isEmpty() ? "-" : entrySub);
+
+					if (!objectName.isEmpty())
+					{
+						entryText += QString(" %1").arg(objectName);
+					}
+					if (!entryBits.isEmpty())
+					{
+						entryText += QString(" (%1bit)").arg(entryBits);
+					}
+
+					entries.append(entryText);
+				}
+			}
+
+			QString line = QString("%1  [%2]  %3")
+				.arg(isRx ? "RxPDO" : "TxPDO")
+				.arg(pdoIndex.isEmpty() ? "-" : pdoIndex)
+				.arg(entries.join(" | "));
+
+			if (attrs.hasAttribute("Sm"))
+			{
+				line += QString("  SM=%1").arg(attrs.value("Sm").toString());
+			}
+
+			if (isRx)
+			{
+				m_xmlRxPdoLines.append(line);
+			}
+			else
+			{
+				m_xmlTxPdoLines.append(line);
+			}
+		}
 	}
+
+	if (xml.hasError())
+	{
+        errorMessage = QString("XML è§£æå¤±è´¥: ç¬¬%1è¡Œ, ç¬¬%2åˆ—, %3")
+            .arg(xml.lineNumber()).arg(xml.columnNumber()).arg(xml.errorString());
+		clearXMLData();
+        return false;
+	}
+
+	m_xmlLoaded = true;
+
+	m_xmlSummaryLines << QString("XMLæ–‡ä»¶: %1").arg(QFileInfo(filePath).fileName());
+	m_xmlSummaryLines << QString("è®¾å¤‡åç§°: %1").arg(safeElementText(deviceName, "æœªè¯»å–åˆ°"));
+	m_xmlSummaryLines << QString("è®¾å¤‡å‹å·: %1").arg(safeElementText(deviceType, "æœªè¯»å–åˆ°"));
+	m_xmlSummaryLines << QString("åˆ†ç»„ç±»å‹: %1").arg(safeElementText(groupType, "æœªè¯»å–åˆ°"));
+	m_xmlSummaryLines << QString("äº§å“ç : %1").arg(productCode.isEmpty() ? "æœªè¯»å–åˆ°" : productCode);
+	m_xmlSummaryLines << QString("ç‰ˆæœ¬å·: %1").arg(revisionNo.isEmpty() ? "æœªè¯»å–åˆ°" : revisionNo);
+	m_xmlSummaryLines << QString("å¯¹è±¡å­—å…¸æ¡ç›®: %1").arg(m_xmlObjectMap.size());
+	m_xmlSummaryLines << QString("RxPDOæ•°é‡: %1").arg(m_xmlRxPdoLines.size());
+	m_xmlSummaryLines << QString("TxPDOæ•°é‡: %1").arg(m_xmlTxPdoLines.size());
+	m_xmlSummaryLines << QString("ä»ç«™ä¸‹æ‹‰å·²æŒ‰ XML åˆ·æ–°ï¼Œå½“å‰æ•°é‡: %1").arg(slaveCountHint);
+	return true;
 }
 
 void XML::clearXMLData()
@@ -279,13 +590,7 @@ void XML::clearXMLData()
 	m_xmlSummaryLines.clear();
 	m_xmlRxPdoLines.clear();
 	m_xmlTxPdoLines.clear();
-
-	/*todo
-	¸ü¶à²ÎÊı´ıÇå³ı
-
-	*/
-
-	emit logMessage("ÒÑÇå¿ÕXML½âÎö»º´æÊı¾İ");
+    //emit logMessage(QString("????????????"));
 }
 
 QVector<XmlEcatParam> XML::getEcatParams() const
@@ -295,7 +600,17 @@ QVector<XmlEcatParam> XML::getEcatParams() const
 
 XmlEcatParam XML::getSlaveParam(uint16_t slaveIndex) const
 {
+	for (const XmlEcatParam& param : m_ecatParams)
+	{
+		if (param.slaveIndex == slaveIndex)
+		{
+			return param;
+		}
+	}
 
+	XmlEcatParam param{};
+	param.slaveIndex = slaveIndex;
+	return param;
 }
 
 void XML::parseEcatParamNode(QXmlStreamReader& xml)

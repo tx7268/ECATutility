@@ -12,45 +12,45 @@
 
 struct XmlEcatParam
 {
-    uint16_t slaveIndex;      // ´ÓÕ¾Ë÷Òı
-    int8_t home_mode;         // »ØÁãÄ£Ê½
-    int32_t vel;              // ËÙ¶È
-    int32_t acc;              // ¼ÓËÙ¶È
-    int32_t dec;              // ¼õËÙ¶È
-    int32_t sw_vel;           // »ØÁãËÑË÷ËÙ¶È
-    int32_t zero_vel;         // »ØÁã¾«È·¶¨Î»ËÙ¶È
-    uint8_t op_mode;          // ²Ù×÷Ä£Ê½£¨PP/CSP/HOMEµÈ£©
+    uint16_t slaveIndex;      // ä»ç«™ç´¢å¼•
+    int8_t home_mode;         // å›é›¶æ¨¡å¼
+    int32_t vel;              // é€Ÿåº¦
+    int32_t acc;              // åŠ é€Ÿåº¦
+    int32_t dec;              // å‡é€Ÿåº¦
+    int32_t sw_vel;           // å›é›¶æœç´¢é€Ÿåº¦
+    int32_t zero_vel;         // å›é›¶ç²¾ç¡®å®šä½é€Ÿåº¦
+    uint8_t op_mode;          // æ“ä½œæ¨¡å¼ï¼ˆPP/CSP/HOMEç­‰ï¼‰
 };
 
-// XML×ÓÏî½á¹¹Ìå£¨´æ´¢¶ÔÏó×Öµä×ÓË÷ÒıĞÅÏ¢£©
+// XMLå­é¡¹ç»“æ„ä½“ï¼ˆå­˜å‚¨å¯¹è±¡å­—å…¸å­ç´¢å¼•ä¿¡æ¯ï¼‰
 struct XmlSubItemInfo
 {
-    int subIndex = -1;        // ×ÓË÷Òı
-    QString name;             // Ãû³Æ
-    QString typeName;         // Êı¾İÀàĞÍ
-    QString access;           // ·ÃÎÊÈ¨ÏŞ£¨ro/rw£©
-    int bitSize = 0;          // Î»¿í
+    int subIndex = -1;        // å­ç´¢å¼•
+    QString name;             // åç§°
+    QString typeName;         // æ•°æ®ç±»å‹
+    QString access;           // è®¿é—®æƒé™ï¼ˆro/rwï¼‰
+    int bitSize = 0;          // ä½å®½
 };
 
-// XMLÊı¾İÀàĞÍ½á¹¹Ìå£¨´æ´¢×Ô¶¨ÒåÊı¾İÀàĞÍĞÅÏ¢£©
+// XMLæ•°æ®ç±»å‹ç»“æ„ä½“ï¼ˆå­˜å‚¨è‡ªå®šä¹‰æ•°æ®ç±»å‹ä¿¡æ¯ï¼‰
 struct XmlDataTypeInfo
 {
-    QString name;                     // ÀàĞÍÃû³Æ
-    QString baseType;                 // »ùÀàĞÍ
-    int bitSize = 0;                  // Î»¿í
-    QVector<XmlSubItemInfo> subItems; // ×ÓÏîÁĞ±í
+    QString name;                     // ç±»å‹åç§°
+    QString baseType;                 // åŸºç±»å‹
+    int bitSize = 0;                  // ä½å®½
+    QVector<XmlSubItemInfo> subItems; // å­é¡¹åˆ—è¡¨
 };
 
-// XML¶ÔÏóĞÅÏ¢½á¹¹Ìå£¨´æ´¢EtherCAT¶ÔÏó×ÖµäºËĞÄĞÅÏ¢£©
+// XMLå¯¹è±¡ä¿¡æ¯ç»“æ„ä½“ï¼ˆå­˜å‚¨EtherCATå¯¹è±¡å­—å…¸æ ¸å¿ƒä¿¡æ¯ï¼‰
 struct XmlObjectInfo
 {
-    quint16 index = 0;        // ¶ÔÏó×ÖµäË÷Òı£¨Èç0x6040£©
-    int subIndex = -1;        // ×ÓË÷Òı
-    QString name;             // ¶ÔÏóÃû³Æ
-    QString typeName;         // Êı¾İÀàĞÍ
-    QString access;           // ·ÃÎÊÈ¨ÏŞ
-    QString pdoMapping;       // PDOÓ³ÉäÊôĞÔ
-    int bitSize = 0;          // Î»¿í
+    quint16 index = 0;        // å¯¹è±¡å­—å…¸ç´¢å¼•ï¼ˆå¦‚0x6040ï¼‰
+    int subIndex = -1;        // å­ç´¢å¼•
+    QString name;             // å¯¹è±¡åç§°
+    QString typeName;         // æ•°æ®ç±»å‹
+    QString access;           // è®¿é—®æƒé™
+    QString pdoMapping;       // PDOæ˜ å°„å±æ€§
+    int bitSize = 0;          // ä½å®½
 };
 
 class XML:public QObject
@@ -60,44 +60,49 @@ public:
     XML(QObject *parent = nullptr);
     ~XML();
 
-    bool readXMLFile(const QString &filepath, QString &errormsg); // ¶ÁÈ¡²¢½âÎöXMLÎÄ¼ş
-    void clearXMLData();                                          // Çå¿Õ½âÎöºóµÄXMLÊı¾İ
 
-    QVector<XmlEcatParam> getEcatParams() const;               // »ñÈ¡½âÎöºóµÄECAT²ÎÊıÁĞ±í
-    XmlEcatParam getSlaveParam(uint16_t slaveIndex = 1) const; // µ¥´ÓÕ¾²ÎÊı¿ì½İ»ñÈ¡£¨ÊÊÅäÏÖÓĞÏîÄ¿Ä¬ÈÏ´ÓÕ¾1£©
+    void clearXMLData();                                          // æ¸…ç©ºè§£æåçš„XMLæ•°æ®
+    bool loadXmlDescription(const QString& filePath, QString& errorMessage);//åŠ è½½å¹¶è§£æEtherCATä»ç«™XMLæè¿°æ–‡ä»¶
+
+    QVector<XmlEcatParam> getEcatParams() const;               // è·å–è§£æåçš„ECATå‚æ•°åˆ—è¡¨
+    XmlEcatParam getSlaveParam(uint16_t slaveIndex = 1) const; // å•ä»ç«™å‚æ•°å¿«æ·è·å–ï¼ˆé€‚é…ç°æœ‰é¡¹ç›®é»˜è®¤ä»ç«™1ï¼‰
+
+    QString xmlFilePath() const;
+    QStringList xmlSummaryLines() const;
+    QStringList xmlRxPdoLines() const;
+    QStringList xmlTxPdoLines() const;
 
 signals:
     void logMessage(const QString& msg);
 
 
 private:
-    bool m_xmlLoaded = false;                       // XMLÊÇ·ñ¼ÓÔØÍê³É±êÖ¾
-    QString m_xmlFilePath;                          // ¼ÓÔØµÄXMLÎÄ¼şÂ·¾¶
-    QHash<QString, XmlDataTypeInfo> m_xmlDataTypes; // ´æ´¢XMLÊı¾İÀàĞÍ
-    QHash<QString, XmlObjectInfo> m_xmlObjectMap;   // ´æ´¢¶ÔÏó×Öµä£¨Ë÷Òı:×ÓË÷Òı -> ¶ÔÏóĞÅÏ¢£©
-    QStringList m_xmlSummaryLines;                  // XML½âÎöÕªÒªĞÅÏ¢
-    QStringList m_xmlRxPdoLines;                    // RxPDO½âÎö½á¹û
-    QStringList m_xmlTxPdoLines;                    // TxPDO½âÎö½á¹û
+    bool m_xmlLoaded = false;                       // XMLæ˜¯å¦åŠ è½½å®Œæˆæ ‡å¿—
+    QString m_xmlFilePath;                          // åŠ è½½çš„XMLæ–‡ä»¶è·¯å¾„
+    QHash<QString, XmlDataTypeInfo> m_xmlDataTypes; // å­˜å‚¨XMLæ•°æ®ç±»å‹
+    QHash<QString, XmlObjectInfo> m_xmlObjectMap;   // å­˜å‚¨å¯¹è±¡å­—å…¸ï¼ˆç´¢å¼•:å­ç´¢å¼• -> å¯¹è±¡ä¿¡æ¯ï¼‰
+    QStringList m_xmlSummaryLines;                  // XMLè§£ææ‘˜è¦ä¿¡æ¯
+    QStringList m_xmlRxPdoLines;                    // RxPDOè§£æç»“æœ
+    QStringList m_xmlTxPdoLines;                    // TxPDOè§£æç»“æœ
 
     QString nodeText(QXmlStreamReader& xml);
     quint32 parseEtherCatNumber(const QString& raw, bool* ok = nullptr);
     QString safeElementText(const QString& text, const QString& fallback = QString());
 
-    QString formatHex(quint32 value, int width) const;                               // Ê®Áù½øÖÆ¸ñÊ½»¯
-    QString makeXmlObjectKey(quint16 index, int subIndex) const;                     // Éú³É¶ÔÏóÎ¨Ò»¼ü£¨Ë÷Òı:×ÓË÷Òı£©
-
-    bool loadXmlDescription(const QString& filePath, QString& errorMessage);//¼ÓÔØ²¢½âÎöEtherCAT´ÓÕ¾XMLÃèÊöÎÄ¼ş
+    QString formatHex(quint32 value, int width) const;                               // åå…­è¿›åˆ¶æ ¼å¼åŒ–
+    QString makeXmlObjectKey(quint16 index, int subIndex) const;                     // ç”Ÿæˆå¯¹è±¡å”¯ä¸€é”®ï¼ˆç´¢å¼•:å­ç´¢å¼•ï¼‰
 
 
-    void parseEcatParamNode(QXmlStreamReader &xml);                                  // ½âÎöECAT²ÎÊı½Úµã£¨ºËĞÄ½âÎöÂß¼­£©
 
-    void parseMotionParamNode(QXmlStreamReader &xml, XmlEcatParam &param);           // ½âÎöÔË¶¯²ÎÊı×Ó½Úµã
-    void parseHomeParamNode(QXmlStreamReader &xml, XmlEcatParam &param);             // ½âÎö»ØÁã²ÎÊı×Ó½Úµã
+    void parseEcatParamNode(QXmlStreamReader &xml);                                  // è§£æECATå‚æ•°èŠ‚ç‚¹ï¼ˆæ ¸å¿ƒè§£æé€»è¾‘ï¼‰
 
-    bool lookupXmlObject(quint16 index, quint8 subIndex, XmlObjectInfo &info) const; // ²éÕÒ¶ÔÏó×Öµä
-    void applyXmlHintsToSdo(quint16 index, quint8 subIndex, bool isWrite);           // SDO²Ù×÷Ê±Ó¦ÓÃXMLÌáÊ¾
+    void parseMotionParamNode(QXmlStreamReader &xml, XmlEcatParam &param);           // è§£æè¿åŠ¨å‚æ•°å­èŠ‚ç‚¹
+    void parseHomeParamNode(QXmlStreamReader &xml, XmlEcatParam &param);             // è§£æå›é›¶å‚æ•°å­èŠ‚ç‚¹
+
+    bool lookupXmlObject(quint16 index, quint8 subIndex, XmlObjectInfo &info) const; // æŸ¥æ‰¾å¯¹è±¡å­—å…¸
+    void applyXmlHintsToSdo(quint16 index, quint8 subIndex, bool isWrite);           // SDOæ“ä½œæ—¶åº”ç”¨XMLæç¤º
     
-    QVector<XmlEcatParam> m_ecatParams;                                              // ´æ´¢½âÎöºóµÄËùÓĞ´ÓÕ¾²ÎÊı
+    QVector<XmlEcatParam> m_ecatParams;                                              // å­˜å‚¨è§£æåçš„æ‰€æœ‰ä»ç«™å‚æ•°
 };
 
 

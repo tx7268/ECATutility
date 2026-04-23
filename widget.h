@@ -13,7 +13,7 @@ QT_BEGIN_NAMESPACE
 
 class Link;
 class Protocol;
-
+class XML;
 
 #define op_mode_no   0            // 无模式
 #define op_mode_pp   1            // Profile Position（位置规划）
@@ -94,6 +94,7 @@ private:
     Ui::Widget* ui;
     Link* m_link;
     Protocol* proto;
+    XML* m_xml;
 
     int8_t home_mode;
     int32_t vel,acc,dec, sw_vel, zero_vel;
