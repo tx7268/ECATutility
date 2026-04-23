@@ -51,7 +51,69 @@ bool XML::lookupXmlObject(quint16 index, quint8 subIndex, XmlObjectInfo& info) c
 {
 	// 1. 精确匹配：索引+子索引
 	const QString fullkey = makeXmlObjectKey(index, subIndex);
+	if (m_xmlObjectMap.contains(fullkey))
+	{
+		info = m_xmlObjectMap.value(fullkey);
+		return true;
+	}
+	const QString objectOnlykey = makeXmlObjectKey(index, -1);
+	if (m_xmlObjectMap.contains(objectOnlykey))
+	{
+		info = m_xmlObjectMap.value(objectOnlykey);
+		return true;
+	}
+	return false;
 }
+
+
+/**
+ * @brief SDO读写时，应用XML字典提示（日志输出对象信息）
+ * @param index 索引
+ * @param subIndex 子索引
+ * @param isWrite true=写入，false=读取
+ */
+void XML::applyXmlHintsToSdo(quint16 index, quint8 subIndex, bool isWrite)
+{
+	if (!m_xmlLoaded)
+	{
+		return;
+	}
+
+	XmlObjectInfo info;
+	if (!lookupXmlObject(index, subIndex, info))
+	{
+		emit logMessage(QString("[XML] 未找到对象 %1:%2")
+			.arg(formatHex(index, 4))
+			.arg(formatHex(subIndex, 2)));
+		return;
+	}
+
+	const QString action = isWrite ? "写入" : "读取";
+	QStringList details;
+	details << QString("%1 %2:%3").arg(action, formatHex(index, 4), formatHex(subIndex, 2));
+	details << QString("名称=%1").arg(info.name.isEmpty() ? "未命名对象" : info.name);
+
+	if (!info.typeName.isEmpty())
+	{
+		details << QString("类型=%1").arg(info.typeName);
+	}
+	if (info.bitSize > 0)
+	{
+		details << QString("位宽=%1").arg(info.bitSize);
+	}
+	if (!info.access.isEmpty())
+	{
+		details << QString("访问=%1").arg(info.access);
+	}
+	if (!info.pdoMapping.isEmpty())
+	{
+		details << QString("PDO映射=%1").arg(info.pdoMapping);
+	}
+
+	emit logMessage(QString("[XML] %1").arg(details.join("  |  ")));
+
+}
+
 
 
 bool XML::readXMLFile(const QString &filePath, QString &errorMsg)
@@ -100,6 +162,14 @@ bool XML::readXMLFile(const QString &filePath, QString &errorMsg)
 void XML::clearXMLData()
 {
 	m_ecatParams.clear();
+
+	m_xmlLoaded = false;
+	m_xmlFilePath.clear();
+	m_xmlDataTypes.clear();
+	m_xmlObjectMap.clear();
+	m_xmlSummaryLines.clear();
+	m_xmlRxPdoLines.clear();
+	m_xmlTxPdoLines.clear();
 
 	/*todo
 	更多参数待清除

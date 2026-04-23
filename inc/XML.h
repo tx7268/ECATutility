@@ -3,6 +3,7 @@
 
 
 #include <QFile>
+#include <QHash>
 #include <QString>
 #include <QVector>
 #include <QObject>
@@ -70,6 +71,14 @@ signals:
 
 
 private:
+    bool m_xmlLoaded = false;                       // XML是否加载完成标志
+    QString m_xmlFilePath;                          // 加载的XML文件路径
+    QHash<QString, XmlDataTypeInfo> m_xmlDataTypes; // 存储XML数据类型
+    QHash<QString, XmlObjectInfo> m_xmlObjectMap;   // 存储对象字典（索引:子索引 -> 对象信息）
+    QStringList m_xmlSummaryLines;                  // XML解析摘要信息
+    QStringList m_xmlRxPdoLines;                    // RxPDO解析结果
+    QStringList m_xmlTxPdoLines;                    // TxPDO解析结果
+
     QString formatHex(quint32 value, int width) const;                               // 十六进制格式化
     QString makeXmlObjectKey(quint16 index, int subIndex) const;                     // 生成对象唯一键（索引:子索引）
 
