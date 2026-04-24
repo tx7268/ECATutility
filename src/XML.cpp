@@ -524,25 +524,25 @@ bool XML::loadXmlDescription(const QString& filePath, QString& errorMessage)
 
 					if (!objectName.isEmpty())
 					{
-						entryText += QString(" %1").arg(objectName);
+						entryText += QString(" → %1").arg(objectName);
 					}
 					if (!entryBits.isEmpty())
 					{
-						entryText += QString(" (%1bit)").arg(entryBits);
+						entryText += QString(" [%1bit]").arg(entryBits);
 					}
 
 					entries.append(entryText);
 				}
 			}
 
-			QString line = QString("%1  [%2]  %3")
+			QString line = QString("%1  [索引: %2]  %3")
 				.arg(isRx ? "RxPDO" : "TxPDO")
 				.arg(pdoIndex.isEmpty() ? "-" : pdoIndex)
 				.arg(entries.join(" | "));
 
 			if (attrs.hasAttribute("Sm"))
 			{
-				line += QString("  SM=%1").arg(attrs.value("Sm").toString());
+				line += QString(" | SM=%1").arg(attrs.value("Sm").toString());
 			}
 
 			if (isRx)
@@ -566,15 +566,17 @@ bool XML::loadXmlDescription(const QString& filePath, QString& errorMessage)
 
 	m_xmlLoaded = true;
 
-	m_xmlSummaryLines << QString("XML文件: %1").arg(QFileInfo(filePath).fileName());
-	m_xmlSummaryLines << QString("设备名称: %1").arg(safeElementText(deviceName, "未读取到"));
-	m_xmlSummaryLines << QString("设备型号: %1").arg(safeElementText(deviceType, "未读取到"));
-	m_xmlSummaryLines << QString("分组类型: %1").arg(safeElementText(groupType, "未读取到"));
-	m_xmlSummaryLines << QString("产品码: %1").arg(productCode.isEmpty() ? "未读取到" : productCode);
-	m_xmlSummaryLines << QString("版本号: %1").arg(revisionNo.isEmpty() ? "未读取到" : revisionNo);
-	m_xmlSummaryLines << QString("对象字典条目: %1").arg(m_xmlObjectMap.size());
-	m_xmlSummaryLines << QString("RxPDO数量: %1").arg(m_xmlRxPdoLines.size());
-	m_xmlSummaryLines << QString("TxPDO数量: %1").arg(m_xmlTxPdoLines.size());
+	m_xmlSummaryLines << "==================================================";
+	m_xmlSummaryLines << QString("XML 解析完成 | 文件: %1").arg(QFileInfo(filePath).fileName());
+	m_xmlSummaryLines << QString("设备名称:      %1").arg(safeElementText(deviceName, "未读取到"));
+	m_xmlSummaryLines << QString("设备型号:      %1").arg(safeElementText(deviceType, "未读取到"));
+	m_xmlSummaryLines << QString("分组类型:      %1").arg(safeElementText(groupType, "未读取到"));
+	m_xmlSummaryLines << QString("产品编码:      %1").arg(productCode.isEmpty() ? "未读取到" : productCode);
+	m_xmlSummaryLines << QString("固件版本:      %1").arg(revisionNo.isEmpty() ? "未读取到" : revisionNo);
+	m_xmlSummaryLines << "--------------------------------------------------";
+	m_xmlSummaryLines << QString("对象字典总数:  %1 个").arg(m_xmlObjectMap.size());
+	m_xmlSummaryLines << QString("RxPDO 总数:    %1 组").arg(m_xmlRxPdoLines.size());
+	m_xmlSummaryLines << QString("TxPDO 总数:    %1 组").arg(m_xmlTxPdoLines.size());
 	m_xmlSummaryLines << QString("从站下拉已按 XML 刷新，当前数量: %1").arg(slaveCountHint);
 	return true;
 }
@@ -590,7 +592,7 @@ void XML::clearXMLData()
 	m_xmlSummaryLines.clear();
 	m_xmlRxPdoLines.clear();
 	m_xmlTxPdoLines.clear();
-    //emit logMessage(QString("????????????"));
+    emit logMessage("[XML] 已清空所有XML解析数据");
 }
 
 QVector<XmlEcatParam> XML::getEcatParams() const

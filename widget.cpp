@@ -1,11 +1,14 @@
 #include "widget.h"
 #include "ui_widget.h"
-#include <QDateTime>
-#include <QMessageBox>
-#include <QFile>
 #include <QDir>
+#include <QFile>
+
+#include <QDateTime>
+
+#include <QMessageBox>
 #include <QFileDialog>
 #include <QTextStream>
+
 #include "inc/Link.h"
 #include "inc/Protocol.h"
 #include "inc/SerialThread.h"
@@ -21,8 +24,9 @@ Widget::Widget(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowTitle("ECATutility");
-
-    setWindowIcon(QIcon(":/icons/ecat_icon.png"));
+    QChart *chart = new QChart();
+    ui->chartView->setChart(chart);
+    setWindowIcon(QIcon(":/icons/ECAT"));
     ui->stackedWidget->hide();
 
     ui->stackedWidget_2->setCurrentIndex(0);
@@ -189,6 +193,8 @@ void Widget::on_btn_link_clicked()
         ui->btn_link->setChecked(true);
         ui->btn_ECAT->setChecked(false);
         ui->btn_set->setChecked(false);
+        ui->btn_scope->setChecked(false);
+        ui->btn_RunTime->setChecked(false);
 
         ui->stackedWidget->setCurrentIndex(target_index);
         ui->stackedWidget->show();
@@ -211,6 +217,8 @@ void Widget::on_btn_ECAT_clicked()
         ui->btn_link->setChecked(false);
         ui->btn_ECAT->setChecked(true);
         ui->btn_set->setChecked(false);
+        ui->btn_scope->setChecked(false);
+        ui->btn_RunTime->setChecked(false);
 
         ui->stackedWidget->setCurrentIndex(target_index);
         ui->stackedWidget->show();
@@ -232,12 +240,62 @@ void Widget::on_btn_set_clicked()
         ui->btn_link->setChecked(false);
         ui->btn_ECAT->setChecked(false);
         ui->btn_set->setChecked(true);
+        ui->btn_scope->setChecked(false);
+        ui->btn_RunTime->setChecked(false);
 
         ui->stackedWidget->setCurrentIndex(target_index);
         ui->stackedWidget->show();
     }
 
 }
+
+//******************************Scope设置按键******************************
+void Widget::on_btn_scope_clicked()
+{
+    const int target_index = 3;
+    if (ui->stackedWidget->isVisible() && ui->stackedWidget->currentIndex() == target_index)
+    {
+        ui->btn_scope->setChecked(false);
+        ui->stackedWidget->hide();
+    }
+    else
+    {
+        ui->btn_link->setChecked(false);
+        ui->btn_ECAT->setChecked(false);
+        ui->btn_set->setChecked(false);
+        ui->btn_scope->setChecked(true);
+        ui->btn_RunTime->setChecked(false);
+
+        ui->stackedWidget->setCurrentIndex(target_index);
+        ui->stackedWidget->show();
+    }
+}
+
+//******************************RunTime设置按键******************************
+void Widget::on_btn_RunTime_clicked()
+{
+    const int target_index = 4;
+    if (ui->stackedWidget->isVisible() && ui->stackedWidget->currentIndex() == target_index)
+    {
+        ui->btn_RunTime->setChecked(false);
+        ui->stackedWidget->hide();
+    }
+    else
+    {
+        ui->btn_link->setChecked(false);
+        ui->btn_ECAT->setChecked(false);
+        ui->btn_set->setChecked(false);
+        ui->btn_scope->setChecked(false);
+        ui->btn_RunTime->setChecked(true);
+
+
+        ui->stackedWidget->setCurrentIndex(target_index);
+        ui->stackedWidget->show();
+    }
+}
+
+
+
 
 //******************************enable按键******************************
 void Widget::on_btn_enable_clicked()
@@ -1214,4 +1272,6 @@ void Widget::on_btn_clear_XMLfile_clicked()
     appendlog("[XML] 已清除当前导入的 XML 缓存与从站提示信息");
     appendlog("已清除 XML 文件缓存");
 }
+
+
 

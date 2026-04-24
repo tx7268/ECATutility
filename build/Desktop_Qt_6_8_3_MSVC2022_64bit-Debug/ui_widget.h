@@ -121,6 +121,8 @@ public:
     QPushButton *btn_read_sdo;
     QPushButton *btn_write_sdo;
     QTextEdit *textEdit_SDO_log;
+    QWidget *page_Scope;
+    QWidget *page_RunTime;
     QStackedWidget *stackedWidget_2;
     QWidget *page_axis;
     QGroupBox *groupBox;
@@ -210,6 +212,7 @@ public:
     QLabel *label_40;
     QPushButton *btn_open_port_2;
     QPushButton *btn_scope;
+    QPushButton *btn_RunTime;
 
     void setupUi(QWidget *Widget)
     {
@@ -218,10 +221,10 @@ public:
         Widget->resize(1500, 950);
         textEdit_log_info = new QTextEdit(Widget);
         textEdit_log_info->setObjectName("textEdit_log_info");
-        textEdit_log_info->setGeometry(QRect(1010, 70, 471, 621));
+        textEdit_log_info->setGeometry(QRect(1010, 50, 471, 651));
         btn_link = new QPushButton(Widget);
         btn_link->setObjectName("btn_link");
-        btn_link->setGeometry(QRect(20, 50, 120, 55));
+        btn_link->setGeometry(QRect(20, 20, 120, 55));
         btn_link->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -269,7 +272,7 @@ public:
         btn_enable = new QPushButton(Widget);
         btn_enable->setObjectName("btn_enable");
         btn_enable->setEnabled(true);
-        btn_enable->setGeometry(QRect(20, 280, 120, 55));
+        btn_enable->setGeometry(QRect(20, 230, 120, 55));
         btn_enable->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -292,7 +295,7 @@ public:
         btn_disable = new QPushButton(Widget);
         btn_disable->setObjectName("btn_disable");
         btn_disable->setEnabled(true);
-        btn_disable->setGeometry(QRect(20, 350, 120, 55));
+        btn_disable->setGeometry(QRect(20, 300, 120, 55));
         btn_disable->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -314,7 +317,7 @@ public:
         btn_reboot = new QPushButton(Widget);
         btn_reboot->setObjectName("btn_reboot");
         btn_reboot->setEnabled(true);
-        btn_reboot->setGeometry(QRect(20, 420, 120, 55));
+        btn_reboot->setGeometry(QRect(20, 370, 120, 55));
         btn_reboot->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -337,7 +340,7 @@ public:
         btn_axis = new QPushButton(Widget);
         btn_axis->setObjectName("btn_axis");
         btn_axis->setEnabled(true);
-        btn_axis->setGeometry(QRect(20, 490, 120, 55));
+        btn_axis->setGeometry(QRect(20, 440, 120, 55));
         btn_axis->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -362,7 +365,7 @@ public:
         btn_dio = new QPushButton(Widget);
         btn_dio->setObjectName("btn_dio");
         btn_dio->setEnabled(true);
-        btn_dio->setGeometry(QRect(20, 560, 120, 55));
+        btn_dio->setGeometry(QRect(20, 510, 120, 55));
         btn_dio->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -386,7 +389,7 @@ public:
         btn_dio->setCheckable(false);
         label = new QLabel(Widget);
         label->setObjectName("label");
-        label->setGeometry(QRect(1000, 45, 101, 21));
+        label->setGeometry(QRect(1010, 20, 101, 21));
         groupBox_2 = new QGroupBox(Widget);
         groupBox_2->setObjectName("groupBox_2");
         groupBox_2->setGeometry(QRect(160, 60, 831, 111));
@@ -450,7 +453,7 @@ public:
 
         btn_ECAT = new QPushButton(Widget);
         btn_ECAT->setObjectName("btn_ECAT");
-        btn_ECAT->setGeometry(QRect(20, 130, 120, 55));
+        btn_ECAT->setGeometry(QRect(20, 90, 120, 55));
         btn_ECAT->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -490,7 +493,7 @@ public:
         btn_ECAT->setCheckable(true);
         btn_set = new QPushButton(Widget);
         btn_set->setObjectName("btn_set");
-        btn_set->setGeometry(QRect(20, 210, 120, 55));
+        btn_set->setGeometry(QRect(20, 160, 120, 55));
         btn_set->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -531,13 +534,13 @@ public:
         btn_set->setCheckable(true);
         btn_save_log = new QPushButton(Widget);
         btn_save_log->setObjectName("btn_save_log");
-        btn_save_log->setGeometry(QRect(1070, 30, 120, 35));
+        btn_save_log->setGeometry(QRect(1070, 10, 120, 35));
         btn_clear_log = new QPushButton(Widget);
         btn_clear_log->setObjectName("btn_clear_log");
-        btn_clear_log->setGeometry(QRect(1220, 30, 120, 35));
+        btn_clear_log->setGeometry(QRect(1220, 10, 120, 35));
         stackedWidget = new QStackedWidget(Widget);
         stackedWidget->setObjectName("stackedWidget");
-        stackedWidget->setGeometry(QRect(150, 50, 851, 641));
+        stackedWidget->setGeometry(QRect(150, 20, 851, 681));
         stackedWidget->setStyleSheet(QString::fromUtf8("QStackedWidget {\n"
 "    background-color: #f0f0f0; \n"
 "    border: 1px solid #dcdcdc;\n"
@@ -668,7 +671,7 @@ public:
         label_3->setGeometry(QRect(30, 20, 161, 16));
         groupBox_4 = new QGroupBox(page_ECAT);
         groupBox_4->setObjectName("groupBox_4");
-        groupBox_4->setGeometry(QRect(20, 60, 341, 221));
+        groupBox_4->setGeometry(QRect(20, 60, 381, 241));
         label_4 = new QLabel(groupBox_4);
         label_4->setObjectName("label_4");
         label_4->setGeometry(QRect(30, 30, 54, 16));
@@ -699,7 +702,7 @@ public:
         textEdit_dc->setGeometry(QRect(30, 140, 91, 41));
         groupBox_5 = new QGroupBox(page_ECAT);
         groupBox_5->setObjectName("groupBox_5");
-        groupBox_5->setGeometry(QRect(20, 310, 341, 301));
+        groupBox_5->setGeometry(QRect(20, 310, 381, 331));
         btn_read_slaveinfo = new QPushButton(groupBox_5);
         btn_read_slaveinfo->setObjectName("btn_read_slaveinfo");
         btn_read_slaveinfo->setGeometry(QRect(20, 110, 111, 71));
@@ -720,7 +723,7 @@ public:
         btn_clear_XMLfile->setGeometry(QRect(190, 20, 111, 71));
         groupBox_6 = new QGroupBox(page_ECAT);
         groupBox_6->setObjectName("groupBox_6");
-        groupBox_6->setGeometry(QRect(370, 60, 321, 551));
+        groupBox_6->setGeometry(QRect(420, 60, 411, 581));
         textEdit_sdo_index = new QTextEdit(groupBox_6);
         textEdit_sdo_index->setObjectName("textEdit_sdo_index");
         textEdit_sdo_index->setGeometry(QRect(20, 140, 121, 31));
@@ -765,17 +768,23 @@ public:
         label_3->raise();
         groupBox_4->raise();
         groupBox_5->raise();
+        page_Scope = new QWidget();
+        page_Scope->setObjectName("page_Scope");
+        stackedWidget->addWidget(page_Scope);
+        page_RunTime = new QWidget();
+        page_RunTime->setObjectName("page_RunTime");
+        stackedWidget->addWidget(page_RunTime);
         stackedWidget_2 = new QStackedWidget(Widget);
         stackedWidget_2->setObjectName("stackedWidget_2");
-        stackedWidget_2->setGeometry(QRect(0, 700, 1491, 241));
+        stackedWidget_2->setGeometry(QRect(0, 710, 1491, 241));
         page_axis = new QWidget();
         page_axis->setObjectName("page_axis");
         groupBox = new QGroupBox(page_axis);
         groupBox->setObjectName("groupBox");
-        groupBox->setGeometry(QRect(9, 10, 1471, 241));
+        groupBox->setGeometry(QRect(9, 10, 1471, 211));
         layoutWidget = new QWidget(groupBox);
         layoutWidget->setObjectName("layoutWidget");
-        layoutWidget->setGeometry(QRect(10, 20, 1441, 201));
+        layoutWidget->setGeometry(QRect(10, -20, 1441, 201));
         gridLayout = new QGridLayout(layoutWidget);
         gridLayout->setObjectName("gridLayout");
         gridLayout->setContentsMargins(0, 0, 0, 0);
@@ -889,10 +898,10 @@ public:
         page_dio->setObjectName("page_dio");
         groupBox_7 = new QGroupBox(page_dio);
         groupBox_7->setObjectName("groupBox_7");
-        groupBox_7->setGeometry(QRect(10, 10, 731, 231));
+        groupBox_7->setGeometry(QRect(10, 10, 731, 221));
         layoutWidget1 = new QWidget(groupBox_7);
         layoutWidget1->setObjectName("layoutWidget1");
-        layoutWidget1->setGeometry(QRect(60, 25, 661, 201));
+        layoutWidget1->setGeometry(QRect(60, 25, 661, 181));
         gridLayout_2 = new QGridLayout(layoutWidget1);
         gridLayout_2->setObjectName("gridLayout_2");
         gridLayout_2->setContentsMargins(0, 0, 0, 0);
@@ -1739,7 +1748,7 @@ public:
 
         layoutWidget2 = new QWidget(groupBox_7);
         layoutWidget2->setObjectName("layoutWidget2");
-        layoutWidget2->setGeometry(QRect(10, 30, 56, 191));
+        layoutWidget2->setGeometry(QRect(10, 30, 51, 171));
         verticalLayout = new QVBoxLayout(layoutWidget2);
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -1760,10 +1769,10 @@ public:
 
         groupBox_8 = new QGroupBox(page_dio);
         groupBox_8->setObjectName("groupBox_8");
-        groupBox_8->setGeometry(QRect(750, 10, 741, 231));
+        groupBox_8->setGeometry(QRect(750, 10, 741, 221));
         layoutWidget3 = new QWidget(groupBox_8);
         layoutWidget3->setObjectName("layoutWidget3");
-        layoutWidget3->setGeometry(QRect(67, 25, 661, 201));
+        layoutWidget3->setGeometry(QRect(67, 25, 661, 181));
         gridLayout_4 = new QGridLayout(layoutWidget3);
         gridLayout_4->setObjectName("gridLayout_4");
         gridLayout_4->setContentsMargins(0, 0, 0, 0);
@@ -2632,7 +2641,7 @@ public:
 
         layoutWidget4 = new QWidget(groupBox_8);
         layoutWidget4->setObjectName("layoutWidget4");
-        layoutWidget4->setGeometry(QRect(20, 25, 41, 201));
+        layoutWidget4->setGeometry(QRect(20, 25, 41, 181));
         verticalLayout_3 = new QVBoxLayout(layoutWidget4);
         verticalLayout_3->setObjectName("verticalLayout_3");
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -2654,19 +2663,20 @@ public:
         stackedWidget_2->addWidget(page_dio);
         btn_open_port_2 = new QPushButton(Widget);
         btn_open_port_2->setObjectName("btn_open_port_2");
-        btn_open_port_2->setGeometry(QRect(1360, 30, 120, 35));
+        btn_open_port_2->setGeometry(QRect(1360, 10, 120, 35));
         btn_open_port_2->setCheckable(true);
         btn_scope = new QPushButton(Widget);
         btn_scope->setObjectName("btn_scope");
         btn_scope->setEnabled(true);
-        btn_scope->setGeometry(QRect(20, 640, 120, 55));
+        btn_scope->setGeometry(QRect(20, 580, 120, 55));
         btn_scope->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
 "    border-radius: 15px;      /* \345\234\206\350\247\222 */\n"
-"    padding: 12px;            /* \345\206\205\350\276\271\350\267\235*/\n"
+"    padding: 5px 5px;            /* \345\206\205\350\276\271\350\267\235*/\n"
 "    font-size: 20px;          /* \346\226\207\345\255\227\345\244\247\345\260\217 */\n"
 "    color: #333333;\n"
+"qproperty-alignment: AlignCenter;\n"
 "}\n"
 "\n"
 "/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\210\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\357\274\211 */\n"
@@ -2677,10 +2687,78 @@ public:
 "\n"
 "/* \346\214\211\344\270\213\347\212\266\346\200\201\357\274\210\351\274\240\346\240\207\347\202\271\345\207\273\346\227\266\357\274\211 */\n"
 "QPushButton:pressed {\n"
-"    padding: 10px 10px 10px 10px;\n"
+"    background-color: #d0d0d0;\n"
+"    border: 1px solid #9e9e9e;\n"
+"    /* \350\275\273\345\276\256\345\206\205\351\231\267\346\225\210\346\236\234\357\274\214\346\250\241\346\213\237\346\214\211\345\216\213 */\n"
+""
+                        "    padding: 10px 10px 10px 10px;\n"
+"}\n"
+"\n"
+"/* ==================================\n"
+"   \345\257\274\350\210\252\346\214\211\351\222\256\357\274\210Link/ECAT/Setting\357\274\211\351\200\211\344\270\255\351\253\230\344\272\256\346\240\267\345\274\217\n"
+"   \351\234\200\345\205\210\345\234\250Qt Designer\344\270\255\345\213\276\351\200\211\346\214\211\351\222\256\347\232\204 checkable \345\261\236\346\200\247\n"
+"================================== */\n"
+"QPushButton#btn_scope:checked\n"
+"{\n"
+"    background-color: #2196F3;  /* \350\223\235\350\211\262\351\253\230\344\272\256 */\n"
+"    border: 1px solid #1976D2;\n"
+"    color: #ffffff;             /* \346\226\207\345\255\227\345\217\230\347\231\275 */\n"
+"}\n"
+"\n"
+"/* \345\257\274\350\210\252\346\214\211\351\222\256\351\200\211\344\270\255\346\227\266\347\232\204\346\202\254\345\201\234\346\225\210\346\236\234 */\n"
+"QPushButton#btn_scope:checked:hover\n"
+" {\n"
+"    background-color: #1976D2;\n"
 "}\n"
 ""));
-        btn_scope->setCheckable(false);
+        btn_scope->setCheckable(true);
+        btn_RunTime = new QPushButton(Widget);
+        btn_RunTime->setObjectName("btn_RunTime");
+        btn_RunTime->setEnabled(true);
+        btn_RunTime->setGeometry(QRect(20, 650, 120, 55));
+        btn_RunTime->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-color: #f5f5f5;\n"
+"    border: 1px solid #e0e0e0;\n"
+"    border-radius: 15px;      /* \345\234\206\350\247\222 */\n"
+"    padding: 5px 5px;            /* \345\206\205\350\276\271\350\267\235*/\n"
+"    font-size: 20px;          /* \346\226\207\345\255\227\345\244\247\345\260\217 */\n"
+"    color: #333333;\n"
+"qproperty-alignment: AlignCenter;\n"
+"}\n"
+"\n"
+"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\210\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\357\274\211 */\n"
+"QPushButton:hover {\n"
+"    background-color: #e8e8e8;\n"
+"    border: 1px solid #bdbdbd;\n"
+"}\n"
+"\n"
+"/* \346\214\211\344\270\213\347\212\266\346\200\201\357\274\210\351\274\240\346\240\207\347\202\271\345\207\273\346\227\266\357\274\211 */\n"
+"QPushButton:pressed {\n"
+"    background-color: #d0d0d0;\n"
+"    border: 1px solid #9e9e9e;\n"
+"    /* \350\275\273\345\276\256\345\206\205\351\231\267\346\225\210\346\236\234\357\274\214\346\250\241\346\213\237\346\214\211\345\216\213 */\n"
+""
+                        "    padding: 10px 10px 10px 10px;\n"
+"}\n"
+"\n"
+"/* ==================================\n"
+"   \345\257\274\350\210\252\346\214\211\351\222\256\357\274\210Link/ECAT/Setting\357\274\211\351\200\211\344\270\255\351\253\230\344\272\256\346\240\267\345\274\217\n"
+"   \351\234\200\345\205\210\345\234\250Qt Designer\344\270\255\345\213\276\351\200\211\346\214\211\351\222\256\347\232\204 checkable \345\261\236\346\200\247\n"
+"================================== */\n"
+"QPushButton#btn_RunTime:checked\n"
+"{\n"
+"    background-color: #2196F3;  /* \350\223\235\350\211\262\351\253\230\344\272\256 */\n"
+"    border: 1px solid #1976D2;\n"
+"    color: #ffffff;             /* \346\226\207\345\255\227\345\217\230\347\231\275 */\n"
+"}\n"
+"\n"
+"/* \345\257\274\350\210\252\346\214\211\351\222\256\351\200\211\344\270\255\346\227\266\347\232\204\346\202\254\345\201\234\346\225\210\346\236\234 */\n"
+"QPushButton#btn_RunTime:checked:hover\n"
+" {\n"
+"    background-color: #1976D2;\n"
+"}\n"
+""));
+        btn_RunTime->setCheckable(true);
         groupBox_2->raise();
         stackedWidget->raise();
         textEdit_log_info->raise();
@@ -2698,10 +2776,11 @@ public:
         stackedWidget_2->raise();
         btn_open_port_2->raise();
         btn_scope->raise();
+        btn_RunTime->raise();
 
         retranslateUi(Widget);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(Widget);
@@ -2855,7 +2934,8 @@ public:
         label_41->setText(QCoreApplication::translate("Widget", "DI1", nullptr));
         label_40->setText(QCoreApplication::translate("Widget", "DI2", nullptr));
         btn_open_port_2->setText(QCoreApplication::translate("Widget", "\346\211\223\345\274\200\344\270\262\345\217\243", nullptr));
-        btn_scope->setText(QCoreApplication::translate("Widget", "scope", nullptr));
+        btn_scope->setText(QCoreApplication::translate("Widget", "Scope", nullptr));
+        btn_RunTime->setText(QCoreApplication::translate("Widget", "RunTime", nullptr));
     } // retranslateUi
 
 };

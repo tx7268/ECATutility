@@ -90,6 +90,10 @@ private slots:
 
     void on_btn_clear_XMLfile_clicked();
 
+    void on_btn_scope_clicked();
+
+    void on_btn_RunTime_clicked();
+
 private:
     Ui::Widget* ui;
     Link* m_link;

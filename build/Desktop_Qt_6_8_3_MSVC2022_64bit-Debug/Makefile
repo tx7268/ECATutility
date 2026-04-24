@@ -328,7 +328,10 @@ Makefile: ..\..\ECATutility.pro D:\QT\6.8.3\msvc2022_64\mkspecs\win32-msvc\qmake
 		D:\QT\6.8.3\msvc2022_64\mkspecs\features\yacc.prf \
 		D:\QT\6.8.3\msvc2022_64\mkspecs\features\lex.prf \
 		..\..\ECATutility.pro \
+		D:\QT\6.8.3\msvc2022_64\lib\Qt6Charts.prl \
+		D:\QT\6.8.3\msvc2022_64\lib\Qt6OpenGLWidgets.prl \
 		D:\QT\6.8.3\msvc2022_64\lib\Qt6Widgets.prl \
+		D:\QT\6.8.3\msvc2022_64\lib\Qt6OpenGL.prl \
 		D:\QT\6.8.3\msvc2022_64\lib\Qt6Gui.prl \
 		D:\QT\6.8.3\msvc2022_64\lib\Qt6SerialPort.prl \
 		D:\QT\6.8.3\msvc2022_64\lib\Qt6Xml.prl \
@@ -336,7 +339,10 @@ Makefile: ..\..\ECATutility.pro D:\QT\6.8.3\msvc2022_64\mkspecs\win32-msvc\qmake
 		D:\QT\6.8.3\msvc2022_64\lib\Qt6EntryPoint.prl \
 		D:\QT\6.8.3\msvc2022_64\mkspecs\features\build_pass.prf \
 		..\..\resources.qrc \
+		D:\QT\6.8.3\msvc2022_64\lib\Qt6Chartsd.prl \
+		D:\QT\6.8.3\msvc2022_64\lib\Qt6OpenGLWidgetsd.prl \
 		D:\QT\6.8.3\msvc2022_64\lib\Qt6Widgetsd.prl \
+		D:\QT\6.8.3\msvc2022_64\lib\Qt6OpenGLd.prl \
 		D:\QT\6.8.3\msvc2022_64\lib\Qt6Guid.prl \
 		D:\QT\6.8.3\msvc2022_64\lib\Qt6SerialPortd.prl \
 		D:\QT\6.8.3\msvc2022_64\lib\Qt6Xmld.prl \
@@ -587,7 +593,10 @@ D:\QT\6.8.3\msvc2022_64\mkspecs\features\exceptions.prf:
 D:\QT\6.8.3\msvc2022_64\mkspecs\features\yacc.prf:
 D:\QT\6.8.3\msvc2022_64\mkspecs\features\lex.prf:
 ..\..\ECATutility.pro:
+D:\QT\6.8.3\msvc2022_64\lib\Qt6Charts.prl:
+D:\QT\6.8.3\msvc2022_64\lib\Qt6OpenGLWidgets.prl:
 D:\QT\6.8.3\msvc2022_64\lib\Qt6Widgets.prl:
+D:\QT\6.8.3\msvc2022_64\lib\Qt6OpenGL.prl:
 D:\QT\6.8.3\msvc2022_64\lib\Qt6Gui.prl:
 D:\QT\6.8.3\msvc2022_64\lib\Qt6SerialPort.prl:
 D:\QT\6.8.3\msvc2022_64\lib\Qt6Xml.prl:
@@ -595,7 +604,10 @@ D:\QT\6.8.3\msvc2022_64\lib\Qt6Core.prl:
 D:\QT\6.8.3\msvc2022_64\lib\Qt6EntryPoint.prl:
 D:\QT\6.8.3\msvc2022_64\mkspecs\features\build_pass.prf:
 ..\..\resources.qrc:
+D:\QT\6.8.3\msvc2022_64\lib\Qt6Chartsd.prl:
+D:\QT\6.8.3\msvc2022_64\lib\Qt6OpenGLWidgetsd.prl:
 D:\QT\6.8.3\msvc2022_64\lib\Qt6Widgetsd.prl:
+D:\QT\6.8.3\msvc2022_64\lib\Qt6OpenGLd.prl:
 D:\QT\6.8.3\msvc2022_64\lib\Qt6Guid.prl:
 D:\QT\6.8.3\msvc2022_64\lib\Qt6SerialPortd.prl:
 D:\QT\6.8.3\msvc2022_64\lib\Qt6Xmld.prl:

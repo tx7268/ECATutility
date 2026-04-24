@@ -1,4 +1,4 @@
-QT       += core gui serialport xml
+QT       += core gui serialport xml charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
  \
+    src/RunTime.cpp \
     src/Scope.cpp \
     src/XML.cpp\
     main.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 
 HEADERS += \
  \
+    inc/RunTime.h \
     inc/Scope.h \
     inc/XML.h\
     inc/Link.h \
