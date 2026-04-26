@@ -85,9 +85,6 @@
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="程序改动日志.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="inc\Scope.h">
       <Filter>Header Files</Filter>
     </ClInclude>

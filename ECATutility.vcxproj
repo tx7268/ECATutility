@@ -219,9 +219,6 @@
     <QtUic Include="widget.ui" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="程序改动日志.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="inc\SerialThread.h" />
   </ItemGroup>
   <ItemGroup>
