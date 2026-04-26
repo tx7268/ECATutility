@@ -21,6 +21,7 @@ Widget::Widget(QWidget *parent)
     ,m_link(new Link(this))
     ,proto(new Protocol(this))
     ,m_xml(new XML(this))
+    , m_timeoutTimer(new QTimer(this))
 {
     ui->setupUi(this);
     setWindowTitle("ECATutility");
@@ -98,7 +99,11 @@ Widget::Widget(QWidget *parent)
 
     ui->comboBox_slave_num->addItem("从站1", QVariant(1));
 
-    //***********************************************信号槽连接***********************************************//
+
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); // 设置RunTime界面的表格禁止编辑
+
+
+    //***********************************************串口通信信号槽连接***********************************************//
     // 刷新串口按钮 → 触发扫描
     connect(ui->btn_refresh_port, &QPushButton::clicked, m_link, &Link::scanSerialPorts);
 
@@ -169,6 +174,11 @@ Widget::Widget(QWidget *parent)
 
     connect(ui->btn_unlink, &QPushButton::clicked, m_link, &Link::closeEcat);
 
+
+    //***********************************************RunTime界面信号槽连接***********************************************
+    m_timeoutTimer->setInterval(100); // 每100ms检测一次
+    connect(m_timeoutTimer, &QTimer::timeout, this, &Widget::checkTimeoutCommands);
+    m_timeoutTimer->start(); // 启动定时器
 }
 
 Widget::~Widget()
@@ -305,7 +315,7 @@ void Widget::on_btn_enable_clicked()
     ui->btn_set->setChecked(false);
     ui->stackedWidget->hide();
 
-    m_link->sendSerialData(proto->enableAllAxes());
+    sendCmdWithLog(proto->enableAllAxes(), "enable", 0);
 }
 
 //******************************disable按键******************************
@@ -316,7 +326,7 @@ void Widget::on_btn_disable_clicked()
     ui->btn_set->setChecked(false);
     ui->stackedWidget->hide();
 
-    m_link->sendSerialData(proto->disableAllAxes());
+    sendCmdWithLog(proto->disableAllAxes(), "disable", 0);
 }
 
 //******************************重启伺服驱动器按键******************************
@@ -327,7 +337,7 @@ void Widget::on_btn_reboot_clicked()
     ui->btn_set->setChecked(false);
     ui->stackedWidget->hide();
 
-    m_link->sendSerialData(proto->resetAllAxes());
+    sendCmdWithLog(proto->resetAllAxes(), "resetaxis", 0);
 }
 
 //******************************axis轴状态按键******************************
@@ -575,17 +585,23 @@ void Widget::serialReadData(const QByteArray &data)
         // ====================== 普通应答/错误帧，可选记录日志 ======================
         else if (type == FRAME_TYPE_ACK)
         {
-
+            updateLogRow(0, "OK");
             switch (cmd)
             {
             case 0x81:
                     appendlog(QString("轴%1使能成功").arg(axis));
+
+                    ui->checkBox_axis0enable->blockSignals(true);
                     ui->checkBox_axis0enable->setChecked(true);
+                    ui->checkBox_axis0enable->blockSignals(false);
                 break;
 
             case 0x82:
                     appendlog(QString("轴%1失能成功").arg(axis));
+
+                    ui->checkBox_axis0enable->blockSignals(true);
                     ui->checkBox_axis0enable->setChecked(false);
+                    ui->checkBox_axis0enable->blockSignals(false);
                 break;
 
             case 0x83: // 停止成功
@@ -718,6 +734,7 @@ void Widget::serialReadData(const QByteArray &data)
             if (payload.size() >= 1)
             {
                 quint8 err = u8(payload[0]);
+                updateLogRow(err, "ERROR");
                 appendlog(QString("错误应答: cmd=0x%1 err=0x%2").arg(cmd, 2, 16, QChar('0')).arg(err, 2, 16, QChar('0')).toUpper());
             }
         }
@@ -734,7 +751,7 @@ void Widget::on_checkBox_axis0enable_stateChanged(int arg1)
     // 根据复选框状态发送不同指令
     if (arg1 == Qt::Checked)
     {
-        m_link->sendSerialData(proto->enableAxis(0));
+        sendCmdWithLog(proto->enableAxis(0), "enable axis0", 0);
         ui->btn_jognegative->setEnabled(true);
         ui->btn_jogpositive->setEnabled(true);
         ui->comboBox_mode_chose->setEnabled(true);
@@ -743,7 +760,7 @@ void Widget::on_checkBox_axis0enable_stateChanged(int arg1)
     }
     else
     {
-        m_link->sendSerialData(proto->disableAxis(0));
+        sendCmdWithLog(proto->disableAxis(0), "disable axis0", 0);
         ui->btn_jognegative->setEnabled(false);
         ui->btn_jogpositive->setEnabled(false);
         ui->comboBox_mode_chose->setEnabled(false);
@@ -756,13 +773,13 @@ void Widget::on_checkBox_axis0enable_stateChanged(int arg1)
 void Widget::on_btn_jognegative_pressed()
 {
     this->appendlog("JOG负方向运动开始...");
-    m_link->sendSerialData(proto->jogbackward(0));
+    sendCmdWithLog(proto->jogbackward(0), "axis0 jog-", 0);
 }
 
 void Widget::on_btn_jognegative_released()
 {
     this->appendlog("JOG停止");
-    m_link->sendSerialData(proto->jogstop(0));
+    sendCmdWithLog(proto->jogstop(0), "axis0 jogstop", 0);
 }
 
 
@@ -770,20 +787,20 @@ void Widget::on_btn_jognegative_released()
 void Widget::on_btn_jogpositive_pressed()
 {
     this->appendlog("JOG正方向运动开始...");
-    m_link->sendSerialData(proto->jogforward(0));
+    sendCmdWithLog(proto->jogforward(0), "axis0 jog+", 0);
 }
 
 void Widget::on_btn_jogpositive_released()
 {
     this->appendlog("JOG停止");
-    m_link->sendSerialData(proto->jogstop(0));
+    sendCmdWithLog(proto->jogstop(0), "axis0 jogstop", 0);
 }
 
 //******************************清除错误按键******************************
 void Widget::on_btn_clear_alarm_clicked()
 {
     this->appendlog("清除从站错误");
-    m_link->sendSerialData(proto->clear_error(0));
+    sendCmdWithLog(proto->clear_error(0), "axis0 clearerror", 0);
 }
 
 //******************************执行运动按键******************************
@@ -824,19 +841,19 @@ void Widget::on_btn_run_clicked()
     {
     case 0: // 绝对运动
     {
-        m_link->sendSerialData(proto->moveabs(0, motion_value));
+        sendCmdWithLog(proto->moveabs(0, motion_value), "axis0 moveabs", motion_value);
         this->appendlog(QString("执行绝对运动：ABS:%1").arg(motion_value));
         break;
     }
     case 1: // 相对运动
     {
-        m_link->sendSerialData(proto->moverel(0, motion_value));
+        sendCmdWithLog(proto->moverel(0, motion_value), "axis0 moverel", motion_value);
         this->appendlog(QString("执行相对运动：REL:%1").arg(motion_value));
         break;
     }
     case 2: // movedeg运动
     {
-        m_link->sendSerialData(proto->movedeg(0, motion_value));
+        sendCmdWithLog(proto->movedeg(0, motion_value), "axis0 movedeg", motion_value);
         this->appendlog(QString("执行角度运动：DEG:%1 °").arg(motion_value));
         break;
     }
@@ -848,7 +865,7 @@ void Widget::on_btn_run_clicked()
             QMessageBox::warning(this, "错误", "回零模式选择异常");
             return;
         }
-        m_link->sendSerialData(proto->homeAxis(0, home_mode));
+        sendCmdWithLog(proto->homeAxis(0, home_mode), "axis0 home", home_mode);
         this->appendlog(QString("执行回零运动：mode:%1").arg(home_mode));
         break;
     }
@@ -865,7 +882,7 @@ void Widget::on_btn_run_clicked()
 void Widget::on_btn_stop_clicked()
 {
     this->appendlog("停止运动");
-    m_link->sendSerialData(proto->stopAxis(0));
+    sendCmdWithLog(proto->stopAxis(0), "axis0 stop", 0);
 }
 
 //******************************设置参数按键******************************
@@ -897,7 +914,7 @@ void Widget::on_btn_setmode_clicked()
         qWarning() << "[ERROR] Invalid mode value:" << seromode;
         seromode = op_mode_no; // 重置为无模式
     }
-    m_link->sendSerialData(proto->writeSDO8(1, 0x6060, 0x00, seromode));
+    sendCmdWithLog(proto->writeSDO8(1, 0x6060, 0x00, seromode), "setmode", seromode);
 }
 
 //******************************设置速度参数按键******************************
@@ -988,7 +1005,7 @@ void Widget::on_btn_read_slaveinfo_clicked()
     }
 
     this->appendlog(QString("读取从站 %1 信息").arg(slave));
-    m_link->sendSerialData(proto->read_slaveinfo(slave));
+    sendCmdWithLog(proto->read_slaveinfo(slave), "read_slaveinfo", 0);
 }
 
 //******************************清除ECAT错误按键******************************
@@ -1004,7 +1021,7 @@ void Widget::on_btn_clear_ECATerror_clicked()
     }
 
     this->appendlog(QString("清除从站 %1 错误").arg(slave));
-    m_link->sendSerialData(proto->clear_error(slave));
+    sendCmdWithLog(proto->clear_error(slave), "clear_error", 0);
 }
 
 //******************************切换至safeop按键******************************
@@ -1019,7 +1036,7 @@ void Widget::on_btn_to_safeop_clicked()
         return;
     }
     this->appendlog(QString("切换从站 %1 至safeop").arg(slave));
-    m_link->sendSerialData(proto->switch_safeop(slave));
+    sendCmdWithLog(proto->switch_safeop(slave), "switch_safeop", 0);
 }
 
 //******************************切换至op按键******************************
@@ -1035,7 +1052,7 @@ void Widget::on_btn_to_op_clicked()
     }
 
     this->appendlog(QString("切换从站 %1 至op").arg(slave));
-    m_link->sendSerialData(proto->switch_op(slave));
+    sendCmdWithLog(proto->switch_op(slave), "switch_op", 0);
 }
 
 //******************************读取sdo按键******************************
@@ -1077,15 +1094,15 @@ void Widget::on_btn_read_sdo_clicked()
     switch (byteSize)
     {
     case 1:
-        m_link->sendSerialData(proto->readSDO8(slave, index, subindex));
+        sendCmdWithLog(proto->readSDO8(slave, index, subindex), "readSDO8", 0);
         this->appendlog(QString("读取 SDO8 (0x" + QString::number(index, 16).toUpper() + ":" + QString::number(subindex, 16).toUpper() + ")"));
         break;
     case 2:
-        m_link->sendSerialData(proto->readSDO16(slave, index, subindex));
+        sendCmdWithLog(proto->readSDO16(slave, index, subindex), "readSDO16", 0);
         this->appendlog(QString("读取 SDO16 (0x" + QString::number(index, 16).toUpper() + ":" + QString::number(subindex, 16).toUpper() + ")"));
         break;
     case 4:
-        m_link->sendSerialData(proto->readSDO32(slave, index, subindex));
+        sendCmdWithLog(proto->readSDO32(slave, index, subindex), "readSDO32", 0);
         this->appendlog(QString("读取 SDO32 (0x" + QString::number(index, 16).toUpper() + ":" + QString::number(subindex, 16).toUpper() + ")"));
         break;
     default:
@@ -1142,15 +1159,15 @@ void Widget::on_btn_write_sdo_clicked()
     switch (byteSize)
     {
     case 1:
-        m_link->sendSerialData(proto->writeSDO8(slave, index, subindex, (uint8_t)value));
+        sendCmdWithLog(proto->writeSDO8(slave, index, subindex, (uint8_t)value), "writeSDO8", value);
         this->appendlog("写入SDO8 ：0x" + QString::number(index, 16).toUpper() + ":" + QString::number(subindex, 16).toUpper() + "  value : " + QString::number(value));
         break;
     case 2:
-        m_link->sendSerialData(proto->writeSDO16(slave, index, subindex, (uint16_t)value));
+        sendCmdWithLog(proto->writeSDO16(slave, index, subindex, (uint8_t)value), "writeSDO16", value);
         this->appendlog("写入SDO16 ：0x" + QString::number(index, 16).toUpper() + ":" + QString::number(subindex, 16).toUpper() + "  value : " + QString::number(value));
         break;
     case 4:
-        m_link->sendSerialData(proto->writeSDO32(slave, index, subindex, value));
+        sendCmdWithLog(proto->writeSDO32(slave, index, subindex, (uint8_t)value), "writeSDO32", value);
         this->appendlog("写入SDO32 ：0x" + QString::number(index, 16).toUpper() + ":" + QString::number(subindex, 16).toUpper() + "  value : " + QString::number(value));
         break;
     }
@@ -1180,9 +1197,10 @@ bool Widget::set_motion_para(uint16_t slaveIndex, int32_t vel, int32_t acc, int3
     }
 
     // 发送SDO设置运动参数
-    m_link->sendSerialData(proto->writeSDO32(slaveIndex, 0x6081, 0x00, static_cast<uint32_t>(vel)));
-    m_link->sendSerialData(proto->writeSDO32(slaveIndex, 0x6083, 0x00, static_cast<uint32_t>(acc)));
-    m_link->sendSerialData(proto->writeSDO32(slaveIndex, 0x6084, 0x00, static_cast<uint32_t>(dec)));
+
+    sendCmdWithLog(proto->writeSDO32(slaveIndex, 0x6081, 0x00, static_cast<uint32_t>(vel)), "setvel", vel);
+    sendCmdWithLog(proto->writeSDO32(slaveIndex, 0x6083, 0x00, static_cast<uint32_t>(acc)), "setacc", acc);
+    sendCmdWithLog(proto->writeSDO32(slaveIndex, 0x6084, 0x00, static_cast<uint32_t>(dec)), "setdec", dec);
 
     // 日志记录
     this->appendlog(QString("速度: %1   加速度: %2   减速度: %3 ").arg(vel).arg(acc).arg(dec));
@@ -1206,10 +1224,9 @@ bool Widget::set_home_para(uint16_t slaveIndex, int8_t home_mode, int32_t sw_vel
     }
 
     //发送SDO设置回零参数
-    m_link->sendSerialData(proto->writeSDO32(slaveIndex, 0x6098, 0x00, static_cast<uint32_t>(home_mode)));
-    m_link->sendSerialData(proto->writeSDO32(slaveIndex, 0x6099, 0x01, static_cast<uint32_t>(sw_vel)));
-    m_link->sendSerialData(proto->writeSDO32(slaveIndex, 0x6099, 0x02, static_cast<uint32_t>(zero_vel)));
-
+    sendCmdWithLog(proto->writeSDO32(slaveIndex, 0x6098, 0x00, static_cast<uint32_t>(home_mode)), "sethome_mode", home_mode);
+    sendCmdWithLog(proto->writeSDO32(slaveIndex, 0x6099, 0x01, static_cast<uint32_t>(sw_vel)), "setsw_vel", sw_vel);
+    sendCmdWithLog(proto->writeSDO32(slaveIndex, 0x6099, 0x02, static_cast<uint32_t>(zero_vel)), "setzero_vel", zero_vel);
     // 日志记录
     this->appendlog(QString("模式: %1   回零搜索速度（sw_vel）: %2   回零精确定位速度(zero_vel): %3 ").arg(home_mode).arg(sw_vel).arg(zero_vel));
 
@@ -1307,4 +1324,91 @@ void Widget::addLogRow(QString time, int seq, QString cmd, int send, int ret, do
 
     // 自动滚动到最新行
     ui->tableWidget->scrollToBottom();
+}
+
+
+
+void Widget::updateLogRow(int retValue, const QString& status)
+{
+    if (m_sendLogQueue.isEmpty()) return;
+
+    // 取出队列中最早的发送命令
+    LogSendInfo info = m_sendLogQueue.dequeue();
+    // 计算通信延时（毫秒 → 秒，保留2位小数）
+    double delay = (QDateTime::currentMSecsSinceEpoch() - info.sendTime) / 1000.0;
+    // 定位到表格对应行
+    int row = info.seq - 1;
+    if (row < 0 || row >= ui->tableWidget->rowCount()) return;
+
+    // 更新：返回值、延时
+    ui->tableWidget->setItem(row, 4, new QTableWidgetItem(QString::number(retValue)));
+    ui->tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(delay, 'f', 2)));
+
+    // 更新：状态 + 颜色
+    QTableWidgetItem* statusItem = new QTableWidgetItem(status);
+    if (status == "OK") 
+    {
+        statusItem->setForeground(Qt::green);
+    }
+    else if (status == "ERROR" || status == "TimeOut")
+    {
+        statusItem->setForeground(QBrush(Qt::red));
+    }
+    ui->tableWidget->setItem(row, 6, statusItem);
+}
+
+// ===================== 新增：发送命令并记录日志 =====================
+void Widget::sendCmdWithLog(const QByteArray& data, const QString& cmdName, int sendValue)
+{
+    // 1. 发送数据
+    m_link->sendSerialData(data);
+
+    // 2. 生成日志信息
+    LogSendInfo info;
+    info.seq = ++m_RunTime_logSeq;
+    info.cmdName = cmdName;
+    info.sendValue = sendValue;
+    info.sendTime = QDateTime::currentMSecsSinceEpoch();
+    m_sendLogQueue.enqueue(info);
+
+    // 3. 添加表格行（初始状态：发送中，返回值/延时为空）
+    QString time = QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
+    addLogRow(time, info.seq, info.cmdName, info.sendValue, 0, 0, "发送中");
+}
+
+void Widget::checkTimeoutCommands()
+{
+    if (m_sendLogQueue.isEmpty())
+        return;
+
+    // 获取当前时间戳
+    qint64 currentTime = QDateTime::currentMSecsSinceEpoch();
+
+    // 循环检查队首（FIFO，只有队首可能超时）
+    while (!m_sendLogQueue.isEmpty())
+    {
+        LogSendInfo& firstInfo = m_sendLogQueue.head();
+        qint64 timePassed = currentTime - firstInfo.sendTime;
+
+        // 未超时，直接退出（后面的命令更晚，肯定没超时）
+        if (timePassed < m_commandTimeoutMs)
+            break;
+
+        // ===================== 命令超时处理 =====================
+        int row = firstInfo.seq - 1;
+        if (row >= 0 && row < ui->tableWidget->rowCount())
+        {
+            // 更新表格状态为超时（红色）
+            QTableWidgetItem* statusItem = new QTableWidgetItem("超时");
+            statusItem->setForeground(Qt::red);
+            ui->tableWidget->setItem(row, 6, statusItem);
+
+            // 更新延时时间
+            ui->tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(timePassed / 1000.0, 'f', 2)));
+        }
+
+        // 超时命令移出队列
+        m_sendLogQueue.dequeue();
+        appendlog(QString("命令超时：%1（序号：%2）").arg(firstInfo.cmdName).arg(firstInfo.seq));
+    }
 }

@@ -3214,11 +3214,11 @@ public:
         QTableWidgetItem *___qtablewidgetitem2 = tableWidget->horizontalHeaderItem(2);
         ___qtablewidgetitem2->setText(QCoreApplication::translate("Widget", "\345\221\275\344\273\244", nullptr));
         QTableWidgetItem *___qtablewidgetitem3 = tableWidget->horizontalHeaderItem(3);
-        ___qtablewidgetitem3->setText(QCoreApplication::translate("Widget", "\350\277\224\345\233\236\345\200\274", nullptr));
+        ___qtablewidgetitem3->setText(QCoreApplication::translate("Widget", "\345\217\221\351\200\201\345\200\274", nullptr));
         QTableWidgetItem *___qtablewidgetitem4 = tableWidget->horizontalHeaderItem(4);
-        ___qtablewidgetitem4->setText(QCoreApplication::translate("Widget", "\345\217\221\351\200\201\345\200\274", nullptr));
+        ___qtablewidgetitem4->setText(QCoreApplication::translate("Widget", "\350\277\224\345\233\236\345\200\274", nullptr));
         QTableWidgetItem *___qtablewidgetitem5 = tableWidget->horizontalHeaderItem(5);
-        ___qtablewidgetitem5->setText(QCoreApplication::translate("Widget", "\345\273\266\346\227\266", nullptr));
+        ___qtablewidgetitem5->setText(QCoreApplication::translate("Widget", "\345\273\266\346\227\266(ms)", nullptr));
         QTableWidgetItem *___qtablewidgetitem6 = tableWidget->horizontalHeaderItem(6);
         ___qtablewidgetitem6->setText(QCoreApplication::translate("Widget", "\347\212\266\346\200\201", nullptr));
         groupBox->setTitle(QCoreApplication::translate("Widget", "GroupBox", nullptr));

@@ -3,12 +3,15 @@
 
 #include <QHash>
 #include <QWidget>
+#include <QQueue>
+#include <QTimer>
 #include <QString>
 #include <QVector>
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QChart>
 #include <QChartView>
+
 
 QT_BEGIN_NAMESPACE
 
@@ -25,6 +28,17 @@ class XML;
 #define op_mode_csp  8            // Cyclic Synchronous Position（周期同步位置）
 #define op_mode_csv  9            // Cyclic Synchronous Velocity（周期同步速度）
 #define op_mode_cst  10           // Cyclic Synchronous Torque（周期同步扭矩）
+
+
+// 日志发送信息结构体（保存发送的命令，用于接收时匹配更新）
+struct LogSendInfo
+{
+    int seq;            // 自增序号
+    QString cmdName;    // 命令名称
+    int sendValue;      // 发送数值
+    qint64 sendTime;    // 发送时间戳(毫秒)
+};
+
 
 namespace Ui
 {
@@ -104,8 +118,8 @@ private slots:
 
     //**********************************************RunTime界面函数**********************************************//
     void addLogRow(QString time, int seq, QString cmd, int send, int ret, double delay, QString status);
-
-
+    void sendCmdWithLog(const QByteArray& data, const QString& cmdName, int sendValue = 0);
+    void checkTimeoutCommands();// 超时检测槽函数
 
 
 private:
@@ -117,6 +131,13 @@ private:
     int32_t vel,acc,dec, sw_vel, zero_vel;
     bool m_serialPortOpen = false;
 
+    int m_RunTime_logSeq;// 日志自增序号
+    QQueue<LogSendInfo> m_sendLogQueue;    // 发送命令队列（异步匹配接收）
+
+    QTimer* m_timeoutTimer;    // 命令超时检测定时器
+    const int m_commandTimeoutMs = 3000; // 超时时间：3000ms = 3秒
+
+
     void appendlog(const QString& msg);
     void updateSerialPortButtons();
     void openSerialPort();
@@ -124,6 +145,7 @@ private:
     bool set_motion_para(uint16_t slaveIndex, int32_t vel, int32_t acc, int32_t dec);
     bool set_home_para(uint16_t slaveIndex, int8_t home_mode, int32_t sw_vel, int32_t zero_vel);
 
+    void updateLogRow(int retValue, const QString& status);
 };
 
 

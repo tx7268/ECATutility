@@ -2079,12 +2079,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </column>
      <column>
       <property name="text">
-       <string>返回值</string>
+       <string>发送值</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>发送值</string>
+       <string>返回值</string>
       </property>
      </column>
      <column>
