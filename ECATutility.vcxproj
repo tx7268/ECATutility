@@ -202,6 +202,7 @@
     <ClCompile Include="src\Link.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Protocol.cpp" />
+    <ClCompile Include="src\RunTime.cpp" />
     <ClCompile Include="src\Scope.cpp" />
     <ClCompile Include="src\SerialThread.cpp" />
     <ClCompile Include="src\XML.cpp" />
@@ -224,6 +225,7 @@
     <QtMoc Include="inc\SerialThread.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\RunTime.h" />
     <ClInclude Include="inc\Scope.h" />
     <QtMoc Include="inc\XML.h" />
   </ItemGroup>

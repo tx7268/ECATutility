@@ -2005,7 +2005,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
       </widget>
      </widget>
     </widget>
-    <widget class="QPushButton" name="btn_scope_clearlog">
+    <widget class="QPushButton" name="btn_RunTime_clearlog">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -2018,7 +2018,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <string>清空日志</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QComboBox" name="comboBox_RunTime_chose">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -2028,7 +2028,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="btn_RunTime_outlog">
      <property name="geometry">
       <rect>
        <x>250</x>

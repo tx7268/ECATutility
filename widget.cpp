@@ -100,8 +100,12 @@ Widget::Widget(QWidget *parent)
     ui->comboBox_slave_num->addItem("从站1", QVariant(1));
 
 
+    //***********************************************RunTime界面初始化***********************************************//
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); // 设置RunTime界面的表格禁止编辑
-
+    ui->comboBox_RunTime_chose->addItem("ALL", QVariant(0));
+    ui->comboBox_RunTime_chose->addItem("OK", QVariant(1));
+    ui->comboBox_RunTime_chose->addItem("ERROR", QVariant(2));
+    ui->comboBox_RunTime_chose->addItem("TimeOut", QVariant(3));
 
     //***********************************************串口通信信号槽连接***********************************************//
     // 刷新串口按钮 → 触发扫描
@@ -179,6 +183,8 @@ Widget::Widget(QWidget *parent)
     m_timeoutTimer->setInterval(100); // 每100ms检测一次
     connect(m_timeoutTimer, &QTimer::timeout, this, &Widget::checkTimeoutCommands);
     m_timeoutTimer->start(); // 启动定时器
+
+    connect(ui->comboBox_RunTime_chose, QOverload<int>::of(&QComboBox::currentIndexChanged),this, &Widget::filterRunTimeLog);
 }
 
 Widget::~Widget()
@@ -1412,3 +1418,114 @@ void Widget::checkTimeoutCommands()
         appendlog(QString("命令超时：%1（序号：%2）").arg(firstInfo.cmdName).arg(firstInfo.seq));
     }
 }
+
+// ===================== RunTime日志筛选功能 =====================
+void Widget::filterRunTimeLog(int index)
+{
+    // 获取筛选类型 0:ALL 1:OK 2:ERROR 3:TimeOut
+    int filterType = ui->comboBox_RunTime_chose->currentData().toInt();
+
+    // 遍历表格所有行，根据状态筛选显示/隐藏
+    int rowCount = ui->tableWidget->rowCount();
+    for (int i = 0; i < rowCount; i++)
+    {
+        // 获取当前行的【状态列】文本（第6列）
+        QTableWidgetItem* statusItem = ui->tableWidget->item(i, 6);
+        if (!statusItem) continue;
+
+        QString status = statusItem->text();
+        bool showRow = false;
+
+        // 匹配筛选条件
+        switch (filterType)
+        {
+        case 0: // ALL：显示所有行
+            showRow = true;
+            break;
+        case 1: // OK：只显示成功
+            showRow = (status == "OK");
+            break;
+        case 2: // ERROR：只显示错误
+            showRow = (status == "ERROR");
+            break;
+        case 3: // TimeOut：只显示超时
+            showRow = (status == "超时");
+            break;
+        default:
+            showRow = true;
+        }
+
+        // 设置行隐藏/显示
+        ui->tableWidget->setRowHidden(i, !showRow);
+    }
+}
+
+void Widget::on_btn_RunTime_clearlog_clicked()
+{
+    ui->tableWidget->setRowCount(0);// 清空表格所有行
+    m_RunTime_logSeq = 0;// 重置日志序号
+    m_sendLogQueue.clear();// 清空发送队列
+    appendlog("RunTime表格日志已清空");
+}
+
+
+void Widget::on_btn_RunTime_outlog_clicked()
+{
+    int rowCount = ui->tableWidget->rowCount();
+    if (rowCount == 0)
+    {
+        QMessageBox::information(this, "提示", "表格日志为空，无需导出");
+        return;
+    }
+
+    // 生成默认文件名（带时间戳）
+    QString defaultFileName = QString("RunTimeLog_%1.csv")
+        .arg(QDateTime::currentDateTime().toString("yyyyMMdd_HHmmss"));
+
+    // 打开保存文件对话框
+    QString filePath = QFileDialog::getSaveFileName(
+        this,
+        "导出表格日志",
+        defaultFileName,
+        "CSV文件 (*.csv);;文本文件 (*.txt);;所有文件 (*.*)"
+    );
+
+    if (filePath.isEmpty()) return;
+
+    // 打开文件，写入UTF-8编码（Excel可直接识别）
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox::critical(this, "导出失败",
+            QString("文件无法打开：%1").arg(file.errorString()));
+        return;
+    }
+
+    QTextStream out(&file);
+    out.setEncoding(QStringConverter::Utf8);
+    out.setGenerateByteOrderMark(true); // 写入BOM头，解决Excel中文乱码
+
+    // 1. 写入表头
+    out << "时间戳,序号(Seq),命令,发送值,返回值,延时(ms),状态\n";
+
+    // 2. 遍历所有行（包括隐藏行，导出完整日志）
+    for (int i = 0; i < rowCount; i++)
+    {
+        // 读取每一列的数据
+        QStringList rowData;
+        for (int col = 0; col < 7; col++)
+        {
+            QTableWidgetItem* item = ui->tableWidget->item(i, col);
+            rowData << (item ? item->text() : "");
+        }
+
+        // 写入CSV行（用逗号分隔，处理带逗号的文本）
+        out << rowData.join(",") << "\n";
+    }
+
+    file.close();
+    QMessageBox::information(this, "导出成功",
+        QString("日志已导出到：\n%1").arg(filePath));
+    appendlog(QString("RunTime表格日志已导出到：%1").arg(filePath));
+}
+

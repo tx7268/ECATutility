@@ -18,11 +18,13 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -129,8 +131,6 @@ public:
     QWidget *x_t;
     QChartView *chartView;
     QWidget *x_v;
-    QWidget *ECAT;
-    QWidget *tab;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout_2;
     QCheckBox *checkBox_actpos;
@@ -179,28 +179,36 @@ public:
     QLineEdit *lineEdit_error_packet;
     QLineEdit *lineEdit_exchange_fre;
     QLineEdit *lineEdit_max_delay;
+    QTabWidget *tabWidget_2;
+    QWidget *tab;
+    QWidget *widget;
+    QWidget *tab_2;
+    QWidget *widget_2;
+    QPushButton *btn_RunTime_clearlog;
+    QComboBox *comboBox_RunTime_chose;
+    QPushButton *btn_RunTime_outlog;
+    QTableWidget *tableWidget;
     QStackedWidget *stackedWidget_2;
     QWidget *page_axis;
     QGroupBox *groupBox;
     QWidget *layoutWidget1;
     QGridLayout *gridLayout;
-    QLabel *label_21;
-    QLabel *label_12;
-    QLabel *label_25;
-    QLabel *label_24;
     QLabel *label_22;
-    QLabel *label_27;
-    QLabel *label_26;
-    QLabel *label_23;
-    QLabel *label_28;
-    QLabel *label_29;
-    QPushButton *btn_clear_alarm;
+    QLabel *label_12;
+    QLabel *label_24;
     QLineEdit *lineEdit_errorpos;
+    QLineEdit *lineEdit_cmdpos;
+    QLabel *label_26;
+    QLabel *label_29;
+    QLineEdit *lineEdit_state;
+    QLabel *label_27;
     QLineEdit *lineEdit_targetpos;
     QLineEdit *lineEdit_actpos;
-    QLineEdit *lineEdit_cmdpos;
+    QLabel *label_21;
+    QLabel *label_25;
+    QLabel *label_23;
+    QPushButton *btn_clear_alarm;
     QLineEdit *lineEdit_stateword;
-    QLineEdit *lineEdit_state;
     QWidget *page_dio;
     QGroupBox *groupBox_7;
     QWidget *layoutWidget2;
@@ -838,12 +846,6 @@ public:
         x_v = new QWidget();
         x_v->setObjectName("x_v");
         tabWidget->addTab(x_v, QString());
-        ECAT = new QWidget();
-        ECAT->setObjectName("ECAT");
-        tabWidget->addTab(ECAT, QString());
-        tab = new QWidget();
-        tab->setObjectName("tab");
-        tabWidget->addTab(tab, QString());
         verticalLayoutWidget = new QWidget(page_Scope);
         verticalLayoutWidget->setObjectName("verticalLayoutWidget");
         verticalLayoutWidget->setGeometry(QRect(20, 100, 147, 161));
@@ -1032,6 +1034,53 @@ public:
         lineEdit_max_delay->setObjectName("lineEdit_max_delay");
         lineEdit_max_delay->setEnabled(false);
         lineEdit_max_delay->setGeometry(QRect(430, 40, 110, 40));
+        tabWidget_2 = new QTabWidget(page_RunTime);
+        tabWidget_2->setObjectName("tabWidget_2");
+        tabWidget_2->setGeometry(QRect(10, 180, 831, 261));
+        tab = new QWidget();
+        tab->setObjectName("tab");
+        widget = new QWidget(tab);
+        widget->setObjectName("widget");
+        widget->setGeometry(QRect(0, 0, 821, 221));
+        tabWidget_2->addTab(tab, QString());
+        tab_2 = new QWidget();
+        tab_2->setObjectName("tab_2");
+        widget_2 = new QWidget(tab_2);
+        widget_2->setObjectName("widget_2");
+        widget_2->setGeometry(QRect(0, 0, 821, 231));
+        tabWidget_2->addTab(tab_2, QString());
+        btn_RunTime_clearlog = new QPushButton(page_RunTime);
+        btn_RunTime_clearlog->setObjectName("btn_RunTime_clearlog");
+        btn_RunTime_clearlog->setGeometry(QRect(140, 640, 100, 24));
+        comboBox_RunTime_chose = new QComboBox(page_RunTime);
+        comboBox_RunTime_chose->setObjectName("comboBox_RunTime_chose");
+        comboBox_RunTime_chose->setGeometry(QRect(10, 640, 101, 24));
+        btn_RunTime_outlog = new QPushButton(page_RunTime);
+        btn_RunTime_outlog->setObjectName("btn_RunTime_outlog");
+        btn_RunTime_outlog->setGeometry(QRect(250, 640, 100, 24));
+        tableWidget = new QTableWidget(page_RunTime);
+        if (tableWidget->columnCount() < 7)
+            tableWidget->setColumnCount(7);
+        QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
+        tableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem);
+        QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
+        tableWidget->setHorizontalHeaderItem(1, __qtablewidgetitem1);
+        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
+        tableWidget->setHorizontalHeaderItem(2, __qtablewidgetitem2);
+        QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
+        tableWidget->setHorizontalHeaderItem(3, __qtablewidgetitem3);
+        QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
+        tableWidget->setHorizontalHeaderItem(4, __qtablewidgetitem4);
+        QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
+        tableWidget->setHorizontalHeaderItem(5, __qtablewidgetitem5);
+        QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
+        tableWidget->setHorizontalHeaderItem(6, __qtablewidgetitem6);
+        tableWidget->setObjectName("tableWidget");
+        tableWidget->setGeometry(QRect(10, 450, 831, 181));
+        tableWidget->setSortingEnabled(false);
+        tableWidget->setRowCount(0);
+        tableWidget->setColumnCount(7);
+        tableWidget->horizontalHeader()->setStretchLastSection(true);
         stackedWidget->addWidget(page_RunTime);
         stackedWidget_2 = new QStackedWidget(Widget);
         stackedWidget_2->setObjectName("stackedWidget_2");
@@ -1047,62 +1096,20 @@ public:
         gridLayout = new QGridLayout(layoutWidget1);
         gridLayout->setObjectName("gridLayout");
         gridLayout->setContentsMargins(0, 0, 0, 0);
-        label_21 = new QLabel(layoutWidget1);
-        label_21->setObjectName("label_21");
+        label_22 = new QLabel(layoutWidget1);
+        label_22->setObjectName("label_22");
 
-        gridLayout->addWidget(label_21, 1, 0, 1, 1);
+        gridLayout->addWidget(label_22, 0, 1, 1, 1);
 
         label_12 = new QLabel(layoutWidget1);
         label_12->setObjectName("label_12");
 
         gridLayout->addWidget(label_12, 0, 0, 1, 1);
 
-        label_25 = new QLabel(layoutWidget1);
-        label_25->setObjectName("label_25");
-
-        gridLayout->addWidget(label_25, 0, 5, 1, 1);
-
         label_24 = new QLabel(layoutWidget1);
         label_24->setObjectName("label_24");
 
-        gridLayout->addWidget(label_24, 0, 4, 1, 1);
-
-        label_22 = new QLabel(layoutWidget1);
-        label_22->setObjectName("label_22");
-
-        gridLayout->addWidget(label_22, 0, 1, 1, 1);
-
-        label_27 = new QLabel(layoutWidget1);
-        label_27->setObjectName("label_27");
-
-        gridLayout->addWidget(label_27, 0, 7, 1, 1);
-
-        label_26 = new QLabel(layoutWidget1);
-        label_26->setObjectName("label_26");
-
-        gridLayout->addWidget(label_26, 0, 6, 1, 1);
-
-        label_23 = new QLabel(layoutWidget1);
-        label_23->setObjectName("label_23");
-
-        gridLayout->addWidget(label_23, 0, 2, 1, 1);
-
-        label_28 = new QLabel(layoutWidget1);
-        label_28->setObjectName("label_28");
-
-        gridLayout->addWidget(label_28, 0, 3, 1, 1);
-
-        label_29 = new QLabel(layoutWidget1);
-        label_29->setObjectName("label_29");
-        label_29->setMaximumSize(QSize(16777215, 25));
-
-        gridLayout->addWidget(label_29, 0, 8, 1, 1);
-
-        btn_clear_alarm = new QPushButton(layoutWidget1);
-        btn_clear_alarm->setObjectName("btn_clear_alarm");
-        btn_clear_alarm->setMinimumSize(QSize(0, 50));
-
-        gridLayout->addWidget(btn_clear_alarm, 1, 8, 1, 1);
+        gridLayout->addWidget(label_24, 0, 3, 1, 1);
 
         lineEdit_errorpos = new QLineEdit(layoutWidget1);
         lineEdit_errorpos->setObjectName("lineEdit_errorpos");
@@ -1110,23 +1117,7 @@ public:
         lineEdit_errorpos->setMinimumSize(QSize(0, 50));
         lineEdit_errorpos->setMaximumSize(QSize(120, 16777215));
 
-        gridLayout->addWidget(lineEdit_errorpos, 1, 7, 1, 1);
-
-        lineEdit_targetpos = new QLineEdit(layoutWidget1);
-        lineEdit_targetpos->setObjectName("lineEdit_targetpos");
-        lineEdit_targetpos->setEnabled(false);
-        lineEdit_targetpos->setMinimumSize(QSize(0, 50));
-        lineEdit_targetpos->setMaximumSize(QSize(120, 16777215));
-
-        gridLayout->addWidget(lineEdit_targetpos, 1, 6, 1, 1);
-
-        lineEdit_actpos = new QLineEdit(layoutWidget1);
-        lineEdit_actpos->setObjectName("lineEdit_actpos");
-        lineEdit_actpos->setEnabled(false);
-        lineEdit_actpos->setMinimumSize(QSize(0, 50));
-        lineEdit_actpos->setMaximumSize(QSize(120, 16777215));
-
-        gridLayout->addWidget(lineEdit_actpos, 1, 5, 1, 1);
+        gridLayout->addWidget(lineEdit_errorpos, 1, 6, 1, 1);
 
         lineEdit_cmdpos = new QLineEdit(layoutWidget1);
         lineEdit_cmdpos->setObjectName("lineEdit_cmdpos");
@@ -1134,15 +1125,18 @@ public:
         lineEdit_cmdpos->setMinimumSize(QSize(0, 50));
         lineEdit_cmdpos->setMaximumSize(QSize(120, 16777215));
 
-        gridLayout->addWidget(lineEdit_cmdpos, 1, 4, 1, 1);
+        gridLayout->addWidget(lineEdit_cmdpos, 1, 3, 1, 1);
 
-        lineEdit_stateword = new QLineEdit(layoutWidget1);
-        lineEdit_stateword->setObjectName("lineEdit_stateword");
-        lineEdit_stateword->setEnabled(false);
-        lineEdit_stateword->setMinimumSize(QSize(0, 50));
-        lineEdit_stateword->setMaximumSize(QSize(120, 16777215));
+        label_26 = new QLabel(layoutWidget1);
+        label_26->setObjectName("label_26");
 
-        gridLayout->addWidget(lineEdit_stateword, 1, 1, 1, 1);
+        gridLayout->addWidget(label_26, 0, 5, 1, 1);
+
+        label_29 = new QLabel(layoutWidget1);
+        label_29->setObjectName("label_29");
+        label_29->setMaximumSize(QSize(16777215, 25));
+
+        gridLayout->addWidget(label_29, 0, 7, 1, 1);
 
         lineEdit_state = new QLineEdit(layoutWidget1);
         lineEdit_state->setObjectName("lineEdit_state");
@@ -1151,6 +1145,57 @@ public:
         lineEdit_state->setMaximumSize(QSize(120, 16777215));
 
         gridLayout->addWidget(lineEdit_state, 1, 2, 1, 1);
+
+        label_27 = new QLabel(layoutWidget1);
+        label_27->setObjectName("label_27");
+
+        gridLayout->addWidget(label_27, 0, 6, 1, 1);
+
+        lineEdit_targetpos = new QLineEdit(layoutWidget1);
+        lineEdit_targetpos->setObjectName("lineEdit_targetpos");
+        lineEdit_targetpos->setEnabled(false);
+        lineEdit_targetpos->setMinimumSize(QSize(0, 50));
+        lineEdit_targetpos->setMaximumSize(QSize(120, 16777215));
+
+        gridLayout->addWidget(lineEdit_targetpos, 1, 5, 1, 1);
+
+        lineEdit_actpos = new QLineEdit(layoutWidget1);
+        lineEdit_actpos->setObjectName("lineEdit_actpos");
+        lineEdit_actpos->setEnabled(false);
+        lineEdit_actpos->setMinimumSize(QSize(0, 50));
+        lineEdit_actpos->setMaximumSize(QSize(120, 16777215));
+
+        gridLayout->addWidget(lineEdit_actpos, 1, 4, 1, 1);
+
+        label_21 = new QLabel(layoutWidget1);
+        label_21->setObjectName("label_21");
+        label_21->setMaximumSize(QSize(100, 16777215));
+
+        gridLayout->addWidget(label_21, 1, 0, 1, 1);
+
+        label_25 = new QLabel(layoutWidget1);
+        label_25->setObjectName("label_25");
+
+        gridLayout->addWidget(label_25, 0, 4, 1, 1);
+
+        label_23 = new QLabel(layoutWidget1);
+        label_23->setObjectName("label_23");
+
+        gridLayout->addWidget(label_23, 0, 2, 1, 1);
+
+        btn_clear_alarm = new QPushButton(layoutWidget1);
+        btn_clear_alarm->setObjectName("btn_clear_alarm");
+        btn_clear_alarm->setMinimumSize(QSize(0, 50));
+
+        gridLayout->addWidget(btn_clear_alarm, 1, 7, 1, 1);
+
+        lineEdit_stateword = new QLineEdit(layoutWidget1);
+        lineEdit_stateword->setObjectName("lineEdit_stateword");
+        lineEdit_stateword->setEnabled(false);
+        lineEdit_stateword->setMinimumSize(QSize(0, 50));
+        lineEdit_stateword->setMaximumSize(QSize(120, 16777215));
+
+        gridLayout->addWidget(lineEdit_stateword, 1, 1, 1, 1);
 
         stackedWidget_2->addWidget(page_axis);
         page_dio = new QWidget();
@@ -3039,8 +3084,9 @@ public:
 
         retranslateUi(Widget);
 
-        stackedWidget->setCurrentIndex(3);
-        tabWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(4);
+        tabWidget->setCurrentIndex(1);
+        tabWidget_2->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(Widget);
@@ -3125,10 +3171,8 @@ public:
         label_13->setText(QCoreApplication::translate("Widget", "\346\225\260\345\200\274\357\274\210DEC\357\274\211", nullptr));
         btn_read_sdo->setText(QCoreApplication::translate("Widget", "\350\257\273\345\217\226SDO", nullptr));
         btn_write_sdo->setText(QCoreApplication::translate("Widget", "\345\206\231\345\205\245SDO", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(x_t), QCoreApplication::translate("Widget", "Tab 1", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(x_v), QCoreApplication::translate("Widget", "Tab 2", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(ECAT), QCoreApplication::translate("Widget", "\351\241\265", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("Widget", "\351\241\265", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(x_t), QCoreApplication::translate("Widget", "\344\275\215\347\275\256\346\233\262\347\272\277", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(x_v), QCoreApplication::translate("Widget", "\351\200\237\345\272\246\346\233\262\347\272\277", nullptr));
         checkBox_actpos->setText(QCoreApplication::translate("Widget", "\345\256\236\351\231\205\344\275\215\347\275\256\357\274\210actpos\357\274\211", nullptr));
         checkBox_targetpos->setText(QCoreApplication::translate("Widget", "\346\214\207\344\273\244\344\275\215\347\275\256 (target pos)", nullptr));
         checkBox_vel->setText(QCoreApplication::translate("Widget", "\351\200\237\345\272\246 (vel)", nullptr));
@@ -3159,17 +3203,34 @@ public:
         groupBox_20->setTitle(QCoreApplication::translate("Widget", "\351\200\232\344\277\241\351\242\221\347\216\207", nullptr));
         label_73->setText(QCoreApplication::translate("Widget", "ms", nullptr));
         lineEdit_exchange_fre->setText(QCoreApplication::translate("Widget", "1", nullptr));
+        tabWidget_2->setTabText(tabWidget_2->indexOf(tab), QCoreApplication::translate("Widget", "ECAT\345\221\250\346\234\237", nullptr));
+        tabWidget_2->setTabText(tabWidget_2->indexOf(tab_2), QCoreApplication::translate("Widget", "\345\273\266\346\227\266\346\227\266\351\227\264", nullptr));
+        btn_RunTime_clearlog->setText(QCoreApplication::translate("Widget", "\346\270\205\347\251\272\346\227\245\345\277\227", nullptr));
+        btn_RunTime_outlog->setText(QCoreApplication::translate("Widget", "\345\257\274\345\207\272\346\227\245\345\277\227", nullptr));
+        QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
+        ___qtablewidgetitem->setText(QCoreApplication::translate("Widget", "\346\227\266\351\227\264\346\210\263", nullptr));
+        QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(1);
+        ___qtablewidgetitem1->setText(QCoreApplication::translate("Widget", "\345\272\217\345\217\267\357\274\210Seq\357\274\211", nullptr));
+        QTableWidgetItem *___qtablewidgetitem2 = tableWidget->horizontalHeaderItem(2);
+        ___qtablewidgetitem2->setText(QCoreApplication::translate("Widget", "\345\221\275\344\273\244", nullptr));
+        QTableWidgetItem *___qtablewidgetitem3 = tableWidget->horizontalHeaderItem(3);
+        ___qtablewidgetitem3->setText(QCoreApplication::translate("Widget", "\345\217\221\351\200\201\345\200\274", nullptr));
+        QTableWidgetItem *___qtablewidgetitem4 = tableWidget->horizontalHeaderItem(4);
+        ___qtablewidgetitem4->setText(QCoreApplication::translate("Widget", "\350\277\224\345\233\236\345\200\274", nullptr));
+        QTableWidgetItem *___qtablewidgetitem5 = tableWidget->horizontalHeaderItem(5);
+        ___qtablewidgetitem5->setText(QCoreApplication::translate("Widget", "\345\273\266\346\227\266(ms)", nullptr));
+        QTableWidgetItem *___qtablewidgetitem6 = tableWidget->horizontalHeaderItem(6);
+        ___qtablewidgetitem6->setText(QCoreApplication::translate("Widget", "\347\212\266\346\200\201", nullptr));
         groupBox->setTitle(QCoreApplication::translate("Widget", "GroupBox", nullptr));
-        label_21->setText(QCoreApplication::translate("Widget", "Axis(0)", nullptr));
-        label_12->setText(QCoreApplication::translate("Widget", "Axis ID", nullptr));
-        label_25->setText(QCoreApplication::translate("Widget", "\345\256\236\351\231\205\344\275\215\347\275\256\357\274\210act pos\357\274\211", nullptr));
-        label_24->setText(QCoreApplication::translate("Widget", "\347\220\206\350\256\272\344\275\215\347\275\256\357\274\210cmd pos\357\274\211", nullptr));
         label_22->setText(QCoreApplication::translate("Widget", "\344\274\272\346\234\215\347\212\266\346\200\201\345\255\227", nullptr));
-        label_27->setText(QCoreApplication::translate("Widget", "\350\257\257\345\267\256\344\275\215\347\275\256\357\274\210error pos\357\274\211", nullptr));
+        label_12->setText(QCoreApplication::translate("Widget", "Axis ID", nullptr));
+        label_24->setText(QCoreApplication::translate("Widget", "\347\220\206\350\256\272\344\275\215\347\275\256\357\274\210cmd pos\357\274\211", nullptr));
         label_26->setText(QCoreApplication::translate("Widget", "\346\214\207\344\273\244\344\275\215\347\275\256\357\274\210target pos\357\274\211", nullptr));
-        label_23->setText(QCoreApplication::translate("Widget", "\347\212\266\346\200\201", nullptr));
-        label_28->setText(QCoreApplication::translate("Widget", "\344\275\277\350\203\275", nullptr));
         label_29->setText(QCoreApplication::translate("Widget", "\346\212\245\350\255\246", nullptr));
+        label_27->setText(QCoreApplication::translate("Widget", "\350\257\257\345\267\256\344\275\215\347\275\256\357\274\210error pos\357\274\211", nullptr));
+        label_21->setText(QCoreApplication::translate("Widget", "Axis(0)", nullptr));
+        label_25->setText(QCoreApplication::translate("Widget", "\345\256\236\351\231\205\344\275\215\347\275\256\357\274\210act pos\357\274\211", nullptr));
+        label_23->setText(QCoreApplication::translate("Widget", "\347\212\266\346\200\201", nullptr));
         btn_clear_alarm->setText(QCoreApplication::translate("Widget", "\346\270\205\351\231\244\346\212\245\350\255\246", nullptr));
         groupBox_7->setTitle(QCoreApplication::translate("Widget", "DO", nullptr));
         btn_do1_1->setText(QString());

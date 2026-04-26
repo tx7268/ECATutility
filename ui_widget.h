@@ -184,9 +184,9 @@ public:
     QWidget *widget;
     QWidget *tab_2;
     QWidget *widget_2;
-    QPushButton *btn_scope_clearlog;
-    QComboBox *comboBox;
-    QPushButton *pushButton_2;
+    QPushButton *btn_RunTime_clearlog;
+    QComboBox *comboBox_RunTime_chose;
+    QPushButton *btn_RunTime_outlog;
     QTableWidget *tableWidget;
     QStackedWidget *stackedWidget_2;
     QWidget *page_axis;
@@ -1049,15 +1049,15 @@ public:
         widget_2->setObjectName("widget_2");
         widget_2->setGeometry(QRect(0, 0, 821, 231));
         tabWidget_2->addTab(tab_2, QString());
-        btn_scope_clearlog = new QPushButton(page_RunTime);
-        btn_scope_clearlog->setObjectName("btn_scope_clearlog");
-        btn_scope_clearlog->setGeometry(QRect(140, 640, 100, 24));
-        comboBox = new QComboBox(page_RunTime);
-        comboBox->setObjectName("comboBox");
-        comboBox->setGeometry(QRect(10, 640, 101, 24));
-        pushButton_2 = new QPushButton(page_RunTime);
-        pushButton_2->setObjectName("pushButton_2");
-        pushButton_2->setGeometry(QRect(250, 640, 100, 24));
+        btn_RunTime_clearlog = new QPushButton(page_RunTime);
+        btn_RunTime_clearlog->setObjectName("btn_RunTime_clearlog");
+        btn_RunTime_clearlog->setGeometry(QRect(140, 640, 100, 24));
+        comboBox_RunTime_chose = new QComboBox(page_RunTime);
+        comboBox_RunTime_chose->setObjectName("comboBox_RunTime_chose");
+        comboBox_RunTime_chose->setGeometry(QRect(10, 640, 101, 24));
+        btn_RunTime_outlog = new QPushButton(page_RunTime);
+        btn_RunTime_outlog->setObjectName("btn_RunTime_outlog");
+        btn_RunTime_outlog->setGeometry(QRect(250, 640, 100, 24));
         tableWidget = new QTableWidget(page_RunTime);
         if (tableWidget->columnCount() < 7)
             tableWidget->setColumnCount(7);
@@ -3205,8 +3205,8 @@ public:
         lineEdit_exchange_fre->setText(QCoreApplication::translate("Widget", "1", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(tab), QCoreApplication::translate("Widget", "ECAT\345\221\250\346\234\237", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(tab_2), QCoreApplication::translate("Widget", "\345\273\266\346\227\266\346\227\266\351\227\264", nullptr));
-        btn_scope_clearlog->setText(QCoreApplication::translate("Widget", "\346\270\205\347\251\272\346\227\245\345\277\227", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("Widget", "\345\257\274\345\207\272\346\227\245\345\277\227", nullptr));
+        btn_RunTime_clearlog->setText(QCoreApplication::translate("Widget", "\346\270\205\347\251\272\346\227\245\345\277\227", nullptr));
+        btn_RunTime_outlog->setText(QCoreApplication::translate("Widget", "\345\257\274\345\207\272\346\227\245\345\277\227", nullptr));
         QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QCoreApplication::translate("Widget", "\346\227\266\351\227\264\346\210\263", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(1);

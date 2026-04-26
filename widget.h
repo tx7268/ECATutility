@@ -120,7 +120,11 @@ private slots:
     void addLogRow(QString time, int seq, QString cmd, int send, int ret, double delay, QString status);
     void sendCmdWithLog(const QByteArray& data, const QString& cmdName, int sendValue = 0);
     void checkTimeoutCommands();// 超时检测槽函数
+    void filterRunTimeLog(int index); // RunTime日志筛选
 
+    void on_btn_RunTime_clearlog_clicked();
+
+    void on_btn_RunTime_outlog_clicked();
 
 private:
     Ui::Widget* ui;
