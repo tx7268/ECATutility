@@ -1169,11 +1169,11 @@ void Widget::on_btn_write_sdo_clicked()
         this->appendlog("写入SDO8 ：0x" + QString::number(index, 16).toUpper() + ":" + QString::number(subindex, 16).toUpper() + "  value : " + QString::number(value));
         break;
     case 2:
-        sendCmdWithLog(proto->writeSDO16(slave, index, subindex, (uint8_t)value), "writeSDO16", value);
+        sendCmdWithLog(proto->writeSDO16(slave, index, subindex, (uint16_t)value), "writeSDO16", value);
         this->appendlog("写入SDO16 ：0x" + QString::number(index, 16).toUpper() + ":" + QString::number(subindex, 16).toUpper() + "  value : " + QString::number(value));
         break;
     case 4:
-        sendCmdWithLog(proto->writeSDO32(slave, index, subindex, (uint8_t)value), "writeSDO32", value);
+        sendCmdWithLog(proto->writeSDO32(slave, index, subindex, (uint32_t)value), "writeSDO32", value);
         this->appendlog("写入SDO32 ：0x" + QString::number(index, 16).toUpper() + ":" + QString::number(subindex, 16).toUpper() + "  value : " + QString::number(value));
         break;
     }
