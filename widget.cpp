@@ -1217,7 +1217,7 @@ bool Widget::set_home_para(uint16_t slaveIndex, int8_t home_mode, int32_t sw_vel
 }
 
 
-//****************************************************XML****************************************************
+//****************************************************XML功能函数****************************************************
 void Widget::on_btn_read_XMLfile_clicked()
 {
     const QString defaultPath =
@@ -1274,4 +1274,37 @@ void Widget::on_btn_clear_XMLfile_clicked()
 }
 
 
+//****************************************************Scope界面功能函数****************************************************
 
+
+
+//****************************************************RunTime界面功能函数****************************************************
+void Widget::addLogRow(QString time, int seq, QString cmd, int send, int ret, double delay, QString status)
+{
+    // 获取当前行数，插入新行
+    int row = ui->tableWidget->rowCount();
+    ui->tableWidget->insertRow(row);
+
+    // 给每一列设置文本
+    ui->tableWidget->setItem(row, 0, new QTableWidgetItem(time));
+    ui->tableWidget->setItem(row, 1, new QTableWidgetItem(QString::number(seq)));
+    ui->tableWidget->setItem(row, 2, new QTableWidgetItem(cmd));
+    ui->tableWidget->setItem(row, 3, new QTableWidgetItem(QString::number(send)));
+    ui->tableWidget->setItem(row, 4, new QTableWidgetItem(QString::number(ret)));
+    ui->tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(delay, 'f', 2)));
+
+    // 状态列：设置文字颜色（OK绿色/ERROR红色）
+    QTableWidgetItem* statusItem = new QTableWidgetItem(status);
+    if (status == "OK") 
+    {
+        statusItem->setForeground(QBrush(Qt::green));
+    }
+    else if (status == "ERROR") 
+    {
+        statusItem->setForeground(QBrush(Qt::red));
+    }
+    ui->tableWidget->setItem(row, 6, statusItem);
+
+    // 自动滚动到最新行
+    ui->tableWidget->scrollToBottom();
+}

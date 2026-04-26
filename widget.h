@@ -7,7 +7,8 @@
 #include <QVector>
 #include <QSerialPort>
 #include <QSerialPortInfo>
-
+#include <QChart>
+#include <QChartView>
 
 QT_BEGIN_NAMESPACE
 
@@ -94,12 +95,24 @@ private slots:
 
     void on_btn_RunTime_clicked();
 
+
+    //**********************************************Scope界面函数**********************************************//
+
+
+
+
+
+    //**********************************************RunTime界面函数**********************************************//
+    void addLogRow(QString time, int seq, QString cmd, int send, int ret, double delay, QString status);
+
+
+
+
 private:
     Ui::Widget* ui;
     Link* m_link;
     Protocol* proto;
     XML* m_xml;
-
     int8_t home_mode;
     int32_t vel,acc,dec, sw_vel, zero_vel;
     bool m_serialPortOpen = false;
