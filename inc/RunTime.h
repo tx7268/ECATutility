@@ -71,10 +71,9 @@ class ChartThread : public QThread
 public:
     explicit ChartThread(QObject *parent = nullptr);
 
-
 public slots:
     void addFreqData(double freq);
-    void addLatencyData(double latency);
+
 
 signals:
     void chartDataUpdated(double freq, double latency);
@@ -112,7 +111,7 @@ public slots:
 
 
 private slots:
-    void updateChart(double freq, double latency);
+    void updateChart(double freq);
 
 private:
     // 添加日志行到表格
@@ -138,17 +137,16 @@ private:
     // 图表对象
     QChart *m_chart = nullptr;
     QLineSeries *m_seriesFreq = nullptr;    // ECAT频率曲线
-    QLineSeries *m_seriesLatency = nullptr; // 通信延时曲线
     QValueAxis *m_axisX = nullptr;
-    QValueAxis *m_axisYLeft = nullptr;  // 左Y轴：频率
-    QValueAxis *m_axisYRight = nullptr; // 右Y轴：延时
+    QValueAxis *m_axisY = nullptr;       // Y轴（频率）
     QChartView *m_chartView = nullptr;
 
     ChartThread *m_chartThread = nullptr; // 绘图线程
     QList<double> m_dataHistory;          // 数据缓存（滚动显示）
-    const int MAX_DATA_COUNT = 100;       // 最大显示点数
+    const int MAX_DATA_COUNT = 400;       // 最大显示点数
 
     int m_xIndex = 0; 
+    double m_maxFreq = 0;                // 缓存最大频率（优化性能）
 };
 
 #endif // RUNTIME_H

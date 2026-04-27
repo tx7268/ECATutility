@@ -31,11 +31,6 @@ void ChartThread::addFreqData(double freq)
     emit chartDataUpdated(freq, -1);
 }
 
-void ChartThread::addLatencyData(double latency)
-{
-    emit chartDataUpdated(-1, latency);
-}
-
 
 // ====================== RunTime 主类实现 ======================
 RunTime::RunTime(QObject *parent)
@@ -89,69 +84,50 @@ void RunTime::init(QTableWidget* tableWidget, QComboBox* filterComboBox, QWidget
 
 
 
-// 创建双轴图表：频率(左) + 延时(右)
+// 创建图表
 void RunTime::createChart()
 {
     if(!m_chartParent) return;
 
-    // 1. 创建图表
+    // 创建图表
     m_chart = new QChart();
+    m_chart->setTitle("ECAT 周期频率实时监控");
+    m_chart->setTitleFont(QFont("Microsoft YaHei", 10, QFont::Bold));
+    m_chart->setBackgroundBrush(QColor(248, 248, 248));
+    m_chart->legend()->setVisible(true);
+    m_chart->legend()->setAlignment(Qt::AlignBottom);
 
-    // 2. 创建两条曲线
+    // 创建曲线
     m_seriesFreq = new QLineSeries();
-    m_seriesLatency = new QLineSeries();
-
-    m_seriesFreq->setName("ECAT周期频率(Hz)");
-    m_seriesLatency->setName("通信延时(ms)");
-
-    QPen penFreq;
-    penFreq.setColor(QColor(0,120,215));
-    penFreq.setWidth(2);
+    QPen penFreq(QColor(0, 112, 192));
+    penFreq.setWidth(1);
     m_seriesFreq->setPen(penFreq);
 
-    QPen penLat;
-    penLat.setColor(QColor(255,80,80));
-    penLat.setWidth(2);
-    m_seriesLatency->setPen(penLat);
-
-    m_chart->addSeries(m_seriesFreq);
-    m_chart->addSeries(m_seriesLatency);
-
-    // 3. X轴：时间序列
     m_axisX = new QValueAxis();
     m_axisX->setRange(0, MAX_DATA_COUNT);
     m_axisX->setLabelFormat("%d");
+    m_axisX->setGridLineVisible(true);
 
-    // 4. 左Y轴：频率
-    m_axisYLeft = new QValueAxis();
-    m_axisYLeft->setTitleText("频率(Hz)");
-    m_axisYLeft->setRange(980, 1000);
+    // Y轴：频率
+    m_axisY = new QValueAxis();
+    m_axisY->setTitleText("频率(Hz)");
+    m_axisY->setRange(950, 1020); // 默认ECAT频率范围
+    m_axisY->setLabelFormat("%d");
+    m_axisY->setGridLineVisible(true);
 
-    // 5. 右Y轴：延时
-    m_axisYRight = new QValueAxis();
-    m_axisYRight->setTitleText("延时(ms)");
-    m_axisYRight->setRange(0, 50);
-
-    // 绑定轴
+    // 绑定坐标轴
     m_chart->addAxis(m_axisX, Qt::AlignBottom);
-    m_chart->addAxis(m_axisYLeft, Qt::AlignLeft);
-    m_chart->addAxis(m_axisYRight, Qt::AlignRight);
-
+    m_chart->addAxis(m_axisY, Qt::AlignLeft);
     m_seriesFreq->attachAxis(m_axisX);
-    m_seriesFreq->attachAxis(m_axisYLeft);
-    m_seriesLatency->attachAxis(m_axisX);
-    m_seriesLatency->attachAxis(m_axisYRight);
+    m_seriesFreq->attachAxis(m_axisY);
 
-    // 6. 创建ChartView并放入布局
+    // 图表视图（抗锯齿）
     m_chartView = new QChartView(m_chart, m_chartParent);
     m_chartView->setRenderHint(QPainter::Antialiasing);
 
     QVBoxLayout *layout = new QVBoxLayout(m_chartParent);
     layout->setContentsMargins(0,0,0,0);
     layout->addWidget(m_chartView);
-
-    // 7. 连接线程更新信号
-    connect(m_chartThread, &ChartThread::chartDataUpdated, this, &RunTime::updateChart);
 }
 
 void RunTime::onEcatFreqUpdated(quint32 freq)
@@ -159,31 +135,24 @@ void RunTime::onEcatFreqUpdated(quint32 freq)
     m_chartThread->addFreqData(freq);
 }
 
-void RunTime::updateChart(double freq, double latency)
+void RunTime::updateChart(double freq)
 {
-    // 仅主线程更新UI，绝对安全
-    if (freq >= 0)
-        m_seriesFreq->append(m_xIndex, freq);
-    if (latency >= 0)
-        m_seriesLatency->append(m_xIndex, latency);
+    // 追加频率数据
+    m_seriesFreq->append(m_xIndex++, freq);
 
-    m_xIndex++;
-    m_dataHistory.append(freq);
+    // 缓存最大频率，避免遍历所有点（性能优化）
+    if (freq > m_maxFreq) 
+    {
+        m_maxFreq = freq;
+        m_axisY->setMax(m_maxFreq * 1.01); // 轻微留白
+    }
 
-    // 滚动显示
+    // 滚动显示：超过最大点数，移除旧数据
     if (m_seriesFreq->count() > MAX_DATA_COUNT)
     {
         m_seriesFreq->removePoints(0, 1);
-        m_seriesLatency->removePoints(0, 1);
         m_axisX->setRange(m_xIndex - MAX_DATA_COUNT, m_xIndex);
     }
-
-    // 自动缩放Y轴
-    double maxFreq = 0;
-    for (const QPointF &p : m_seriesFreq->points())
-        maxFreq = qMax(maxFreq, p.y());
-    if (maxFreq > 0)
-        m_axisYLeft->setMax(maxFreq * 1.1);
 
     m_chart->update();
 }
@@ -191,7 +160,7 @@ void RunTime::updateChart(double freq, double latency)
 
 void RunTime::calculateStats()
 {
-    // 1. 重置动态指标
+    // 重置动态指标
     m_stats.maxLatency = 0;
     m_stats.minLatency = 0;
     m_stats.avgLatency = 0;
@@ -211,20 +180,20 @@ void RunTime::calculateStats()
         return;
     }
 
-    // 2. 当前延时 = 最后一次有效延时
+    // 当前延时 = 最后一次有效延时
     m_stats.currentLatency = m_stats.latencyList.last();
 
-    // 3. 最大/最小延时
+    // 最大/最小延时
     m_stats.minLatency = *std::min_element(m_stats.latencyList.begin(), m_stats.latencyList.end());
     m_stats.maxLatency = *std::max_element(m_stats.latencyList.begin(), m_stats.latencyList.end());
 
-    // 4. 平均延时
+    // 平均延时
     double sum = 0;
     for (double t : m_stats.latencyList)
         sum += t;
     m_stats.avgLatency = sum / m_stats.latencyList.size();
 
-    // 5. 抖动（相邻延时绝对差的平均值）
+    // 抖动（相邻延时绝对差的平均值）
     if (m_stats.latencyList.size() >= 2)
     {
         double jitterSum = 0;
@@ -235,7 +204,7 @@ void RunTime::calculateStats()
         m_stats.jitter = jitterSum / (m_stats.latencyList.size() - 1);
     }
 
-    // 6. 丢包率
+    // 丢包率
     if (m_stats.totalPackets > 0)
     {
         m_stats.packetLossRate = (double)m_stats.timeoutPackets / m_stats.totalPackets * 100;
@@ -246,7 +215,7 @@ void RunTime::calculateStats()
     }
 
     // 实时把延时传给图表线程
-    m_chartThread->addLatencyData(m_stats.currentLatency);
+    emit statsUpdated(m_stats);
 }
 
 void RunTime::addLogRow(QString time, int seq, QString cmd, int send, int ret, double delay, QString status)
@@ -426,16 +395,15 @@ void RunTime::clearLog()
     m_sendLogQueue.clear();
 
         // ====================== 新增：重置图表 ======================
-    if(m_seriesFreq && m_seriesLatency) 
+    if(m_seriesFreq)
     {
-        m_seriesFreq->clear();       // 清空频率曲线
-        m_seriesLatency->clear();    // 清空延时曲线
-        m_xIndex = 0;                // 重置X轴计数
-        m_axisX->setRange(0, MAX_DATA_COUNT); // 重置X轴范围
-        m_axisYLeft->setMax(2000);    // 重置频率轴默认值
-        m_chart->update();           // 刷新UI
+        m_seriesFreq->clear();
+        m_xIndex = 0;
+        m_maxFreq = 0;
+        m_axisX->setRange(0, MAX_DATA_COUNT);
+        m_axisY->setRange(980, 1000);
+        m_chart->update();
     }
-
     // 重置统计数据
     m_stats = RunTimeStats();
     emit statsUpdated(m_stats); // 发送清空信号
