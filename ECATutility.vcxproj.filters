@@ -78,6 +78,9 @@
     <QtMoc Include="inc\XML.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="inc\RunTime.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="widget.ui">
@@ -86,9 +89,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Scope.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\RunTime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">

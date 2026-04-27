@@ -13,7 +13,7 @@
 #include "inc/Protocol.h"
 #include "inc/SerialThread.h"
 #include "inc/XML.h"
-
+#include "inc/RunTime.h"
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -21,7 +21,7 @@ Widget::Widget(QWidget *parent)
     ,m_link(new Link(this))
     ,proto(new Protocol(this))
     ,m_xml(new XML(this))
-    , m_timeoutTimer(new QTimer(this))
+    , m_runTime(new RunTime(this))
 {
     ui->setupUi(this);
     setWindowTitle("ECATutility");
@@ -180,12 +180,9 @@ Widget::Widget(QWidget *parent)
 
 
     //***********************************************RunTime界面信号槽连接***********************************************
-    m_timeoutTimer->setInterval(100); // 每100ms检测一次
-    connect(m_timeoutTimer, &QTimer::timeout, this, &Widget::checkTimeoutCommands);
-    m_timeoutTimer->start(); // 启动定时器
-
-    connect(ui->comboBox_RunTime_chose, QOverload<int>::of(&QComboBox::currentIndexChanged),this, &Widget::filterRunTimeLog);
-}
+    m_runTime->init(ui->tableWidget, ui->comboBox_RunTime_chose, this);
+    connect(m_runTime, &RunTime::sendSerialDataRequested, m_link, &Link::sendSerialData);
+    connect(m_runTime, &RunTime::logMessage, this, &Widget::appendlog);}
 
 Widget::~Widget()
 {
@@ -1303,225 +1300,36 @@ void Widget::on_btn_clear_XMLfile_clicked()
 
 //****************************************************RunTime界面功能函数****************************************************
 
-void Widget::addLogRow(QString time, int seq, QString cmd, int send, int ret, double delay, QString status)
-{
-    // 获取当前行数，插入新行
-    int row = ui->tableWidget->rowCount();
-    ui->tableWidget->insertRow(row);
-
-    // 给每一列设置文本
-    ui->tableWidget->setItem(row, 0, new QTableWidgetItem(time));
-    ui->tableWidget->setItem(row, 1, new QTableWidgetItem(QString::number(seq)));
-    ui->tableWidget->setItem(row, 2, new QTableWidgetItem(cmd));
-    ui->tableWidget->setItem(row, 3, new QTableWidgetItem(QString::number(send)));
-    ui->tableWidget->setItem(row, 4, new QTableWidgetItem(QString::number(ret)));
-    ui->tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(delay, 'f', 2)));
-
-    // 状态列：设置文字颜色（OK绿色/ERROR红色）
-    QTableWidgetItem* statusItem = new QTableWidgetItem(status);
-    if (status == "OK") 
-    {
-        statusItem->setForeground(QBrush(Qt::green));
-    }
-    else if (status == "ERROR") 
-    {
-        statusItem->setForeground(QBrush(Qt::red));
-    }
-    ui->tableWidget->setItem(row, 6, statusItem);
-
-    // 自动滚动到最新行
-    ui->tableWidget->scrollToBottom();
-}
-
-
-
 void Widget::updateLogRow(int retValue, const QString& status)
 {
-    if (m_sendLogQueue.isEmpty()) return;
-
-    // 取出队列中最早的发送命令
-    LogSendInfo info = m_sendLogQueue.dequeue();
-    // 计算通信延时
-    //currentMSecsSinceEpoch:调用本函数的瞬间（也就是收到应答的时刻）
-    double delay = (QDateTime::currentMSecsSinceEpoch() - info.sendTime);
-    // 定位到表格对应行
-    int row = info.seq - 1;
-    if (row < 0 || row >= ui->tableWidget->rowCount()) return;
-
-    // 返回值、延时
-    ui->tableWidget->setItem(row, 4, new QTableWidgetItem(QString::number(retValue)));
-    ui->tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(delay, 'f', 2)));
-
-    // 状态、颜色
-    QTableWidgetItem* statusItem = new QTableWidgetItem(status);
-    if (status == "OK") 
+    if (m_runTime)
     {
-        statusItem->setForeground(Qt::green);
+        m_runTime->updateLogRow(retValue, status);
     }
-    else if (status == "ERROR" || status == "TimeOut")
-    {
-        statusItem->setForeground(QBrush(Qt::red));
-    }
-    ui->tableWidget->setItem(row, 6, statusItem);
 }
 
-// ===================== 发送命令并记录日志 =====================
 void Widget::sendCmdWithLog(const QByteArray& data, const QString& cmdName, int sendValue)
 {
-    m_link->sendSerialData(data);
-
-    // 日志信息
-    LogSendInfo info;
-    info.seq = ++m_RunTime_logSeq;
-    info.cmdName = cmdName;
-    info.sendValue = sendValue;
-    info.sendTime = QDateTime::currentMSecsSinceEpoch();
-    m_sendLogQueue.enqueue(info);
-
-    // 添加表格行
-    QString time = QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
-    addLogRow(time, info.seq, info.cmdName, info.sendValue, 0, 0, "发送中");
-}
-
-
-void Widget::checkTimeoutCommands()
-{
-    if (m_sendLogQueue.isEmpty())
-        return;
-
-    // 获取当前时间戳
-    qint64 currentTime = QDateTime::currentMSecsSinceEpoch();
-
-    // 循环检查队首
-    while (!m_sendLogQueue.isEmpty())
+    if (m_runTime)
     {
-        LogSendInfo& firstInfo = m_sendLogQueue.head();
-        qint64 timePassed = currentTime - firstInfo.sendTime;
-
-        // 未超时，直接退出
-        if (timePassed < m_commandTimeoutMs)
-            break;
-
-        // 命令超时处理
-        int row = firstInfo.seq - 1;
-        if (row >= 0 && row < ui->tableWidget->rowCount())
-        {
-            // 更新表格状态为超时
-            QTableWidgetItem* statusItem = new QTableWidgetItem("TimeOut");
-            statusItem->setForeground(Qt::red);
-            ui->tableWidget->setItem(row, 6, statusItem);
-
-            // 更新延时时间
-            ui->tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(timePassed / 1000.0, 'f', 2)));
-        }
-
-        // 超时命令移出队列
-        m_sendLogQueue.dequeue();
-        appendlog(QString("命令超时：%1（序号：%2）").arg(firstInfo.cmdName).arg(firstInfo.seq));
-    }
-}
-
-// ===================== RunTime日志筛选功能 =====================
-void Widget::filterRunTimeLog(int index)
-{
-    int filterType = ui->comboBox_RunTime_chose->currentData().toInt();
-
-    // 遍历表格所有行，根据状态筛选显示/隐藏
-    int rowCount = ui->tableWidget->rowCount();
-    for (int i = 0; i < rowCount; i++)
-    {
-        QTableWidgetItem* statusItem = ui->tableWidget->item(i, 6);
-        if (!statusItem) continue;
-
-        QString status = statusItem->text();
-        bool showRow = false;
-
-        switch (filterType)
-        {
-        case 0: // ALL
-            showRow = true;
-            break;
-        case 1: // OK
-            showRow = (status == "OK");
-            break;
-        case 2: // ERROR
-            showRow = (status == "ERROR");
-            break;
-        case 3: // TimeOut
-            showRow = (status == "TimeOut");
-            break;
-        default:
-            showRow = true;
-        }
-
-        // 设置行隐藏/显示
-        ui->tableWidget->setRowHidden(i, !showRow);
+        m_runTime->sendCmdWithLog(data, cmdName, sendValue);
     }
 }
 
 void Widget::on_btn_RunTime_clearlog_clicked()
 {
-    ui->tableWidget->setRowCount(0);// 清空表格所有行
-    m_RunTime_logSeq = 0;// 重置日志序号
-    m_sendLogQueue.clear();// 清空发送队列
-    appendlog("RunTime表格日志已清空");
+    if (m_runTime)
+    {
+        m_runTime->clearLog();
+    }
 }
-
 
 void Widget::on_btn_RunTime_outlog_clicked()
 {
-    int rowCount = ui->tableWidget->rowCount();
-    if (rowCount == 0)
+    if (m_runTime)
     {
-        QMessageBox::information(this, "提示", "表格日志为空，无需导出");
-        return;
+        m_runTime->exportLog();
     }
-
-    QString defaultFileName = QString("RunTimeLog_%1.csv").arg(QDateTime::currentDateTime().toString("yyyyMMdd_HHmmss"));
-
-    // 打开保存文件对话框
-    QString filePath = QFileDialog::getSaveFileName(
-        this,
-        "导出表格日志",
-        defaultFileName,
-        "CSV文件 (*.csv);;文本文件 (*.txt);;所有文件 (*.*)"
-    );
-
-    if (filePath.isEmpty()) return;
-
-    QFile file(filePath);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        QMessageBox::critical(this, "导出失败",
-            QString("文件无法打开：%1").arg(file.errorString()));
-        return;
-    }
-
-    QTextStream out(&file);
-    out.setEncoding(QStringConverter::Utf8);
-    out.setGenerateByteOrderMark(true); // 写入BOM头，解决Excel中文乱码
-
-    // 1. 写入表头
-    out << "时间戳,序号(Seq),命令,发送值,返回值,延时(ms),状态\n";
-
-    // 2. 遍历所有行（包括隐藏行，导出完整日志）
-    for (int i = 0; i < rowCount; i++)
-    {
-        // 读取每一列的数据
-        QStringList rowData;
-        for (int col = 0; col < 7; col++)
-        {
-            QTableWidgetItem* item = ui->tableWidget->item(i, col);
-            rowData << (item ? item->text() : "");
-        }
-
-        // 写入CSV行
-        out << rowData.join(",") << "\n";
-    }
-
-    file.close();
-    QMessageBox::information(this, "导出成功",
-        QString("日志已导出到：\n%1").arg(filePath));
-    appendlog(QString("RunTime表格日志已导出到：%1").arg(filePath));
 }
+
 

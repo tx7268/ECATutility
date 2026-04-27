@@ -222,7 +222,7 @@
     <QtMoc Include="inc\SerialThread.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\RunTime.h" />
+    <QtMoc Include="inc\RunTime.h" />
     <ClInclude Include="inc\Scope.h" />
     <ClInclude Include="resource.h" />
     <QtMoc Include="inc\XML.h" />
