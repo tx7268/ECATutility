@@ -102,10 +102,7 @@ Widget::Widget(QWidget *parent)
 
     //***********************************************RunTime界面初始化***********************************************//
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); // 设置RunTime界面的表格禁止编辑
-    ui->comboBox_RunTime_chose->addItem("ALL", QVariant(0));
-    ui->comboBox_RunTime_chose->addItem("OK", QVariant(1));
-    ui->comboBox_RunTime_chose->addItem("ERROR", QVariant(2));
-    ui->comboBox_RunTime_chose->addItem("TimeOut", QVariant(3));
+
 
     //***********************************************串口通信信号槽连接***********************************************//
     // 刷新串口按钮 → 触发扫描
@@ -180,9 +177,13 @@ Widget::Widget(QWidget *parent)
 
 
     //***********************************************RunTime界面信号槽连接***********************************************
-    m_runTime->init(ui->tableWidget, ui->comboBox_RunTime_chose, this);
+    m_runTime->init(ui->tableWidget, ui->comboBox_RunTime_chose, this, ui->widget_chart);
     connect(m_runTime, &RunTime::sendSerialDataRequested, m_link, &Link::sendSerialData);
-    connect(m_runTime, &RunTime::logMessage, this, &Widget::appendlog);}
+    connect(m_runTime, &RunTime::logMessage, this, &Widget::appendlog);
+
+    // 统计数据更新信号
+    connect(m_runTime, &RunTime::statsUpdated, this, &Widget::updateRunTimeStats);
+}
 
 Widget::~Widget()
 {
@@ -584,6 +585,9 @@ void Widget::serialReadData(const QByteArray &data)
             ui->textEdit_dc->setPlainText(QString::number(dc));
             ui->textEdit_freq->setPlainText(QString("%1 ").arg(freq));
             ui->textEdit_slavestate->setPlainText(ethercatStateToString(slavestate));
+
+            // 把频率传给RunTime绘图
+            m_runTime->onEcatFreqUpdated(freq);
         }
         // ====================== 普通应答/错误帧，可选记录日志 ======================
         else if (type == FRAME_TYPE_ACK)
@@ -1258,7 +1262,6 @@ void Widget::on_btn_read_XMLfile_clicked()
     if (!m_xml->loadXmlDescription(filePath, errorMessage))
     {
         appendlog(QString("[XML] %1").arg(errorMessage));
-        appendlog(errorMessage);
         QMessageBox::warning(this, "XML导入失败", errorMessage);
         return;
     }
@@ -1332,4 +1335,20 @@ void Widget::on_btn_RunTime_outlog_clicked()
     }
 }
 
+// 实时更新RunTime统计UI
+void Widget::updateRunTimeStats(const RunTimeStats& stats)
+{
+    // 错误包数
+    ui->lineEdit_error_packet->setText(QString::number(stats.errorPackets));
+
+    // 延时指标
+    ui->lineEdit_current_delay->setText(QString::number(stats.currentLatency, 'f', 2));
+    ui->lineEdit_max_delay->setText(QString::number(stats.maxLatency, 'f', 2));
+    ui->lineEdit_min_delay->setText(QString::number(stats.minLatency, 'f', 2));
+    ui->lineEdit_average_delay->setText(QString::number(stats.avgLatency, 'f', 2));
+    ui->lineEdit_jitter->setText(QString::number(stats.jitter, 'f', 2));
+
+    // 丢包率
+    ui->lineEdit_loss_rate->setText(QString::number(stats.packetLossRate, 'f', 1));
+}
 

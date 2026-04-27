@@ -20,6 +20,7 @@ class Protocol;
 class XML;
 class RunTime;
 
+struct RunTimeStats;
 
 #define op_mode_no   0            // 无模式
 #define op_mode_pp   1            // Profile Position（位置规划）
@@ -46,6 +47,9 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
+
+public slots:
+    //void updateEcatFreqToRunTime(quint32 freq);
 
 private slots:
 
@@ -100,7 +104,7 @@ private slots:
 
     void on_btn_scope_clicked();
 
-    void on_btn_RunTime_clicked();
+   
 
 
     //**********************************************Scope界面函数**********************************************//
@@ -110,7 +114,11 @@ private slots:
 
 
     //**********************************************RunTime界面函数**********************************************//
-    void sendCmdWithLog(const QByteArray& data, const QString& cmdName, int sendValue = 0);
+    void on_btn_RunTime_clicked();
+
+    void sendCmdWithLog(const QByteArray &data, const QString &cmdName, int sendValue = 0);
+
+    void updateRunTimeStats(const RunTimeStats &stats);
 
     void on_btn_RunTime_clearlog_clicked();
 
