@@ -548,7 +548,7 @@ QPushButton#btn_set:checked:hover
 }</string>
    </property>
    <property name="currentIndex">
-    <number>4</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="page_Link">
     <widget class="QGroupBox" name="groupBox_3">
@@ -1401,31 +1401,41 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <x>180</x>
        <y>10</y>
        <width>661</width>
-       <height>661</height>
+       <height>671</height>
       </rect>
      </property>
      <property name="currentIndex">
       <number>1</number>
      </property>
-     <widget class="QWidget" name="x_t">
+     <widget class="QWidget" name="scope_table1">
       <attribute name="title">
        <string>位置曲线</string>
       </attribute>
-      <widget class="QChartView" name="chartView" native="true">
+      <widget class="QChartView" name="chart_pos" native="true">
        <property name="geometry">
         <rect>
-         <x>9</x>
-         <y>9</y>
-         <width>631</width>
-         <height>621</height>
+         <x>-1</x>
+         <y>-1</y>
+         <width>651</width>
+         <height>641</height>
         </rect>
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="x_v">
+     <widget class="QWidget" name="scope_table2">
       <attribute name="title">
        <string>速度曲线</string>
       </attribute>
+      <widget class="QWidget" name="chart_vel" native="true">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>641</width>
+         <height>621</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="verticalLayoutWidget">

@@ -128,9 +128,10 @@ public:
     QTextEdit *textEdit_SDO_log;
     QWidget *page_Scope;
     QTabWidget *tabWidget;
-    QWidget *x_t;
-    QChartView *chartView;
-    QWidget *x_v;
+    QWidget *scope_table1;
+    QChartView *chart_pos;
+    QWidget *scope_table2;
+    QWidget *chart_vel;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout_2;
     QCheckBox *checkBox_actpos;
@@ -832,16 +833,19 @@ public:
         page_Scope->setObjectName("page_Scope");
         tabWidget = new QTabWidget(page_Scope);
         tabWidget->setObjectName("tabWidget");
-        tabWidget->setGeometry(QRect(180, 10, 661, 661));
-        x_t = new QWidget();
-        x_t->setObjectName("x_t");
-        chartView = new QChartView(x_t);
-        chartView->setObjectName("chartView");
-        chartView->setGeometry(QRect(9, 9, 631, 621));
-        tabWidget->addTab(x_t, QString());
-        x_v = new QWidget();
-        x_v->setObjectName("x_v");
-        tabWidget->addTab(x_v, QString());
+        tabWidget->setGeometry(QRect(180, 10, 661, 671));
+        scope_table1 = new QWidget();
+        scope_table1->setObjectName("scope_table1");
+        chart_pos = new QChartView(scope_table1);
+        chart_pos->setObjectName("chart_pos");
+        chart_pos->setGeometry(QRect(-1, -1, 651, 641));
+        tabWidget->addTab(scope_table1, QString());
+        scope_table2 = new QWidget();
+        scope_table2->setObjectName("scope_table2");
+        chart_vel = new QWidget(scope_table2);
+        chart_vel->setObjectName("chart_vel");
+        chart_vel->setGeometry(QRect(10, 20, 641, 621));
+        tabWidget->addTab(scope_table2, QString());
         verticalLayoutWidget = new QWidget(page_Scope);
         verticalLayoutWidget->setObjectName("verticalLayoutWidget");
         verticalLayoutWidget->setGeometry(QRect(20, 100, 147, 161));
@@ -3068,7 +3072,7 @@ public:
 
         retranslateUi(Widget);
 
-        stackedWidget->setCurrentIndex(4);
+        stackedWidget->setCurrentIndex(3);
         tabWidget->setCurrentIndex(1);
 
 
@@ -3154,8 +3158,8 @@ public:
         label_13->setText(QCoreApplication::translate("Widget", "\346\225\260\345\200\274\357\274\210DEC\357\274\211", nullptr));
         btn_read_sdo->setText(QCoreApplication::translate("Widget", "\350\257\273\345\217\226SDO", nullptr));
         btn_write_sdo->setText(QCoreApplication::translate("Widget", "\345\206\231\345\205\245SDO", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(x_t), QCoreApplication::translate("Widget", "\344\275\215\347\275\256\346\233\262\347\272\277", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(x_v), QCoreApplication::translate("Widget", "\351\200\237\345\272\246\346\233\262\347\272\277", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(scope_table1), QCoreApplication::translate("Widget", "\344\275\215\347\275\256\346\233\262\347\272\277", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(scope_table2), QCoreApplication::translate("Widget", "\351\200\237\345\272\246\346\233\262\347\272\277", nullptr));
         checkBox_actpos->setText(QCoreApplication::translate("Widget", "\345\256\236\351\231\205\344\275\215\347\275\256\357\274\210actpos\357\274\211", nullptr));
         checkBox_targetpos->setText(QCoreApplication::translate("Widget", "\346\214\207\344\273\244\344\275\215\347\275\256 (target pos)", nullptr));
         checkBox_vel->setText(QCoreApplication::translate("Widget", "\351\200\237\345\272\246 (vel)", nullptr));

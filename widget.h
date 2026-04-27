@@ -19,6 +19,7 @@ class Link;
 class Protocol;
 class XML;
 class RunTime;
+class Scope;
 
 struct RunTimeStats;
 
@@ -108,7 +109,13 @@ private slots:
 
 
     //**********************************************Scope界面函数**********************************************//
+    void on_btn_begin_scope_clicked();
 
+    void on_btn_stop_scope_clicked();
+
+    void on_btn_clear_scope_clicked();
+
+    void on_btn_out_scope_clicked();
 
 
 
@@ -124,12 +131,15 @@ private slots:
 
     void on_btn_RunTime_outlog_clicked();
 
+
+
 private:
     Ui::Widget* ui;
     Link* m_link;
     Protocol* proto;
     XML* m_xml;
     RunTime* m_runTime;
+    Scope* m_scope;
 
     int8_t home_mode;
     int32_t vel,acc,dec, sw_vel, zero_vel;
@@ -144,6 +154,8 @@ private:
     bool set_home_para(uint16_t slaveIndex, int8_t home_mode, int32_t sw_vel, int32_t zero_vel);
 
     void updateLogRow(int retValue, const QString& status);
+    void updateScopeConfig();
+    QWidget* findScopeChartContainer() const;
 };
 
 

@@ -8,25 +8,57 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QTextStream>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QPushButton>
 
 #include "inc/Link.h"
 #include "inc/Protocol.h"
 #include "inc/SerialThread.h"
 #include "inc/XML.h"
 #include "inc/RunTime.h"
+#include "inc/Scope.h"
+
+namespace
+{
+QCheckBox *findCheckBox(QWidget *root, const QStringList &names)
+{
+    if (!root)
+    {
+        return nullptr;
+    }
+
+    for (const QString &name : names)
+    {
+        if (QCheckBox *box = root->findChild<QCheckBox *>(name))
+        {
+            return box;
+        }
+    }
+
+    return nullptr;
+}
+
+bool checkBoxChecked(QWidget *root, const QStringList &names, bool defaultValue)
+{
+    QCheckBox *box = findCheckBox(root, names);
+    return box ? box->isChecked() : defaultValue;
+}
+}
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
-    ,m_link(new Link(this))
-    ,proto(new Protocol(this))
-    ,m_xml(new XML(this))
+    , m_link(new Link(this))
+    , proto(new Protocol(this))
+    , m_xml(new XML(this))
     , m_runTime(new RunTime(this))
+    , m_scope(new Scope(this))
 {
     ui->setupUi(this);
     setWindowTitle("ECATutility");
-    QChart *chart = new QChart();
-    ui->chartView->setChart(chart);
+
+
     setWindowIcon(QIcon(":/icons/ECAT"));
     ui->stackedWidget->hide();
 
@@ -40,8 +72,7 @@ Widget::Widget(QWidget *parent)
 
     updateSerialPortButtons();
 
-    QList<QPushButton *> dioButtons =
-        {
+    QList<QPushButton *> dioButtons = {
             ui->btn_do0_0, ui->btn_do0_1, ui->btn_do0_2, ui->btn_do0_3,
             ui->btn_do0_4, ui->btn_do0_5, ui->btn_do0_6, ui->btn_do0_7,
             ui->btn_do1_0, ui->btn_do1_1, ui->btn_do1_2, ui->btn_do1_3,
@@ -74,6 +105,9 @@ Widget::Widget(QWidget *parent)
     ui->comboBox_mode_chose->addItem("DEG", QVariant(2));  // 1: 相对位置运动
     ui->comboBox_mode_chose->addItem("HOME", QVariant(3)); // 2: 回零运动
     ui->comboBox_mode_chose->setCurrentIndex(0);           // 默认ABS模式
+
+
+
     // 限制只能输入32位有符号整数
     ui->lineEdit_motion_value->setValidator(new QIntValidator(-2147483648, 2147483647, this));
 
@@ -183,12 +217,65 @@ Widget::Widget(QWidget *parent)
 
     // 统计数据更新信号
     connect(m_runTime, &RunTime::statsUpdated, this, &Widget::updateRunTimeStats);
+
+
+    //***********************************************Scope界面***********************************************
+    ui->comboBox_axischose->addItem("Axis0", QVariant(0));
+    ui->comboBox_axischose->setCurrentIndex(0);           // 默认Axis0
+
+
+    ui->comboBox_timebase->addItem("10ms",  QVariant(0));
+    ui->comboBox_timebase->addItem("100ms",  QVariant(1));
+    ui->comboBox_timebase->addItem("1s",  QVariant(2));
+    ui->comboBox_timebase->addItem("10s",  QVariant(3));
+    ui->comboBox_timebase->addItem("100s", QVariant(4));
+    ui->comboBox_timebase->setCurrentIndex(2);           // 默认1s
+
+    ui->comboBox_timeall->addItem("NONE", QVariant(0));
+    ui->comboBox_timeall->addItem("5s", QVariant(1));
+    ui->comboBox_timeall->addItem("15s", QVariant(2));
+    ui->comboBox_timeall->addItem("60s", QVariant(3));
+    ui->comboBox_timeall->addItem("120s", QVariant(4));
+    ui->comboBox_timeall->setCurrentIndex(0);           // 默认NONE
+
+    ui->comboBox_posall->addItem("10^6", QVariant(0));
+    ui->comboBox_posall->addItem("10^7", QVariant(1));
+    ui->comboBox_posall->addItem("10^8", QVariant(2));
+    ui->comboBox_posall->addItem("10^9", QVariant(3));
+    ui->comboBox_posall->setCurrentIndex(0);           // 默认NONE
+
+    ui->comboBox_trigger->addItem("上升沿", QVariant(0));
+    ui->comboBox_trigger->addItem("下降沿", QVariant(1));
+    ui->comboBox_trigger->setCurrentIndex(0);           // 默认NONE
+    m_scope->init(findScopeChartContainer());
+    updateScopeConfig();
 }
+
+
 
 Widget::~Widget()
 {
+    if (m_link)
+    {
+        m_link->closeSerialPort();
+
+        QThread::msleep(50);
+    }
+
+    disconnect(m_link, nullptr, this, nullptr);
+    disconnect(proto, nullptr, this, nullptr);
+    disconnect(m_xml, nullptr, this, nullptr);
+    disconnect(m_runTime, nullptr, this, nullptr);
+    disconnect(m_scope, nullptr, this, nullptr);
+
+    m_serialPortOpen = false;
+
     delete ui;
+
+    ui = nullptr;
 }
+
+
 
 //**********************************************左侧按键列表**********************************************//
 
@@ -588,6 +675,10 @@ void Widget::serialReadData(const QByteArray &data)
 
             // 把频率传给RunTime绘图
             m_runTime->onEcatFreqUpdated(freq);
+            if (m_scope)
+            {
+                m_scope->appendSample(actpos, targetpos, freq);
+            }
         }
         // ====================== 普通应答/错误帧，可选记录日志 ======================
         else if (type == FRAME_TYPE_ACK)
@@ -1296,11 +1387,6 @@ void Widget::on_btn_clear_XMLfile_clicked()
     appendlog("已清除 XML 文件缓存");
 }
 
-
-//****************************************************Scope界面功能函数****************************************************
-
-
-
 //****************************************************RunTime界面功能函数****************************************************
 
 void Widget::updateLogRow(int retValue, const QString& status)
@@ -1350,5 +1436,161 @@ void Widget::updateRunTimeStats(const RunTimeStats& stats)
 
     // 丢包率
     ui->lineEdit_loss_rate->setText(QString::number(stats.packetLossRate, 'f', 1));
+}
+
+
+
+//****************************************************Scope界面功能函数****************************************************
+
+
+void Widget::on_btn_begin_scope_clicked()
+{
+    if (!m_scope)
+    {
+        return;
+    }
+
+    updateScopeConfig();
+    m_scope->clear();
+    m_scope->start();
+    appendlog("Scope start");
+}
+
+
+void Widget::on_btn_stop_scope_clicked()
+{
+    if (m_scope)
+    {
+        m_scope->stop();
+        appendlog("Scope stop");
+    }
+}
+
+
+void Widget::on_btn_clear_scope_clicked()
+{
+    if (m_scope)
+    {
+        m_scope->clear();
+        appendlog("Scope clear");
+    }
+}
+
+
+void Widget::on_btn_out_scope_clicked()
+{
+    if (m_scope && !m_scope->exportImage(this))
+    {
+        appendlog("Scope export canceled or failed");
+    }
+}
+
+void Widget::updateScopeConfig()
+{
+    if (!m_scope)
+    {
+        return;
+    }
+
+    QWidget *scopePage = ui->stackedWidget->widget(3);
+
+    const bool showActual = checkBoxChecked(scopePage, {
+        "checkBox_actpos", "checkBox_actual_pos", "checkBox_actual_position", "checkBox_scope_actpos"
+    }, true);
+    const bool showTarget = checkBoxChecked(scopePage, {
+        "checkBox_targetpos", "checkBox_target_pos", "checkBox_target_position", "checkBox_scope_targetpos"
+    }, true);
+    const bool showVelocity = checkBoxChecked(scopePage, {
+        "checkBox_vel", "checkBox_velocity", "checkBox_scope_vel"
+    }, false);
+    const bool showAcceleration = checkBoxChecked(scopePage, {
+        "checkBox_acc", "checkBox_acceleration", "checkBox_scope_acc"
+    }, false);
+
+    int timeBaseMs = 1000;
+    switch (ui->comboBox_timebase->currentData().toInt())
+    {
+    case 0: timeBaseMs = 10; break;
+    case 1: timeBaseMs = 100; break;
+    case 2: timeBaseMs = 1000; break;
+    case 3: timeBaseMs = 10000; break;
+    case 4: timeBaseMs = 100000; break;
+    default: break;
+    }
+
+    int totalSeconds = 0;
+    switch (ui->comboBox_timeall->currentData().toInt())
+    {
+    case 1: totalSeconds = 5; break;
+    case 2: totalSeconds = 15; break;
+    case 3: totalSeconds = 60; break;
+    case 4: totalSeconds = 120; break;
+    default: break;
+    }
+
+    double range = 1000000.0;
+    switch (ui->comboBox_posall->currentData().toInt())
+    {
+    case 0: range = 1000000.0; break;
+    case 1: range = 10000000.0; break;
+    case 2: range = 100000000.0; break;
+    case 3: range = 1000000000.0; break;
+    default: break;
+    }
+
+    const int triggerMode = ui->comboBox_trigger->currentData().toInt();
+    m_scope->configure(showActual, showTarget, showVelocity, showAcceleration,
+                       timeBaseMs, totalSeconds, range, triggerMode);
+}
+
+QWidget *Widget::findScopeChartContainer() const
+{
+    QWidget *scopePage = ui->stackedWidget->widget(3);
+    if (!scopePage)
+    {
+        return nullptr;
+    }
+
+    const QStringList candidateNames = {
+        "widget_scope_chart",
+        "widget_scopeChart",
+        "widget_scope_view",
+        "widget_scopeView",
+        "widget_scope_plot",
+        "widget_scope",
+        "widget_plot",
+        "widget_chart_scope"
+    };
+
+    for (const QString &name : candidateNames)
+    {
+        if (QWidget *widget = scopePage->findChild<QWidget *>(name))
+        {
+            return widget;
+        }
+    }
+
+    QWidget *bestWidget = nullptr;
+    int bestArea = 0;
+    const QList<QWidget *> children = scopePage->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly);
+    for (QWidget *child : children)
+    {
+        if (qobject_cast<QPushButton *>(child) ||
+            qobject_cast<QComboBox *>(child) ||
+            qobject_cast<QCheckBox *>(child))
+        {
+            continue;
+        }
+
+        const QRect rect = child->geometry();
+        const int area = rect.width() * rect.height();
+        if (area > bestArea)
+        {
+            bestArea = area;
+            bestWidget = child;
+        }
+    }
+
+    return bestWidget ? bestWidget : scopePage;
 }
 
