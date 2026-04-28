@@ -247,6 +247,8 @@ Widget::Widget(QWidget *parent)
     ui->comboBox_trigger->addItem("上升沿", QVariant(0));
     ui->comboBox_trigger->addItem("下降沿", QVariant(1));
     ui->comboBox_trigger->setCurrentIndex(0);           // 默认NONE
+    ui->btn_begin_scope->setEnabled(true);
+    ui->btn_stop_scope->setEnabled(false);
     m_scope->init(findScopeChartContainer());
     updateScopeConfig();
 }
@@ -678,6 +680,11 @@ void Widget::serialReadData(const QByteArray &data)
             if (m_scope)
             {
                 m_scope->appendSample(actpos, targetpos, freq);
+                if (!m_scope->isRunning())
+                {
+                    ui->btn_begin_scope->setEnabled(true);
+                    ui->btn_stop_scope->setEnabled(false);
+                }
             }
         }
         // ====================== 普通应答/错误帧，可选记录日志 ======================
@@ -1450,18 +1457,39 @@ void Widget::on_btn_begin_scope_clicked()
         return;
     }
 
+    if (m_scope->isRunning())
+    {
+        return;
+    }
+
     updateScopeConfig();
     m_scope->clear();
     m_scope->start();
+    if (ui->btn_begin_scope)
+    {
+        ui->btn_begin_scope->setEnabled(false);
+    }
+    if (ui->btn_stop_scope)
+    {
+        ui->btn_stop_scope->setEnabled(true);
+    }
     appendlog("Scope start");
 }
 
 
 void Widget::on_btn_stop_scope_clicked()
 {
-    if (m_scope)
+    if (m_scope && m_scope->isRunning())
     {
         m_scope->stop();
+        if (ui->btn_begin_scope)
+        {
+            ui->btn_begin_scope->setEnabled(true);
+        }
+        if (ui->btn_stop_scope)
+        {
+            ui->btn_stop_scope->setEnabled(false);
+        }
         appendlog("Scope stop");
     }
 }
@@ -1471,7 +1499,19 @@ void Widget::on_btn_clear_scope_clicked()
 {
     if (m_scope)
     {
+        if (m_scope->isRunning())
+        {
+            m_scope->stop();
+        }
         m_scope->clear();
+        if (ui->btn_begin_scope)
+        {
+            ui->btn_begin_scope->setEnabled(true);
+        }
+        if (ui->btn_stop_scope)
+        {
+            ui->btn_stop_scope->setEnabled(false);
+        }
         appendlog("Scope clear");
     }
 }

@@ -6,7 +6,6 @@
 #include <QLegend>
 #include <QLineSeries>
 #include <QPainter>
-#include <QPixmap>
 #include <QVBoxLayout>
 #include <QValueAxis>
 
@@ -32,7 +31,7 @@ void Scope::init(QWidget *chartContainer)
         m_axisX = new QValueAxis();
         m_axisX->setTitleText(QStringLiteral("Time (s)"));
         m_axisX->setLabelFormat("%.2f");
-        m_axisX->setRange(0.0, 30.0);
+        m_axisX->setRange(0.0, visibleWindowSeconds());
 
         m_axisY = new QValueAxis();
         m_axisY->setTitleText(QStringLiteral("Value"));
@@ -63,7 +62,11 @@ void Scope::init(QWidget *chartContainer)
     {
         m_chartView->setParent(chartContainer);
     }
-    layout->addWidget(m_chartView);
+
+    if (layout->indexOf(m_chartView) < 0)
+    {
+        layout->addWidget(m_chartView);
+    }
 }
 
 void Scope::configure(bool actualPositionEnabled,
@@ -94,10 +97,10 @@ void Scope::configure(bool actualPositionEnabled,
     {
         m_axisY->setRange(-m_range, m_range);
     }
+
     if (m_axisX)
     {
-        const double visibleSeconds = m_totalSeconds > 0 ? m_totalSeconds : 30.0;
-        m_axisX->setRange(0.0, visibleSeconds);
+        m_axisX->setRange(0.0, visibleWindowSeconds());
     }
 }
 
@@ -110,8 +113,8 @@ void Scope::start()
 
     m_running = true;
     m_elapsed.restart();
-    m_lastAppendMs = -1;
     m_lastSampleMs = -1;
+    m_lastUiRefreshMs = -1;
     m_hasLastPosition = false;
     m_lastVelocity = 0.0;
 }
@@ -128,15 +131,24 @@ void Scope::clear()
     if (m_velocitySeries) m_velocitySeries->clear();
     if (m_accelerationSeries) m_accelerationSeries->clear();
 
-    m_lastAppendMs = -1;
     m_lastSampleMs = -1;
+    m_lastUiRefreshMs = -1;
     m_hasLastPosition = false;
     m_lastVelocity = 0.0;
 
     if (m_axisX)
     {
-        const double visibleSeconds = m_totalSeconds > 0 ? m_totalSeconds : 30.0;
-        m_axisX->setRange(0.0, visibleSeconds);
+        m_axisX->setRange(0.0, visibleWindowSeconds());
+    }
+
+    if (m_axisY)
+    {
+        m_axisY->setRange(-m_range, m_range);
+    }
+
+    if (m_chart)
+    {
+        m_chart->update();
     }
 }
 
@@ -161,6 +173,11 @@ bool Scope::exportImage(QWidget *parent)
     return m_chartView->grab().save(filePath);
 }
 
+bool Scope::isRunning() const
+{
+    return m_running;
+}
+
 void Scope::appendSample(qint32 actualPosition, qint32 targetPosition, quint32 feedbackFreq)
 {
     if (!m_running || !hasVisibleChannel())
@@ -169,12 +186,8 @@ void Scope::appendSample(qint32 actualPosition, qint32 targetPosition, quint32 f
     }
 
     const qint64 nowMs = m_elapsed.elapsed();
-    if (m_lastAppendMs >= 0 && (nowMs - m_lastAppendMs) < m_timeBaseMs)
-    {
-        return;
-    }
-
     const double x = nowMs / 1000.0;
+
     double dt = 0.0;
     if (m_lastSampleMs >= 0)
     {
@@ -201,15 +214,36 @@ void Scope::appendSample(qint32 actualPosition, qint32 targetPosition, quint32 f
     m_lastActualPosition = actualPosition;
     m_lastVelocity = velocity;
     m_hasLastPosition = true;
-    m_lastAppendMs = nowMs;
     m_lastSampleMs = nowMs;
 
-    refreshAxes(x);
+    if (m_lastUiRefreshMs < 0 || (nowMs - m_lastUiRefreshMs) >= m_uiRefreshIntervalMs)
+    {
+        refreshAxes(x);
+        if (m_chart)
+        {
+            m_chart->update();
+        }
+        if (m_chartView)
+        {
+            m_chartView->viewport()->update();
+        }
+        m_lastUiRefreshMs = nowMs;
+    }
 
     if (m_totalSeconds > 0 && x >= m_totalSeconds)
     {
         stop();
     }
+}
+
+double Scope::visibleWindowSeconds() const
+{
+    if (m_totalSeconds > 0)
+    {
+        return static_cast<double>(m_totalSeconds);
+    }
+
+    return qMax(1.0, static_cast<double>(m_timeBaseMs) / 1000.0);
 }
 
 void Scope::setupSeries()
@@ -265,7 +299,7 @@ void Scope::refreshAxes(double x)
         return;
     }
 
-    const double visibleSeconds = m_totalSeconds > 0 ? m_totalSeconds : 30.0;
+    const double visibleSeconds = visibleWindowSeconds();
     if (m_totalSeconds > 0)
     {
         m_axisX->setRange(0.0, visibleSeconds);

@@ -118,6 +118,7 @@ void RunTime::createChart()
     // 绑定坐标轴
     m_chart->addAxis(m_axisX, Qt::AlignBottom);
     m_chart->addAxis(m_axisY, Qt::AlignLeft);
+    m_chart->addSeries(m_seriesFreq);
     m_seriesFreq->attachAxis(m_axisX);
     m_seriesFreq->attachAxis(m_axisY);
 
@@ -125,9 +126,16 @@ void RunTime::createChart()
     m_chartView = new QChartView(m_chart, m_chartParent);
     m_chartView->setRenderHint(QPainter::Antialiasing);
 
-    QVBoxLayout *layout = new QVBoxLayout(m_chartParent);
-    layout->setContentsMargins(0,0,0,0);
-    layout->addWidget(m_chartView);
+    QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(m_chartParent->layout());
+    if (!layout)
+    {
+        layout = new QVBoxLayout(m_chartParent);
+        layout->setContentsMargins(0, 0, 0, 0);
+    }
+    if (layout->indexOf(m_chartView) < 0)
+    {
+        layout->addWidget(m_chartView);
+    }
 }
 
 void RunTime::onEcatFreqUpdated(quint32 freq)
@@ -137,6 +145,11 @@ void RunTime::onEcatFreqUpdated(quint32 freq)
 
 void RunTime::updateChart(double freq)
 {
+    if (!m_seriesFreq || !m_axisX || !m_axisY || !m_chart)
+    {
+        return;
+    }
+
     // 追加频率数据
     m_seriesFreq->append(m_xIndex++, freq);
 
@@ -155,6 +168,10 @@ void RunTime::updateChart(double freq)
     }
 
     m_chart->update();
+    if (m_chartView)
+    {
+        m_chartView->viewport()->update();
+    }
 }
 
 
