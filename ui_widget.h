@@ -3072,7 +3072,7 @@ public:
 
         retranslateUi(Widget);
 
-        stackedWidget->setCurrentIndex(3);
+        stackedWidget->setCurrentIndex(2);
         tabWidget->setCurrentIndex(1);
 
 

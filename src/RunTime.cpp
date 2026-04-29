@@ -10,10 +10,40 @@
 #include <QVBoxLayout>
 #include <QPen>
 #include <QColor>
+
 #include <algorithm>
 #include <cmath>
 
+// ====================== 全局常量配置 ======================
+namespace
+{
+    constexpr double kRuntimeDefaultMinFreq = 950.0;    // 默认最小频率
+    constexpr double kRuntimeDefaultMaxFreq = 1020.0;   // 默认最大频率
+    constexpr double kRuntimeRangePaddingRatio = 0.05;  // 坐标轴留白比例
+    constexpr double kRuntimeRangePaddingFloor = 2.0;   // 坐标轴最小留白
 
+    constexpr int kRuntimeMajorTickCount = 8;           // 主刻度数量
+    constexpr int kRuntimeMinorTickCount = 1;           // 副刻度数量
+
+    constexpr double kFreqFilterThreshold = 2000.0;// 频率过滤阈值：超过2000Hz的数据直接丢弃
+
+     /**
+     * @brief 配置图表坐标轴样式（刻度、网格）
+     * @param axis 数值坐标轴对象
+     */
+    void configureRuntimeAxis(QValueAxis* axis)
+    {
+        if (!axis)
+        {
+            return;
+        }
+
+        axis->setTickCount(kRuntimeMajorTickCount);
+        axis->setMinorTickCount(kRuntimeMinorTickCount);
+        axis->setGridLineVisible(true);
+        axis->setMinorGridLineVisible(true);
+    }
+}
 
 // ====================== 图表线程实现 ======================
 ChartThread::ChartThread(QObject *parent) : QThread(parent)
@@ -55,6 +85,13 @@ RunTime::~RunTime()
 }
 
 
+/**
+ * @brief 初始化RunTime模块，绑定UI控件
+ * @param tableWidget 日志表格
+ * @param filterComboBox 日志过滤器
+ * @param dialogParent 弹窗父控件
+ * @param chartParent 图表父控件
+ */
 void RunTime::init(QTableWidget* tableWidget, QComboBox* filterComboBox, QWidget* dialogParent, QWidget *chartParent)
 {
     m_tableWidget = tableWidget;
@@ -62,7 +99,7 @@ void RunTime::init(QTableWidget* tableWidget, QComboBox* filterComboBox, QWidget
     m_dialogParent = dialogParent;
     m_chartParent = chartParent; 
 
-    if (m_tableWidget)
+    if (m_tableWidget)// 设置表格不可编辑
     {
         m_tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     }
@@ -83,8 +120,9 @@ void RunTime::init(QTableWidget* tableWidget, QComboBox* filterComboBox, QWidget
 }
 
 
-
-// 创建图表
+/**
+ * @brief 创建实时频率监控图表
+ */
 void RunTime::createChart()
 {
     if(!m_chartParent) return;
@@ -103,17 +141,19 @@ void RunTime::createChart()
     penFreq.setWidth(1);
     m_seriesFreq->setPen(penFreq);
 
+    // X轴（数据点序号）
     m_axisX = new QValueAxis();
     m_axisX->setRange(0, MAX_DATA_COUNT);
     m_axisX->setLabelFormat("%d");
-    m_axisX->setGridLineVisible(true);
+    //m_axisX->setGridLineVisible(true);
+    configureRuntimeAxis(m_axisX);
 
-    // Y轴：频率
+    // Y轴（频率值）
     m_axisY = new QValueAxis();
     m_axisY->setTitleText("频率(Hz)");
-    m_axisY->setRange(950, 1020); // 默认ECAT频率范围
+    m_axisY->setRange(kRuntimeDefaultMinFreq, kRuntimeDefaultMaxFreq); // 默认ECAT频率范围
     m_axisY->setLabelFormat("%d");
-    m_axisY->setGridLineVisible(true);
+    configureRuntimeAxis(m_axisY);
 
     // 绑定坐标轴
     m_chart->addAxis(m_axisX, Qt::AlignBottom);
@@ -126,6 +166,7 @@ void RunTime::createChart()
     m_chartView = new QChartView(m_chart, m_chartParent);
     m_chartView->setRenderHint(QPainter::Antialiasing);
 
+    //将图表添加到父控件
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(m_chartParent->layout());
     if (!layout)
     {
@@ -138,10 +179,15 @@ void RunTime::createChart()
     }
 }
 
+/**
+ * @brief 外部接口：更新ECAT实时频率
+ * @param freq 频率值
+ */
 void RunTime::onEcatFreqUpdated(quint32 freq)
 {
     m_chartThread->addFreqData(freq);
 }
+
 
 void RunTime::updateChart(double freq)
 {
@@ -150,24 +196,60 @@ void RunTime::updateChart(double freq)
         return;
     }
 
+    // 过滤2000Hz以上频率
+    if (freq > kFreqFilterThreshold)
+    {
+        return;
+    }
+
     // 追加频率数据
     m_seriesFreq->append(m_xIndex++, freq);
-
-    // 缓存最大频率，避免遍历所有点（性能优化）
-    if (freq > m_maxFreq) 
-    {
-        m_maxFreq = freq;
-        m_axisY->setMax(m_maxFreq * 1.01); // 轻微留白
-    }
+    m_dataHistory.append(freq);
 
     // 滚动显示：超过最大点数，移除旧数据
     if (m_seriesFreq->count() > MAX_DATA_COUNT)
+        if (m_seriesFreq->count() > MAX_DATA_COUNT)
+        {
+            m_seriesFreq->removePoints(0, 1);
+            if (!m_dataHistory.isEmpty())
+            {
+                m_dataHistory.removeFirst();
+            }
+        }
+
+    // 自适应X轴范围
+    if (m_xIndex > MAX_DATA_COUNT)
     {
-        m_seriesFreq->removePoints(0, 1);
         m_axisX->setRange(m_xIndex - MAX_DATA_COUNT, m_xIndex);
     }
+    else
+    {
+        m_axisX->setRange(0, MAX_DATA_COUNT);
+    }
+
+    double minFreq = kRuntimeDefaultMinFreq;
+    double maxFreq = kRuntimeDefaultMaxFreq;
+    if (!m_dataHistory.isEmpty())
+    {
+        auto minmax = std::minmax_element(m_dataHistory.cbegin(), m_dataHistory.cend());
+        minFreq = *minmax.first;
+        maxFreq = *minmax.second;
+    }
+
+    const double span = qMax(maxFreq - minFreq, 1.0);
+    const double padding = qMax(span * kRuntimeRangePaddingRatio, kRuntimeRangePaddingFloor);
+    m_axisY->setRange(minFreq - padding, maxFreq + padding);
+
+    if (maxFreq > m_maxFreq)
+    {
+        m_maxFreq = maxFreq;
+    }
+
+    configureRuntimeAxis(m_axisX);
+    configureRuntimeAxis(m_axisY);
 
     m_chart->update();
+
     if (m_chartView)
     {
         m_chartView->viewport()->update();
@@ -411,7 +493,7 @@ void RunTime::clearLog()
     m_logSeq = 0;
     m_sendLogQueue.clear();
 
-        // ====================== 新增：重置图表 ======================
+    // ====================== 重置图表 ======================
     if(m_seriesFreq)
     {
         m_seriesFreq->clear();

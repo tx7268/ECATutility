@@ -1449,7 +1449,7 @@ void Widget::updateRunTimeStats(const RunTimeStats& stats)
 
 //****************************************************Scope界面功能函数****************************************************
 
-
+//启动示波器的数据采集
 void Widget::on_btn_begin_scope_clicked()
 {
     if (!m_scope)
@@ -1463,8 +1463,12 @@ void Widget::on_btn_begin_scope_clicked()
     }
 
     updateScopeConfig();
-    m_scope->clear();
+
+    //m_scope->clear();//清空上一次的缓存数据
+
     m_scope->start();
+
+
     if (ui->btn_begin_scope)
     {
         ui->btn_begin_scope->setEnabled(false);
@@ -1476,7 +1480,7 @@ void Widget::on_btn_begin_scope_clicked()
     appendlog("Scope start");
 }
 
-
+//停止示波器采集
 void Widget::on_btn_stop_scope_clicked()
 {
     if (m_scope && m_scope->isRunning())
@@ -1494,29 +1498,17 @@ void Widget::on_btn_stop_scope_clicked()
     }
 }
 
-
+//清空示波器波形数据，
 void Widget::on_btn_clear_scope_clicked()
 {
     if (m_scope)
     {
-        if (m_scope->isRunning())
-        {
-            m_scope->stop();
-        }
         m_scope->clear();
-        if (ui->btn_begin_scope)
-        {
-            ui->btn_begin_scope->setEnabled(true);
-        }
-        if (ui->btn_stop_scope)
-        {
-            ui->btn_stop_scope->setEnabled(false);
-        }
         appendlog("Scope clear");
     }
 }
 
-
+//将当前波形保存为图片文件
 void Widget::on_btn_out_scope_clicked()
 {
     if (m_scope && !m_scope->exportImage(this))
@@ -1525,6 +1517,12 @@ void Widget::on_btn_out_scope_clicked()
     }
 }
 
+
+/**
+ * @brief 更新示波器配置参数
+ *
+ * 该函数读取UI界面上的各种控件（复选框、下拉框），
+ */
 void Widget::updateScopeConfig()
 {
     if (!m_scope)
@@ -1532,20 +1530,14 @@ void Widget::updateScopeConfig()
         return;
     }
 
+    // 获取 Scope 页面的 Widget 指针
     QWidget *scopePage = ui->stackedWidget->widget(3);
 
-    const bool showActual = checkBoxChecked(scopePage, {
-        "checkBox_actpos", "checkBox_actual_pos", "checkBox_actual_position", "checkBox_scope_actpos"
-    }, true);
-    const bool showTarget = checkBoxChecked(scopePage, {
-        "checkBox_targetpos", "checkBox_target_pos", "checkBox_target_position", "checkBox_scope_targetpos"
-    }, true);
-    const bool showVelocity = checkBoxChecked(scopePage, {
-        "checkBox_vel", "checkBox_velocity", "checkBox_scope_vel"
-    }, false);
-    const bool showAcceleration = checkBoxChecked(scopePage, {
-        "checkBox_acc", "checkBox_acceleration", "checkBox_scope_acc"
-    }, false);
+    // 读取显示通道配置
+    const bool showActual = scopePage->findChild<QCheckBox*>("checkBox_actpos")->isChecked();
+    const bool showTarget = scopePage->findChild<QCheckBox*>("checkBox_targetpos")->isChecked();
+    const bool showVelocity = scopePage->findChild<QCheckBox*>("checkBox_vel")->isChecked();
+    const bool showAcceleration = scopePage->findChild<QCheckBox*>("checkBox_acc")->isChecked();
 
     int timeBaseMs = 1000;
     switch (ui->comboBox_timebase->currentData().toInt())
@@ -1578,7 +1570,10 @@ void Widget::updateScopeConfig()
     default: break;
     }
 
+    // 6. 读取触发模式
     const int triggerMode = ui->comboBox_trigger->currentData().toInt();
+
+    // 7. 将上述所有配置应用到 m_scope 对象
     m_scope->configure(showActual, showTarget, showVelocity, showAcceleration,
                        timeBaseMs, totalSeconds, range, triggerMode);
 }
