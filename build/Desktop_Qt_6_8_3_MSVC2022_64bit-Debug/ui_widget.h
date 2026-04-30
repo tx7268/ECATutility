@@ -23,7 +23,6 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStackedWidget>
-#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
@@ -127,11 +126,6 @@ public:
     QPushButton *btn_write_sdo;
     QTextEdit *textEdit_SDO_log;
     QWidget *page_Scope;
-    QTabWidget *tabWidget;
-    QWidget *scope_table1;
-    QChartView *chart_pos;
-    QWidget *scope_table2;
-    QWidget *chart_vel;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout_2;
     QCheckBox *checkBox_actpos;
@@ -147,14 +141,17 @@ public:
     QPushButton *btn_out_scope;
     QWidget *layoutWidget;
     QGridLayout *gridLayout_3;
-    QLabel *label_57;
-    QLabel *label_55;
-    QComboBox *comboBox_posall;
     QComboBox *comboBox_trigger;
     QComboBox *comboBox_timebase;
-    QLabel *label_56;
-    QLabel *label_58;
+    QLabel *label_57;
     QComboBox *comboBox_timeall;
+    QLabel *label_55;
+    QLabel *label_58;
+    QComboBox *comboBox_posall;
+    QLabel *label_56;
+    QLabel *label_28;
+    QCheckBox *checkBox;
+    QChartView *chart_pos;
     QWidget *page_RunTime;
     QGroupBox *groupBox_13;
     QLabel *label_59;
@@ -831,24 +828,9 @@ public:
         groupBox_5->raise();
         page_Scope = new QWidget();
         page_Scope->setObjectName("page_Scope");
-        tabWidget = new QTabWidget(page_Scope);
-        tabWidget->setObjectName("tabWidget");
-        tabWidget->setGeometry(QRect(180, 10, 661, 671));
-        scope_table1 = new QWidget();
-        scope_table1->setObjectName("scope_table1");
-        chart_pos = new QChartView(scope_table1);
-        chart_pos->setObjectName("chart_pos");
-        chart_pos->setGeometry(QRect(-1, -1, 651, 641));
-        tabWidget->addTab(scope_table1, QString());
-        scope_table2 = new QWidget();
-        scope_table2->setObjectName("scope_table2");
-        chart_vel = new QWidget(scope_table2);
-        chart_vel->setObjectName("chart_vel");
-        chart_vel->setGeometry(QRect(10, 20, 641, 621));
-        tabWidget->addTab(scope_table2, QString());
         verticalLayoutWidget = new QWidget(page_Scope);
         verticalLayoutWidget->setObjectName("verticalLayoutWidget");
-        verticalLayoutWidget->setGeometry(QRect(20, 100, 147, 161));
+        verticalLayoutWidget->setGeometry(QRect(10, 90, 161, 131));
         verticalLayout_2 = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout_2->setObjectName("verticalLayout_2");
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
@@ -882,7 +864,7 @@ public:
         label_54->setGeometry(QRect(10, 6, 101, 20));
         comboBox_axischose = new QComboBox(page_Scope);
         comboBox_axischose->setObjectName("comboBox_axischose");
-        comboBox_axischose->setGeometry(QRect(10, 40, 161, 41));
+        comboBox_axischose->setGeometry(QRect(10, 40, 161, 31));
         btn_begin_scope = new QPushButton(page_Scope);
         btn_begin_scope->setObjectName("btn_begin_scope");
         btn_begin_scope->setGeometry(QRect(10, 480, 151, 41));
@@ -897,26 +879,10 @@ public:
         btn_out_scope->setGeometry(QRect(10, 630, 151, 41));
         layoutWidget = new QWidget(page_Scope);
         layoutWidget->setObjectName("layoutWidget");
-        layoutWidget->setGeometry(QRect(10, 270, 161, 201));
+        layoutWidget->setGeometry(QRect(10, 230, 161, 241));
         gridLayout_3 = new QGridLayout(layoutWidget);
         gridLayout_3->setObjectName("gridLayout_3");
         gridLayout_3->setContentsMargins(0, 0, 0, 0);
-        label_57 = new QLabel(layoutWidget);
-        label_57->setObjectName("label_57");
-
-        gridLayout_3->addWidget(label_57, 3, 0, 1, 1);
-
-        label_55 = new QLabel(layoutWidget);
-        label_55->setObjectName("label_55");
-        label_55->setMinimumSize(QSize(30, 0));
-
-        gridLayout_3->addWidget(label_55, 0, 0, 1, 1);
-
-        comboBox_posall = new QComboBox(layoutWidget);
-        comboBox_posall->setObjectName("comboBox_posall");
-
-        gridLayout_3->addWidget(comboBox_posall, 2, 1, 1, 1);
-
         comboBox_trigger = new QComboBox(layoutWidget);
         comboBox_trigger->setObjectName("comboBox_trigger");
 
@@ -928,21 +894,50 @@ public:
 
         gridLayout_3->addWidget(comboBox_timebase, 0, 1, 1, 1);
 
-        label_56 = new QLabel(layoutWidget);
-        label_56->setObjectName("label_56");
+        label_57 = new QLabel(layoutWidget);
+        label_57->setObjectName("label_57");
 
-        gridLayout_3->addWidget(label_56, 2, 0, 1, 1);
-
-        label_58 = new QLabel(layoutWidget);
-        label_58->setObjectName("label_58");
-
-        gridLayout_3->addWidget(label_58, 1, 0, 1, 1);
+        gridLayout_3->addWidget(label_57, 3, 0, 1, 1);
 
         comboBox_timeall = new QComboBox(layoutWidget);
         comboBox_timeall->setObjectName("comboBox_timeall");
 
         gridLayout_3->addWidget(comboBox_timeall, 1, 1, 1, 1);
 
+        label_55 = new QLabel(layoutWidget);
+        label_55->setObjectName("label_55");
+        label_55->setMinimumSize(QSize(30, 0));
+
+        gridLayout_3->addWidget(label_55, 0, 0, 1, 1);
+
+        label_58 = new QLabel(layoutWidget);
+        label_58->setObjectName("label_58");
+
+        gridLayout_3->addWidget(label_58, 1, 0, 1, 1);
+
+        comboBox_posall = new QComboBox(layoutWidget);
+        comboBox_posall->setObjectName("comboBox_posall");
+
+        gridLayout_3->addWidget(comboBox_posall, 2, 1, 1, 1);
+
+        label_56 = new QLabel(layoutWidget);
+        label_56->setObjectName("label_56");
+
+        gridLayout_3->addWidget(label_56, 2, 0, 1, 1);
+
+        label_28 = new QLabel(layoutWidget);
+        label_28->setObjectName("label_28");
+
+        gridLayout_3->addWidget(label_28, 4, 0, 1, 1);
+
+        checkBox = new QCheckBox(layoutWidget);
+        checkBox->setObjectName("checkBox");
+
+        gridLayout_3->addWidget(checkBox, 4, 1, 1, 1);
+
+        chart_pos = new QChartView(page_Scope);
+        chart_pos->setObjectName("chart_pos");
+        chart_pos->setGeometry(QRect(180, 10, 661, 671));
         stackedWidget->addWidget(page_Scope);
         page_RunTime = new QWidget();
         page_RunTime->setObjectName("page_RunTime");
@@ -3073,7 +3068,6 @@ public:
         retranslateUi(Widget);
 
         stackedWidget->setCurrentIndex(3);
-        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(Widget);
@@ -3158,8 +3152,6 @@ public:
         label_13->setText(QCoreApplication::translate("Widget", "\346\225\260\345\200\274\357\274\210DEC\357\274\211", nullptr));
         btn_read_sdo->setText(QCoreApplication::translate("Widget", "\350\257\273\345\217\226SDO", nullptr));
         btn_write_sdo->setText(QCoreApplication::translate("Widget", "\345\206\231\345\205\245SDO", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(scope_table1), QCoreApplication::translate("Widget", "\344\275\215\347\275\256\346\233\262\347\272\277", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(scope_table2), QCoreApplication::translate("Widget", "\351\200\237\345\272\246\346\233\262\347\272\277", nullptr));
         checkBox_actpos->setText(QCoreApplication::translate("Widget", "\345\256\236\351\231\205\344\275\215\347\275\256\357\274\210actpos\357\274\211", nullptr));
         checkBox_targetpos->setText(QCoreApplication::translate("Widget", "\346\214\207\344\273\244\344\275\215\347\275\256 (target pos)", nullptr));
         checkBox_vel->setText(QCoreApplication::translate("Widget", "\351\200\237\345\272\246 (vel)", nullptr));
@@ -3171,8 +3163,10 @@ public:
         btn_out_scope->setText(QCoreApplication::translate("Widget", "\345\257\274\345\207\272\345\233\276\345\203\217", nullptr));
         label_57->setText(QCoreApplication::translate("Widget", "\350\247\246\345\217\221", nullptr));
         label_55->setText(QCoreApplication::translate("Widget", "\346\227\266\345\237\272", nullptr));
-        label_56->setText(QCoreApplication::translate("Widget", "\351\207\217\347\250\213", nullptr));
         label_58->setText(QCoreApplication::translate("Widget", "\345\256\232\346\227\266\346\227\266\351\227\264", nullptr));
+        label_56->setText(QCoreApplication::translate("Widget", "\351\207\217\347\250\213", nullptr));
+        label_28->setText(QCoreApplication::translate("Widget", "\345\205\211\346\240\207", nullptr));
+        checkBox->setText(QCoreApplication::translate("Widget", "\345\205\211\346\240\207", nullptr));
         groupBox_13->setTitle(QCoreApplication::translate("Widget", "\345\275\223\345\211\215\345\273\266\346\227\266", nullptr));
         label_59->setText(QCoreApplication::translate("Widget", "ms", nullptr));
         groupBox_14->setTitle(QCoreApplication::translate("Widget", "\345\271\263\345\235\207\345\273\266\346\227\266", nullptr));

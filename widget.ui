@@ -548,7 +548,7 @@ QPushButton#btn_set:checked:hover
 }</string>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="page_Link">
     <widget class="QGroupBox" name="groupBox_3">
@@ -1395,56 +1395,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <zorder>groupBox_5</zorder>
    </widget>
    <widget class="QWidget" name="page_Scope">
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>10</y>
-       <width>661</width>
-       <height>671</height>
-      </rect>
-     </property>
-     <property name="currentIndex">
-      <number>1</number>
-     </property>
-     <widget class="QWidget" name="scope_table1">
-      <attribute name="title">
-       <string>位置曲线</string>
-      </attribute>
-      <widget class="QChartView" name="chart_pos" native="true">
-       <property name="geometry">
-        <rect>
-         <x>-1</x>
-         <y>-1</y>
-         <width>651</width>
-         <height>641</height>
-        </rect>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="scope_table2">
-      <attribute name="title">
-       <string>速度曲线</string>
-      </attribute>
-      <widget class="QWidget" name="chart_vel" native="true">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>641</width>
-         <height>621</height>
-        </rect>
-       </property>
-      </widget>
-     </widget>
-    </widget>
     <widget class="QWidget" name="verticalLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>100</y>
-       <width>147</width>
-       <height>161</height>
+       <x>16</x>
+       <y>80</y>
+       <width>151</width>
+       <height>141</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1510,7 +1467,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <x>10</x>
        <y>40</y>
        <width>161</width>
-       <height>41</height>
+       <height>31</height>
       </rect>
      </property>
     </widget>
@@ -1570,19 +1527,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>270</y>
-       <width>161</width>
-       <height>201</height>
+       <y>230</y>
+       <width>168</width>
+       <height>241</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_57">
-        <property name="text">
-         <string>触发</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label_55">
         <property name="minimumSize">
@@ -1599,9 +1549,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <item row="2" column="1">
        <widget class="QComboBox" name="comboBox_posall"/>
       </item>
-      <item row="3" column="1">
-       <widget class="QComboBox" name="comboBox_trigger"/>
-      </item>
       <item row="0" column="1">
        <widget class="QComboBox" name="comboBox_timebase">
         <property name="minimumSize">
@@ -1612,13 +1559,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_56">
-        <property name="text">
-         <string>量程</string>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_58">
         <property name="text">
@@ -1626,10 +1566,51 @@ li.checked::marker { content: &quot;\2612&quot;; }
         </property>
        </widget>
       </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_56">
+        <property name="text">
+         <string>量程</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="comboBox_trigger"/>
+      </item>
       <item row="1" column="1">
        <widget class="QComboBox" name="comboBox_timeall"/>
       </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_57">
+        <property name="text">
+         <string>触发</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_28">
+        <property name="text">
+         <string>光标</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QCheckBox" name="checkBox_cursor">
+        <property name="text">
+         <string>光标</string>
+        </property>
+       </widget>
+      </item>
      </layout>
+    </widget>
+    <widget class="QWidget" name="chart_vel" native="true">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>10</y>
+       <width>641</width>
+       <height>671</height>
+      </rect>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="page_RunTime">
@@ -4489,14 +4470,6 @@ QPushButton#btn_RunTime:checked:hover
   <zorder>btn_scope</zorder>
   <zorder>btn_RunTime</zorder>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QChartView</class>
-   <extends>QWidget</extends>
-   <header>qchartview.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

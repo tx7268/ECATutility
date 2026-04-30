@@ -1993,7 +1993,6 @@ debug\Scope.obj: ..\..\src\Scope.cpp ..\..\inc\Scope.h \
 		D:\QT\6.8.3\msvc2022_64\include\QtCharts\qxyseries.h \
 		D:\QT\6.8.3\msvc2022_64\include\QtGui\QImage \
 		D:\QT\6.8.3\msvc2022_64\include\QtGui\QPainter \
-		D:\QT\6.8.3\msvc2022_64\include\QtGui\QPixmap \
 		D:\QT\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
 		D:\QT\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
 		D:\QT\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
@@ -3109,7 +3108,6 @@ debug\widget.obj: ..\..\widget.cpp ..\..\widget.h \
 		D:\QT\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
 		D:\QT\6.8.3\msvc2022_64\include\QtWidgets\QStackedWidget \
 		D:\QT\6.8.3\msvc2022_64\include\QtWidgets\qstackedwidget.h \
-		D:\QT\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
 		D:\QT\6.8.3\msvc2022_64\include\QtWidgets\QTableWidget \
 		D:\QT\6.8.3\msvc2022_64\include\QtWidgets\qtablewidget.h \
 		D:\QT\6.8.3\msvc2022_64\include\QtWidgets\qtableview.h \

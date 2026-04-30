@@ -1,20 +1,149 @@
 #include "inc/Scope.h"
 
+#include <QBrush>
 #include <QChart>
 #include <QChartView>
+#include <QColor>
 #include <QFileDialog>
+#include <QGraphicsLineItem>
+#include <QGraphicsSimpleTextItem>
+#include <QHash>
 #include <QLegend>
 #include <QLineSeries>
+#include <QMouseEvent>
 #include <QPainter>
-#include <QVBoxLayout>
+#include <QPen>
+#include <QPointF>
 #include <QValueAxis>
+#include <QVBoxLayout>
+#include <QtGlobal>
+#include <functional>
 
-Scope::Scope(QObject *parent)
-    : QObject(parent)
+namespace
 {
+    constexpr int kScopeMajorTickCount = 9;
+    constexpr int kScopeMinorTickCount = 1;
+    constexpr int kScopeTimeTickCount = 6;
+
+    void configureAxisStyle(QValueAxis* axis, int tickCount, int minorTickCount)
+    {
+        if (!axis)
+        {
+            return;
+        }
+
+        axis->setTickCount(tickCount);
+        axis->setMinorTickCount(minorTickCount);
+        axis->setGridLineVisible(true);
+        axis->setMinorGridLineVisible(true);
+    }
+
+    class ScopeChartView final : public QChartView
+    {
+    public:
+        explicit ScopeChartView(QChart* chart, QWidget* parent = nullptr)
+            : QChartView(chart, parent)
+        {
+            setMouseTracking(true);
+        }
+
+        std::function<void(Qt::MouseButton, const QPoint&)> onPress;
+        std::function<void(Qt::MouseButtons, const QPoint&)> onMove;
+        std::function<void(Qt::MouseButton, const QPoint&)> onRelease;
+
+    protected:
+        void mousePressEvent(QMouseEvent* event) override
+        {
+            if (onPress)
+            {
+                onPress(event->button(), event->pos());
+            }
+            event->accept();
+        }
+
+        void mouseMoveEvent(QMouseEvent* event) override
+        {
+            if (onMove)
+            {
+                onMove(event->buttons(), event->pos());
+            }
+            event->accept();
+        }
+
+        void mouseReleaseEvent(QMouseEvent* event) override
+        {
+            if (onRelease)
+            {
+                onRelease(event->button(), event->pos());
+            }
+            event->accept();
+        }
+    };
+
+    struct ScopePrivateState
+    {
+        bool cursorEnabled = false;
+        bool panning = false;
+        bool draggingCursor = false;
+        QPoint dragStartPos;
+        double dragStartMinX = 0.0;
+        double dragStartMaxX = 0.0;
+        double dragStartMinY = 0.0;
+        double dragStartMaxY = 0.0;
+        bool followLatestData = true;
+        QGraphicsLineItem* cursorLine = nullptr;
+        QGraphicsSimpleTextItem* cursorLabel = nullptr;
+    };
+
+    QHash<const Scope*, ScopePrivateState*>& scopeStates()
+    {
+        static QHash<const Scope*, ScopePrivateState*> states;
+        return states;
+    }
+
+    ScopePrivateState* stateFor(const Scope* scope)
+    {
+        auto& states = scopeStates();
+        if (!states.contains(scope))
+        {
+            states.insert(scope, new ScopePrivateState());
+        }
+        return states.value(scope);
+    }
+
+    QPointF findNearestPoint(QLineSeries* series, double xValue)
+    {
+        if (!series || series->count() == 0)
+        {
+            return QPointF();
+        }
+
+        const QList<QPointF> points = series->points();
+        QPointF bestPoint = points.first();
+        double bestDistance = qAbs(bestPoint.x() - xValue);
+
+        for (const QPointF& point : points)
+        {
+            const double distance = qAbs(point.x() - xValue);
+            if (distance < bestDistance)
+            {
+                bestDistance = distance;
+                bestPoint = point;
+            }
+        }
+
+        return bestPoint;
+    }
+
 }
 
-void Scope::init(QWidget *chartContainer)
+Scope::Scope(QObject* parent)
+    : QObject(parent)
+{
+    stateFor(this);
+}
+
+void Scope::init(QWidget* chartContainer)
 {
     if (!chartContainer)
     {
@@ -25,6 +154,7 @@ void Scope::init(QWidget *chartContainer)
     {
         m_chart = new QChart();
         m_chart->setTitle(QStringLiteral("Scope"));
+        m_chart->setAnimationOptions(QChart::NoAnimation);
         m_chart->legend()->setVisible(true);
         m_chart->legend()->setAlignment(Qt::AlignTop);
 
@@ -32,11 +162,13 @@ void Scope::init(QWidget *chartContainer)
         m_axisX->setTitleText(QStringLiteral("Time (s)"));
         m_axisX->setLabelFormat("%.2f");
         m_axisX->setRange(0.0, visibleWindowSeconds());
+        configureAxisStyle(m_axisX, kScopeTimeTickCount, kScopeMinorTickCount);
 
         m_axisY = new QValueAxis();
         m_axisY->setTitleText(QStringLiteral("Value"));
         m_axisY->setLabelFormat("%.0f");
         m_axisY->setRange(-m_range, m_range);
+        configureAxisStyle(m_axisY, kScopeMajorTickCount, kScopeMinorTickCount);
 
         m_chart->addAxis(m_axisX, Qt::AlignBottom);
         m_chart->addAxis(m_axisY, Qt::AlignLeft);
@@ -45,12 +177,186 @@ void Scope::init(QWidget *chartContainer)
 
     if (!m_chartView)
     {
-        m_chartView = new QChartView(m_chart, chartContainer);
-        m_chartView->setRenderHint(QPainter::Antialiasing);
-        m_chartView->setRubberBand(QChartView::RectangleRubberBand);
+        ScopeChartView* view = new ScopeChartView(m_chart, chartContainer);
+        view->setRenderHint(QPainter::Antialiasing);
+        view->setRubberBand(QChartView::NoRubberBand);
+
+        view->onPress = [this](Qt::MouseButton button, const QPoint& pos)
+            {
+                ScopePrivateState* state = stateFor(this);
+                if (state->cursorEnabled && button == Qt::LeftButton)
+                {
+                    state->draggingCursor = true;
+                    if (m_chartView)
+                    {
+                        m_chartView->setCursor(Qt::SizeHorCursor);
+                    }
+                    if (m_chart)
+                    {
+                        const QRectF plotArea = m_chart->plotArea();
+                        if (plotArea.contains(pos))
+                        {
+                            if (!state->cursorLine)
+                            {
+                                state->cursorLine = new QGraphicsLineItem(m_chart);
+                                QPen pen(QColor(220, 80, 20));
+                                pen.setWidth(1);
+                                pen.setStyle(Qt::DashLine);
+                                state->cursorLine->setPen(pen);
+                            }
+                            if (!state->cursorLabel)
+                            {
+                                state->cursorLabel = new QGraphicsSimpleTextItem(m_chart);
+                                state->cursorLabel->setBrush(QBrush(QColor(20, 20, 20)));
+                            }
+                        }
+                    }
+                    return;
+                }
+
+                if ((!state->cursorEnabled && button == Qt::LeftButton) ||
+                    (state->cursorEnabled && button == Qt::RightButton))
+                {
+                    if (!m_axisX || !m_axisY)
+                    {
+                        return;
+                    }
+
+                    state->panning = true;
+                    state->followLatestData = false;
+                    state->dragStartPos = pos;
+                    state->dragStartMinX = m_axisX->min();
+                    state->dragStartMaxX = m_axisX->max();
+                    state->dragStartMinY = m_axisY->min();
+                    state->dragStartMaxY = m_axisY->max();
+                    if (m_chartView)
+                    {
+                        m_chartView->setCursor(Qt::ClosedHandCursor);
+                    }
+                }
+            };
+
+        view->onMove = [this](Qt::MouseButtons buttons, const QPoint& pos)
+            {
+                Q_UNUSED(buttons);
+                ScopePrivateState* state = stateFor(this);
+
+                if (state->draggingCursor)
+                {
+                    if (!m_chart || !m_axisY)
+                    {
+                        return;
+                    }
+
+                    const QRectF plotArea = m_chart->plotArea();
+                    if (!plotArea.contains(pos))
+                    {
+                        return;
+                    }
+
+                    QLineSeries* referenceSeries = nullptr;
+                    if (m_showActualPosition && m_actualSeries && m_actualSeries->count() > 0)
+                    {
+                        referenceSeries = m_actualSeries;
+                    }
+                    else if (m_showTargetPosition && m_targetSeries && m_targetSeries->count() > 0)
+                    {
+                        referenceSeries = m_targetSeries;
+                    }
+                    else if (m_showVelocity && m_velocitySeries && m_velocitySeries->count() > 0)
+                    {
+                        referenceSeries = m_velocitySeries;
+                    }
+                    else if (m_showAcceleration && m_accelerationSeries && m_accelerationSeries->count() > 0)
+                    {
+                        referenceSeries = m_accelerationSeries;
+                    }
+
+                    const QPointF chartValue = m_chart->mapToValue(pos);
+                    const QPointF nearestPoint = findNearestPoint(referenceSeries, chartValue.x());
+                    if (!referenceSeries || referenceSeries->count() == 0)
+                    {
+                        return;
+                    }
+
+                    if (!state->cursorLine)
+                    {
+                        state->cursorLine = new QGraphicsLineItem(m_chart);
+                        QPen pen(QColor(220, 80, 20));
+                        pen.setWidth(1);
+                        pen.setStyle(Qt::DashLine);
+                        state->cursorLine->setPen(pen);
+                    }
+
+                    if (!state->cursorLabel)
+                    {
+                        state->cursorLabel = new QGraphicsSimpleTextItem(m_chart);
+                        state->cursorLabel->setBrush(QBrush(QColor(20, 20, 20)));
+                    }
+
+                    const QPointF top = m_chart->mapToPosition(QPointF(nearestPoint.x(), m_axisY->max()));
+                    const QPointF bottom = m_chart->mapToPosition(QPointF(nearestPoint.x(), m_axisY->min()));
+                    state->cursorLine->setLine(QLineF(top, bottom));
+                    state->cursorLine->show();
+
+                    state->cursorLabel->setText(QStringLiteral("t=%1s  y=%2")
+                        .arg(nearestPoint.x(), 0, 'f', 3)
+                        .arg(nearestPoint.y(), 0, 'f', 0));
+                    state->cursorLabel->setPos(top + QPointF(6.0, 6.0));
+                    state->cursorLabel->show();
+                    return;
+                }
+
+                if (!state->panning || !m_chart || !m_axisX || !m_axisY)
+                {
+                    return;
+                }
+
+                const QRectF plotArea = m_chart->plotArea();
+                if (plotArea.width() <= 0.0 || plotArea.height() <= 0.0)
+                {
+                    return;
+                }
+
+                const QPoint delta = pos - state->dragStartPos;
+                const double spanX = state->dragStartMaxX - state->dragStartMinX;
+                const double spanY = state->dragStartMaxY - state->dragStartMinY;
+                const double dx = -(static_cast<double>(delta.x()) / plotArea.width()) * spanX;
+                const double dy = (static_cast<double>(delta.y()) / plotArea.height()) * spanY;
+
+                m_axisX->setRange(state->dragStartMinX + dx, state->dragStartMaxX + dx);
+                m_axisY->setRange(state->dragStartMinY + dy, state->dragStartMaxY + dy);
+                configureAxisStyle(m_axisX, kScopeTimeTickCount, kScopeMinorTickCount);
+                configureAxisStyle(m_axisY, kScopeMajorTickCount, kScopeMinorTickCount);
+
+                if (m_chartView)
+                {
+                    m_chartView->viewport()->update();
+                }
+            };
+
+        view->onRelease = [this](Qt::MouseButton button, const QPoint& pos)
+            {
+                Q_UNUSED(pos);
+                ScopePrivateState* state = stateFor(this);
+                if (button == Qt::LeftButton)
+                {
+                    state->draggingCursor = false;
+                }
+                if (button == Qt::LeftButton || button == Qt::RightButton)
+                {
+                    state->panning = false;
+                }
+                if (m_chartView)
+                {
+                    m_chartView->unsetCursor();
+                }
+            };
+
+        m_chartView = view;
     }
 
-    QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(chartContainer->layout());
+    QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(chartContainer->layout());
     if (!layout)
     {
         layout = new QVBoxLayout(chartContainer);
@@ -70,13 +376,13 @@ void Scope::init(QWidget *chartContainer)
 }
 
 void Scope::configure(bool actualPositionEnabled,
-                      bool targetPositionEnabled,
-                      bool velocityEnabled,
-                      bool accelerationEnabled,
-                      int timeBaseMs,
-                      int totalSeconds,
-                      double range,
-                      int triggerMode)
+    bool targetPositionEnabled,
+    bool velocityEnabled,
+    bool accelerationEnabled,
+    int timeBaseMs,
+    int totalSeconds,
+    double range,
+    int triggerMode)
 {
     m_showActualPosition = actualPositionEnabled;
     m_showTargetPosition = targetPositionEnabled;
@@ -88,19 +394,42 @@ void Scope::configure(bool actualPositionEnabled,
     m_triggerMode = triggerMode;
     Q_UNUSED(m_triggerMode);
 
+    ScopePrivateState* state = stateFor(this);
+    state->cursorEnabled = property("cursorEnabled").toBool();
+
     if (m_actualSeries) m_actualSeries->setVisible(m_showActualPosition);
     if (m_targetSeries) m_targetSeries->setVisible(m_showTargetPosition);
     if (m_velocitySeries) m_velocitySeries->setVisible(m_showVelocity);
     if (m_accelerationSeries) m_accelerationSeries->setVisible(m_showAcceleration);
 
-    if (m_axisY)
+    if (!state->cursorEnabled)
     {
-        m_axisY->setRange(-m_range, m_range);
+        state->draggingCursor = false;
+        if (state->cursorLine) state->cursorLine->hide();
+        if (state->cursorLabel) state->cursorLabel->hide();
     }
 
-    if (m_axisX)
+    if (!state->panning)
     {
-        m_axisX->setRange(0.0, visibleWindowSeconds());
+        if (m_axisY)
+        {
+            m_axisY->setRange(-m_range, m_range);
+            configureAxisStyle(m_axisY, kScopeMajorTickCount, kScopeMinorTickCount);
+        }
+
+        if (m_axisX)
+        {
+            refreshAxes((m_running && m_elapsed.isValid()) ? m_elapsed.elapsed() / 1000.0 : 0.0);
+        }
+    }
+
+    if (m_chart)
+    {
+        m_chart->update();
+    }
+    if (m_chartView)
+    {
+        m_chartView->viewport()->update();
     }
 }
 
@@ -110,6 +439,11 @@ void Scope::start()
     {
         return;
     }
+
+    ScopePrivateState* state = stateFor(this);
+    state->followLatestData = true;
+    state->panning = false;
+    state->draggingCursor = false;
 
     m_running = true;
     m_elapsed.restart();
@@ -136,14 +470,23 @@ void Scope::clear()
     m_hasLastPosition = false;
     m_lastVelocity = 0.0;
 
+    ScopePrivateState* state = stateFor(this);
+    state->followLatestData = true;
+    state->panning = false;
+    state->draggingCursor = false;
+    if (state->cursorLine) state->cursorLine->hide();
+    if (state->cursorLabel) state->cursorLabel->hide();
+
     if (m_axisX)
     {
         m_axisX->setRange(0.0, visibleWindowSeconds());
+        configureAxisStyle(m_axisX, kScopeTimeTickCount, kScopeMinorTickCount);
     }
 
     if (m_axisY)
     {
         m_axisY->setRange(-m_range, m_range);
+        configureAxisStyle(m_axisY, kScopeMajorTickCount, kScopeMinorTickCount);
     }
 
     if (m_chart)
@@ -152,7 +495,7 @@ void Scope::clear()
     }
 }
 
-bool Scope::exportImage(QWidget *parent)
+bool Scope::exportImage(QWidget* parent)
 {
     if (!m_chartView)
     {
@@ -206,19 +549,23 @@ void Scope::appendSample(qint32 actualPosition, qint32 targetPosition, quint32 f
         acceleration = (velocity - m_lastVelocity) / dt;
     }
 
-    appendPoint(m_actualSeries, x, actualPosition, m_showActualPosition);
-    appendPoint(m_targetSeries, x, targetPosition, m_showTargetPosition);
-    appendPoint(m_velocitySeries, x, velocity, m_showVelocity);
-    appendPoint(m_accelerationSeries, x, acceleration, m_showAcceleration);
+    appendPoint(m_actualSeries, x, actualPosition, true);
+    appendPoint(m_targetSeries, x, targetPosition, true);
+    appendPoint(m_velocitySeries, x, velocity, true);
+    appendPoint(m_accelerationSeries, x, acceleration, true);
 
     m_lastActualPosition = actualPosition;
     m_lastVelocity = velocity;
     m_hasLastPosition = true;
     m_lastSampleMs = nowMs;
 
+    ScopePrivateState* state = stateFor(this);
     if (m_lastUiRefreshMs < 0 || (nowMs - m_lastUiRefreshMs) >= m_uiRefreshIntervalMs)
     {
-        refreshAxes(x);
+        if (state->followLatestData && !state->panning)
+        {
+            refreshAxes(x);
+        }
         if (m_chart)
         {
             m_chart->update();
@@ -252,7 +599,7 @@ void Scope::setupSeries()
     m_actualSeries->setName(QStringLiteral("actpos"));
 
     m_targetSeries = new QLineSeries();
-    m_targetSeries->setName(QStringLiteral("target pos"));
+    m_targetSeries->setName(QStringLiteral("cmd pos"));
 
     m_velocitySeries = new QLineSeries();
     m_velocitySeries->setName(QStringLiteral("vel"));
@@ -260,14 +607,14 @@ void Scope::setupSeries()
     m_accelerationSeries = new QLineSeries();
     m_accelerationSeries->setName(QStringLiteral("acc"));
 
-    const QList<QLineSeries *> seriesList = {
+    const QList<QLineSeries*> seriesList = {
         m_actualSeries,
         m_targetSeries,
         m_velocitySeries,
         m_accelerationSeries
     };
 
-    for (QLineSeries *series : seriesList)
+    for (QLineSeries* series : seriesList)
     {
         m_chart->addSeries(series);
         series->attachAxis(m_axisX);
@@ -278,7 +625,7 @@ void Scope::setupSeries()
     m_accelerationSeries->setVisible(m_showAcceleration);
 }
 
-void Scope::appendPoint(QLineSeries *series, double x, double y, bool enabled)
+void Scope::appendPoint(QLineSeries* series, double x, double y, bool enabled)
 {
     if (!series || !enabled)
     {
@@ -313,7 +660,9 @@ void Scope::refreshAxes(double x)
         m_axisX->setRange(0.0, visibleSeconds);
     }
 
+    configureAxisStyle(m_axisX, kScopeTimeTickCount, kScopeMinorTickCount);
     m_axisY->setRange(-m_range, m_range);
+    configureAxisStyle(m_axisY, kScopeMajorTickCount, kScopeMinorTickCount);
 }
 
 bool Scope::hasVisibleChannel() const

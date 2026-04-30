@@ -224,11 +224,15 @@ Widget::Widget(QWidget *parent)
     ui->comboBox_axischose->setCurrentIndex(0);           // 默认Axis0
 
 
-    ui->comboBox_timebase->addItem("10ms",  QVariant(0));
-    ui->comboBox_timebase->addItem("100ms",  QVariant(1));
-    ui->comboBox_timebase->addItem("1s",  QVariant(2));
-    ui->comboBox_timebase->addItem("10s",  QVariant(3));
-    ui->comboBox_timebase->addItem("100s", QVariant(4));
+    ui->comboBox_timebase->clear();
+    ui->comboBox_timebase->addItem("10ms", QVariant(10));
+    ui->comboBox_timebase->addItem("100ms", QVariant(100));
+    ui->comboBox_timebase->addItem("1s", QVariant(1000));
+    ui->comboBox_timebase->addItem("10s", QVariant(10000));
+    ui->comboBox_timebase->addItem("25s", QVariant(25000));
+    ui->comboBox_timebase->addItem("50s", QVariant(50000));
+    ui->comboBox_timebase->addItem("75s", QVariant(75000));
+    ui->comboBox_timebase->addItem("100s", QVariant(100000));
     ui->comboBox_timebase->setCurrentIndex(2);           // 默认1s
 
     ui->comboBox_timeall->addItem("NONE", QVariant(0));
@@ -238,11 +242,16 @@ Widget::Widget(QWidget *parent)
     ui->comboBox_timeall->addItem("120s", QVariant(4));
     ui->comboBox_timeall->setCurrentIndex(0);           // 默认NONE
 
-    ui->comboBox_posall->addItem("10^6", QVariant(0));
-    ui->comboBox_posall->addItem("10^7", QVariant(1));
-    ui->comboBox_posall->addItem("10^8", QVariant(2));
-    ui->comboBox_posall->addItem("10^9", QVariant(3));
-    ui->comboBox_posall->setCurrentIndex(0);           // 默认NONE
+    ui->comboBox_posall->clear();
+    ui->comboBox_posall->addItem("2x10^5", QVariant(200000));
+    ui->comboBox_posall->addItem("5x10^5", QVariant(500000));
+    ui->comboBox_posall->addItem("10^6", QVariant(1000000));
+    ui->comboBox_posall->addItem("2x10^6", QVariant(2000000));
+    ui->comboBox_posall->addItem("5x10^6", QVariant(5000000));
+    ui->comboBox_posall->addItem("10^7", QVariant(10000000));
+    ui->comboBox_posall->addItem("10^8", QVariant(100000000));
+    ui->comboBox_posall->addItem("10^9", QVariant(1000000000));
+    ui->comboBox_posall->setCurrentIndex(2);           // 默认1e6
 
     ui->comboBox_trigger->addItem("上升沿", QVariant(0));
     ui->comboBox_trigger->addItem("下降沿", QVariant(1));
@@ -250,6 +259,32 @@ Widget::Widget(QWidget *parent)
     ui->btn_begin_scope->setEnabled(true);
     ui->btn_stop_scope->setEnabled(false);
     m_scope->init(findScopeChartContainer());
+
+    connect(ui->comboBox_timebase, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int) { updateScopeConfig(); });
+    connect(ui->comboBox_timeall, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int) { updateScopeConfig(); });
+    connect(ui->comboBox_posall, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int) { updateScopeConfig(); });
+    connect(ui->comboBox_trigger, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int) { updateScopeConfig(); });
+
+    QWidget* scopePage = ui->stackedWidget->widget(3);
+    if (scopePage)
+    {
+        const QStringList channelBoxNames = {
+            "checkBox_actpos",
+            "checkBox_targetpos",
+            "checkBox_vel",
+            "checkBox_acc",
+            "checkBox_cursor"
+        };
+
+        for (const QString& name : channelBoxNames)
+        {
+            if (QCheckBox* box = scopePage->findChild<QCheckBox*>(name))
+            {
+                connect(box, &QCheckBox::toggled, this, [this](bool) { updateScopeConfig(); });
+            }
+        }
+    }
+
     updateScopeConfig();
 }
 
@@ -1534,21 +1569,18 @@ void Widget::updateScopeConfig()
     QWidget *scopePage = ui->stackedWidget->widget(3);
 
     // 读取显示通道配置
-    const bool showActual = scopePage->findChild<QCheckBox*>("checkBox_actpos")->isChecked();
-    const bool showTarget = scopePage->findChild<QCheckBox*>("checkBox_targetpos")->isChecked();
-    const bool showVelocity = scopePage->findChild<QCheckBox*>("checkBox_vel")->isChecked();
-    const bool showAcceleration = scopePage->findChild<QCheckBox*>("checkBox_acc")->isChecked();
-
-    int timeBaseMs = 1000;
-    switch (ui->comboBox_timebase->currentData().toInt())
+    if (!scopePage)
     {
-    case 0: timeBaseMs = 10; break;
-    case 1: timeBaseMs = 100; break;
-    case 2: timeBaseMs = 1000; break;
-    case 3: timeBaseMs = 10000; break;
-    case 4: timeBaseMs = 100000; break;
-    default: break;
+        return;
     }
+
+    const bool showActual = checkBoxChecked(scopePage, { "checkBox_actpos" }, true);
+    const bool showTarget = checkBoxChecked(scopePage, { "checkBox_targetpos" }, true);
+    const bool showVelocity = checkBoxChecked(scopePage, { "checkBox_vel" }, false);
+    const bool showAcceleration = checkBoxChecked(scopePage, { "checkBox_acc" }, false);
+    const bool cursorEnabled = checkBoxChecked(scopePage, { "checkBox_cursor" }, false);
+
+    const int timeBaseMs = qMax(10, ui->comboBox_timebase->currentData().toInt());
 
     int totalSeconds = 0;
     switch (ui->comboBox_timeall->currentData().toInt())
@@ -1560,22 +1592,20 @@ void Widget::updateScopeConfig()
     default: break;
     }
 
-    double range = 1000000.0;
-    switch (ui->comboBox_posall->currentData().toInt())
+    double range = ui->comboBox_posall->currentData().toDouble();
+    if (range <= 0.0)
     {
-    case 0: range = 1000000.0; break;
-    case 1: range = 10000000.0; break;
-    case 2: range = 100000000.0; break;
-    case 3: range = 1000000000.0; break;
-    default: break;
+        range = 1000000.0;
     }
 
     // 6. 读取触发模式
     const int triggerMode = ui->comboBox_trigger->currentData().toInt();
 
+    m_scope->setProperty("cursorEnabled", cursorEnabled);
+
     // 7. 将上述所有配置应用到 m_scope 对象
     m_scope->configure(showActual, showTarget, showVelocity, showAcceleration,
-                       timeBaseMs, totalSeconds, range, triggerMode);
+        timeBaseMs, totalSeconds, range, triggerMode);
 }
 
 QWidget *Widget::findScopeChartContainer() const
