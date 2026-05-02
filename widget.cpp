@@ -10,7 +10,6 @@
 #include <QTextStream>
 #include <QCheckBox>
 #include <QComboBox>
-#include <QPushButton>
 
 #include "inc/Link.h"
 #include "inc/Protocol.h"
@@ -43,6 +42,29 @@ bool checkBoxChecked(QWidget *root, const QStringList &names, bool defaultValue)
 {
     QCheckBox *box = findCheckBox(root, names);
     return box ? box->isChecked() : defaultValue;
+}
+
+QList<QPushButton*> sortedButtons(QWidget* root)
+{
+    QList<QPushButton*> buttons;
+    if (!root)
+    {
+        return buttons;
+    }
+
+    buttons = root->findChildren<QPushButton*>();
+    std::sort(buttons.begin(), buttons.end(), [](QPushButton* lhs, QPushButton* rhs) {
+        const QPoint leftPos = lhs->mapToGlobal(QPoint(0, 0));
+        const QPoint rightPos = rhs->mapToGlobal(QPoint(0, 0));
+
+        if (leftPos.y() == rightPos.y())
+        {
+            return leftPos.x() < rightPos.x();
+        }
+        return leftPos.y() < rightPos.y();
+        });
+
+    return buttons;
 }
 }
 
@@ -77,13 +99,60 @@ Widget::Widget(QWidget *parent)
             ui->btn_do0_4, ui->btn_do0_5, ui->btn_do0_6, ui->btn_do0_7,
             ui->btn_do1_0, ui->btn_do1_1, ui->btn_do1_2, ui->btn_do1_3,
             ui->btn_do1_4, ui->btn_do1_5, ui->btn_do1_6, ui->btn_do1_7,
-            ui->btn_do2_0, ui->btn_do2_1, ui->btn_do2_2, ui->btn_do2_3,
-            ui->btn_do2_4, ui->btn_do2_5, ui->btn_do2_6, ui->btn_do2_7
         };
 
     for (QPushButton* btn : dioButtons)
     {
         btn->setCheckable(true);          // 允许选中/取消选中
+    }
+    for (int i = 0; i < dioButtons.size(); ++i)
+    {
+        QPushButton* btn = dioButtons.at(i);
+        btn->setProperty("dioBit", i); // 给按钮绑定自定义属性：标记对应的IO位号
+
+        // 绑定按钮切换信号：点击按钮时发送IO输出指令
+        connect(btn, &QPushButton::toggled, this, [this](bool) {
+            if (m_updatingDioButtons)
+            {
+                return;// 正在更新按钮状态时，不执行操作
+            }
+
+            const uint16_t mask = currentDoMask();
+
+            if (m_waitingDoAck)
+            {
+                appendlog("DO command pending, ignore this click");
+                applyDoMask(m_lastDoMask);
+                return;
+            }
+
+            m_pendingDoMask = mask;
+            m_waitingDoAck = true;
+
+            // Keep UI at the last confirmed state until the ACK arrives.
+            applyDoMask(m_lastDoMask);
+
+            appendlog(QString("设置IO输出: 0x%1").arg(mask, 4, 16, QChar('0')).toUpper());
+            sendCmdWithLog(proto->setDioOutput(currentDioSlave(), mask), "dio_set_output", mask);
+
+            QTimer::singleShot(800, this, [this, mask]() {
+                if (m_waitingDoAck && m_pendingDoMask == mask)
+                {
+                    m_waitingDoAck = false;
+                    applyDoMask(m_lastDoMask);
+                    appendlog("DO ACK timeout, keep last confirmed UI state");
+                }
+                });
+            });
+    }
+    // 初始化 DI按钮
+    const QList<QPushButton*> inputButtons = diButtons();
+    for (int i = 0; i < inputButtons.size(); ++i)
+    {
+        QPushButton* btn = inputButtons.at(i);
+        btn->setCheckable(true);
+        btn->setProperty("dioBit", i); // 绑定IO位号属性
+        btn->setEnabled(false);        // 禁用所有DI按钮
     }
 
     QStringList standardBaudRates =
@@ -485,6 +554,7 @@ void Widget::on_btn_axis_clicked()
         ui->btn_set->setChecked(false);
         ui->stackedWidget_2->setCurrentIndex(target_index);
         ui->stackedWidget_2->show();
+        requestDioInput();
     }
 
 }
@@ -710,6 +780,11 @@ void Widget::serialReadData(const QByteArray &data)
             ui->textEdit_freq->setPlainText(QString("%1 ").arg(freq));
             ui->textEdit_slavestate->setPlainText(ethercatStateToString(slavestate));
 
+            if (payload.size() >= 32)
+            {
+                applyDiMask(readU16(payload, 30));
+            }
+
             // 把频率传给RunTime绘图
             m_runTime->onEcatFreqUpdated(freq);
             if (m_scope)
@@ -864,6 +939,33 @@ void Widget::serialReadData(const QByteArray &data)
             }
             break;
 
+            case 0xD1: // DO输出成功
+            {
+                quint16 doMask = m_pendingDoMask;
+                if (payload.size() >= 2)
+                {
+                    doMask = readU16(payload, 0);
+                }
+
+                m_waitingDoAck = false;
+                m_lastDoMask = doMask;
+                applyDoMask(doMask);
+                appendlog(QString("DO ACK OK: 0x%1").arg(doMask, 4, 16, QChar('0')).toUpper());
+                requestDioInput();
+            }
+            break;
+
+            case 0xD2: // DI读取成功
+            {
+                if (payload.size() >= 2)
+                {
+                    const quint16 diMask = readU16(payload, 0);
+                    applyDiMask(diMask);
+                    appendlog(QString("DI state: 0x%1").arg(diMask, 4, 16, QChar('0')).toUpper());
+                }
+            }
+            break;
+
             default:
                 appendlog(QString("收到ACK: cmd=0x%1 axis=%2").arg(cmd, 2, 16, QChar('0')).toUpper().arg(axis));
                 break;
@@ -876,6 +978,12 @@ void Widget::serialReadData(const QByteArray &data)
                 quint8 err = u8(payload[0]);
                 updateLogRow(err, "ERROR");
                 appendlog(QString("错误应答: cmd=0x%1 err=0x%2").arg(cmd, 2, 16, QChar('0')).arg(err, 2, 16, QChar('0')).toUpper());
+            
+                if (cmd == 0xD1)
+                {
+                    m_waitingDoAck = false;
+                    applyDoMask(m_lastDoMask);
+                }
             }
         }
 
@@ -1598,12 +1706,12 @@ void Widget::updateScopeConfig()
         range = 1000000.0;
     }
 
-    // 6. 读取触发模式
+    // 读取触发模式
     const int triggerMode = ui->comboBox_trigger->currentData().toInt();
 
     m_scope->setProperty("cursorEnabled", cursorEnabled);
 
-    // 7. 将上述所有配置应用到 m_scope 对象
+    // 将上述所有配置应用到 m_scope 对象
     m_scope->configure(showActual, showTarget, showVelocity, showAcceleration,
         timeBaseMs, totalSeconds, range, triggerMode);
 }
@@ -1659,3 +1767,101 @@ QWidget *Widget::findScopeChartContainer() const
     return bestWidget ? bestWidget : scopePage;
 }
 
+
+//**********************************************DIO界面**********************************************//
+QList<QPushButton *> Widget::doButtons() const
+{
+    return {
+        ui->btn_do0_0, ui->btn_do0_1, ui->btn_do0_2, ui->btn_do0_3,
+        ui->btn_do0_4, ui->btn_do0_5, ui->btn_do0_6, ui->btn_do0_7,
+        ui->btn_do1_0, ui->btn_do1_1, ui->btn_do1_2, ui->btn_do1_3,
+        ui->btn_do1_4, ui->btn_do1_5, ui->btn_do1_6, ui->btn_do1_7,
+    };
+}
+
+QList<QPushButton *> Widget::diButtons() const
+{
+    QWidget *dioPage = ui->stackedWidget_2->widget(1);
+    if (!dioPage)
+    {
+        return {};
+    }
+
+    QGroupBox *diGroup = dioPage->findChild<QGroupBox *>("groupBox_8");
+    if (!diGroup)
+    {
+        return {};
+    }
+
+    QList<QPushButton *> buttons = sortedButtons(diGroup);
+    return buttons;
+}
+
+uint16_t Widget::currentDoMask() const
+{
+    uint16_t mask = 0;
+    const QList<QPushButton *> buttons = doButtons();
+
+    for (int i = 0; i < buttons.size() && i < 16; ++i)
+    {
+        if (buttons.at(i) && buttons.at(i)->isChecked())
+        {
+            mask |= static_cast<uint16_t>(1U << i);
+        }
+    }
+
+    return mask;
+}
+
+uint8_t Widget::currentDioSlave() const
+{
+    bool ok = false;
+    const int slave = ui->comboBox_slave_num->currentData().toInt(&ok);
+    if (!ok || slave <= 0)
+    {
+        return 1;
+    }
+
+    return static_cast<uint8_t>(slave);
+}
+
+void Widget::applyDoMask(uint16_t mask)
+{
+    const QList<QPushButton *> buttons = doButtons();
+    m_updatingDioButtons = true;
+
+    for (int i = 0; i < buttons.size(); ++i)
+    {
+        QPushButton *button = buttons.at(i);
+        if (!button)
+        {
+            continue;
+        }
+
+        button->setChecked((mask & static_cast<uint16_t>(1U << i)) != 0U);
+    }
+
+    m_updatingDioButtons = false;
+}
+
+void Widget::applyDiMask(uint16_t mask)
+{
+    const QList<QPushButton *> buttons = diButtons();
+
+    for (int i = 0; i < buttons.size(); ++i)
+    {
+        QPushButton *button = buttons.at(i);
+        if (!button)
+        {
+            continue;
+        }
+
+        button->setChecked((mask & static_cast<uint16_t>(1U << i)) != 0U);
+        button->setToolTip(QString("DI%1").arg(i));
+    }
+}
+
+void Widget::requestDioInput()
+{
+    sendCmdWithLog(proto->readDioInput(currentDioSlave()), "dio_read_input", 0);
+}

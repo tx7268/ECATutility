@@ -11,7 +11,7 @@
 #include <QSerialPortInfo>
 #include <QChart>
 #include <QChartView>
-
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
 
@@ -79,13 +79,10 @@ private slots:
     void on_btn_set_2_clicked();
     void on_btn_run_clicked();
     void on_btn_stop_clicked();
-
     //**********************************************SET界面函数**********************************************//
     void on_btn_setmode_clicked();
     void on_btn_setpara_clicked();
     void on_btn_set_homepara_clicked();
-
-
     //**********************************************ECAT监视界面函数**********************************************//
     void on_btn_read_slaveinfo_clicked();
     void on_btn_clear_ECATerror_clicked();
@@ -93,45 +90,23 @@ private slots:
     void on_btn_to_op_clicked();
     void on_btn_read_sdo_clicked();
     void on_btn_write_sdo_clicked();
-
-
     //**********************************************axis界面函数**********************************************//
     void on_btn_clear_alarm_clicked();
-
     //**********************************************XML函数**********************************************//
     void on_btn_read_XMLfile_clicked();
-
     void on_btn_clear_XMLfile_clicked();
-
     void on_btn_scope_clicked();
-
-   
-
-
     //**********************************************Scope界面函数**********************************************//
     void on_btn_begin_scope_clicked();
-
     void on_btn_stop_scope_clicked();
-
     void on_btn_clear_scope_clicked();
-
     void on_btn_out_scope_clicked();
-
-
-
-
     //**********************************************RunTime界面函数**********************************************//
     void on_btn_RunTime_clicked();
-
     void sendCmdWithLog(const QByteArray &data, const QString &cmdName, int sendValue = 0);
-
     void updateRunTimeStats(const RunTimeStats &stats);
-
     void on_btn_RunTime_clearlog_clicked();
-
     void on_btn_RunTime_outlog_clicked();
-
-
 
 private:
     Ui::Widget* ui;
@@ -145,7 +120,6 @@ private:
     int32_t vel,acc,dec, sw_vel, zero_vel;
     bool m_serialPortOpen = false;
 
-
     void appendlog(const QString& msg);
     void updateSerialPortButtons();
     void openSerialPort();
@@ -156,11 +130,20 @@ private:
     void updateLogRow(int retValue, const QString& status);
     void updateScopeConfig();
     QWidget* findScopeChartContainer() const;
+
+    QList<QPushButton*> doButtons() const;
+    QList<QPushButton*> diButtons() const;
+    uint16_t currentDoMask() const;
+    uint8_t currentDioSlave() const;
+    void applyDoMask(uint16_t mask);
+    void applyDiMask(uint16_t mask);
+    void requestDioInput();
+
+    bool m_updatingDioButtons = false;
+    bool m_waitingDoAck = false;
+    uint16_t m_lastDoMask = 0;
+    uint16_t m_pendingDoMask = 0;
 };
 
-
-
 #endif // WIDGET_H
-
-
 

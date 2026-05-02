@@ -2319,198 +2319,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="1">
-        <widget class="QPushButton" name="btn_do1_1">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="btn_do0_1">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="7">
-        <widget class="QPushButton" name="btn_do1_7">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="6">
-        <widget class="QPushButton" name="btn_do1_6">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="5">
-        <widget class="QPushButton" name="btn_do0_5">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="5">
-        <widget class="QPushButton" name="btn_do2_5">
+       <item row="1" column="2">
+        <widget class="QPushButton" name="btn_do1_2">
          <property name="styleSheet">
           <string notr="true">QPushButton {
     /* 基础样式：浅灰圆形 */
@@ -2588,236 +2398,8 @@ QPushButton:checked:hover {
          </property>
         </widget>
        </item>
-       <item row="0" column="6">
-        <widget class="QPushButton" name="btn_do0_6">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QPushButton" name="btn_do2_1">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="4">
-        <widget class="QPushButton" name="btn_do0_4">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="4">
-        <widget class="QPushButton" name="btn_do2_4">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="6">
-        <widget class="QPushButton" name="btn_do2_6">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="7">
-        <widget class="QPushButton" name="btn_do2_7">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="btn_do2_0">
+       <item row="1" column="5">
+        <widget class="QPushButton" name="btn_do1_5">
          <property name="styleSheet">
           <string notr="true">QPushButton {
     /* 基础样式：浅灰圆形 */
@@ -2892,8 +2474,8 @@ QPushButton:checked:hover {
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
-        <widget class="QPushButton" name="btn_do1_2">
+       <item row="0" column="6">
+        <widget class="QPushButton" name="btn_do0_6">
          <property name="styleSheet">
           <string notr="true">QPushButton {
     /* 基础样式：浅灰圆形 */
@@ -2930,122 +2512,8 @@ QPushButton:checked:hover {
          </property>
         </widget>
        </item>
-       <item row="0" column="3">
-        <widget class="QPushButton" name="btn_do0_3">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="4">
-        <widget class="QPushButton" name="btn_do1_4">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <widget class="QPushButton" name="btn_do2_3">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QPushButton" name="btn_do2_2">
+       <item row="1" column="6">
+        <widget class="QPushButton" name="btn_do1_6">
          <property name="styleSheet">
           <string notr="true">QPushButton {
     /* 基础样式：浅灰圆形 */
@@ -3120,44 +2588,6 @@ QPushButton:checked:hover {
          </property>
         </widget>
        </item>
-       <item row="0" column="7">
-        <widget class="QPushButton" name="btn_do0_7">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="3">
         <widget class="QPushButton" name="btn_do1_3">
          <property name="styleSheet">
@@ -3196,8 +2626,274 @@ QPushButton:checked:hover {
          </property>
         </widget>
        </item>
-       <item row="1" column="5">
-        <widget class="QPushButton" name="btn_do1_5">
+       <item row="1" column="4">
+        <widget class="QPushButton" name="btn_do1_4">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    /* 基础样式：浅灰圆形 */
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    font-size: 12px;
+    color: #333333;            /* 文字颜色 */
+}
+
+/* 悬停状态：鼠标放上去时轻微变灰 */
+QPushButton:hover {
+    background-color: #e8e8e8;
+    border: 1px solid #bdbdbd;
+}
+
+
+QPushButton:checked {
+    background-color: #4caf50; /* 主绿色 */
+    border: 1px solid #388e3c; /* 深绿色边框 */
+    color: #ffffff;            /* 文字变白，更醒目 */
+}
+
+QPushButton:checked:hover {
+    background-color: #388e3c;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QPushButton" name="btn_do0_4">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    /* 基础样式：浅灰圆形 */
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    font-size: 12px;
+    color: #333333;            /* 文字颜色 */
+}
+
+/* 悬停状态：鼠标放上去时轻微变灰 */
+QPushButton:hover {
+    background-color: #e8e8e8;
+    border: 1px solid #bdbdbd;
+}
+
+
+QPushButton:checked {
+    background-color: #4caf50; /* 主绿色 */
+    border: 1px solid #388e3c; /* 深绿色边框 */
+    color: #ffffff;            /* 文字变白，更醒目 */
+}
+
+QPushButton:checked:hover {
+    background-color: #388e3c;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="btn_do0_3">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    /* 基础样式：浅灰圆形 */
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    font-size: 12px;
+    color: #333333;            /* 文字颜色 */
+}
+
+/* 悬停状态：鼠标放上去时轻微变灰 */
+QPushButton:hover {
+    background-color: #e8e8e8;
+    border: 1px solid #bdbdbd;
+}
+
+
+QPushButton:checked {
+    background-color: #4caf50; /* 主绿色 */
+    border: 1px solid #388e3c; /* 深绿色边框 */
+    color: #ffffff;            /* 文字变白，更醒目 */
+}
+
+QPushButton:checked:hover {
+    background-color: #388e3c;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5">
+        <widget class="QPushButton" name="btn_do0_5">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    /* 基础样式：浅灰圆形 */
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    font-size: 12px;
+    color: #333333;            /* 文字颜色 */
+}
+
+/* 悬停状态：鼠标放上去时轻微变灰 */
+QPushButton:hover {
+    background-color: #e8e8e8;
+    border: 1px solid #bdbdbd;
+}
+
+
+QPushButton:checked {
+    background-color: #4caf50; /* 主绿色 */
+    border: 1px solid #388e3c; /* 深绿色边框 */
+    color: #ffffff;            /* 文字变白，更醒目 */
+}
+
+QPushButton:checked:hover {
+    background-color: #388e3c;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="btn_do1_1">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    /* 基础样式：浅灰圆形 */
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    font-size: 12px;
+    color: #333333;            /* 文字颜色 */
+}
+
+/* 悬停状态：鼠标放上去时轻微变灰 */
+QPushButton:hover {
+    background-color: #e8e8e8;
+    border: 1px solid #bdbdbd;
+}
+
+
+QPushButton:checked {
+    background-color: #4caf50; /* 主绿色 */
+    border: 1px solid #388e3c; /* 深绿色边框 */
+    color: #ffffff;            /* 文字变白，更醒目 */
+}
+
+QPushButton:checked:hover {
+    background-color: #388e3c;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="7">
+        <widget class="QPushButton" name="btn_do1_7">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    /* 基础样式：浅灰圆形 */
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    font-size: 12px;
+    color: #333333;            /* 文字颜色 */
+}
+
+/* 悬停状态：鼠标放上去时轻微变灰 */
+QPushButton:hover {
+    background-color: #e8e8e8;
+    border: 1px solid #bdbdbd;
+}
+
+
+QPushButton:checked {
+    background-color: #4caf50; /* 主绿色 */
+    border: 1px solid #388e3c; /* 深绿色边框 */
+    color: #ffffff;            /* 文字变白，更醒目 */
+}
+
+QPushButton:checked:hover {
+    background-color: #388e3c;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="btn_do0_1">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    /* 基础样式：浅灰圆形 */
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    font-size: 12px;
+    color: #333333;            /* 文字颜色 */
+}
+
+/* 悬停状态：鼠标放上去时轻微变灰 */
+QPushButton:hover {
+    background-color: #e8e8e8;
+    border: 1px solid #bdbdbd;
+}
+
+
+QPushButton:checked {
+    background-color: #4caf50; /* 主绿色 */
+    border: 1px solid #388e3c; /* 深绿色边框 */
+    color: #ffffff;            /* 文字变白，更醒目 */
+}
+
+QPushButton:checked:hover {
+    background-color: #388e3c;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="7">
+        <widget class="QPushButton" name="btn_do0_7">
          <property name="styleSheet">
           <string notr="true">QPushButton {
     /* 基础样式：浅灰圆形 */
@@ -3260,13 +2956,6 @@ QPushButton:checked:hover {
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QLabel" name="label_32">
-         <property name="text">
-          <string>DO2</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
     </widget>
@@ -3292,251 +2981,8 @@ QPushButton:checked:hover {
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_4">
-       <item row="1" column="1">
-        <widget class="QPushButton" name="pushButton_58">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="5">
-        <widget class="QPushButton" name="pushButton_62">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="1">
         <widget class="QPushButton" name="pushButton_51">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <widget class="QPushButton" name="pushButton_68">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="pushButton_53">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="QPushButton" name="pushButton_60">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="7">
-        <widget class="QPushButton" name="pushButton_72">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -3617,254 +3063,8 @@ QPushButton:checked:hover {
          </property>
         </widget>
        </item>
-       <item row="0" column="7">
-        <widget class="QPushButton" name="pushButton_50">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="7">
-        <widget class="QPushButton" name="pushButton_64">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="6">
-        <widget class="QPushButton" name="pushButton_71">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="pushButton_57">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QPushButton" name="pushButton_67">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="4">
-        <widget class="QPushButton" name="pushButton_56">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="5">
-        <widget class="QPushButton" name="pushButton_70">
+       <item row="1" column="2">
+        <widget class="QPushButton" name="pushButton_59">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -3945,47 +3145,6 @@ QPushButton:checked:hover {
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QPushButton" name="pushButton_49">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-    /* 基础样式：浅灰圆形 */
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    font-size: 12px;
-    color: #333333;            /* 文字颜色 */
-}
-
-/* 悬停状态：鼠标放上去时轻微变灰 */
-QPushButton:hover {
-    background-color: #e8e8e8;
-    border: 1px solid #bdbdbd;
-}
-
-
-QPushButton:checked {
-    background-color: #4caf50; /* 主绿色 */
-    border: 1px solid #388e3c; /* 深绿色边框 */
-    color: #ffffff;            /* 文字变白，更醒目 */
-}
-
-QPushButton:checked:hover {
-    background-color: #388e3c;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="6">
         <widget class="QPushButton" name="pushButton_52">
          <property name="enabled">
@@ -4027,8 +3186,46 @@ QPushButton:checked:hover {
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
-        <widget class="QPushButton" name="pushButton_59">
+       <item row="1" column="3">
+        <widget class="QPushButton" name="pushButton_60">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    /* 基础样式：浅灰圆形 */
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    font-size: 12px;
+    color: #333333;            /* 文字颜色 */
+}
+
+/* 悬停状态：鼠标放上去时轻微变灰 */
+QPushButton:hover {
+    background-color: #e8e8e8;
+    border: 1px solid #bdbdbd;
+}
+
+
+QPushButton:checked {
+    background-color: #4caf50; /* 主绿色 */
+    border: 1px solid #388e3c; /* 深绿色边框 */
+    color: #ffffff;            /* 文字变白，更醒目 */
+}
+
+QPushButton:checked:hover {
+    background-color: #388e3c;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="7">
+        <widget class="QPushButton" name="pushButton_50">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -4068,8 +3265,8 @@ QPushButton:checked:hover {
          </property>
         </widget>
        </item>
-       <item row="1" column="6">
-        <widget class="QPushButton" name="pushButton_63">
+       <item row="1" column="0">
+        <widget class="QPushButton" name="pushButton_57">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -4150,8 +3347,8 @@ QPushButton:checked:hover {
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="pushButton_65">
+       <item row="1" column="7">
+        <widget class="QPushButton" name="pushButton_64">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -4191,8 +3388,8 @@ QPushButton:checked:hover {
          </property>
         </widget>
        </item>
-       <item row="2" column="4">
-        <widget class="QPushButton" name="pushButton_69">
+       <item row="1" column="1">
+        <widget class="QPushButton" name="pushButton_58">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -4232,8 +3429,172 @@ QPushButton:checked:hover {
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QPushButton" name="pushButton_66">
+       <item row="0" column="4">
+        <widget class="QPushButton" name="pushButton_56">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    /* 基础样式：浅灰圆形 */
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    font-size: 12px;
+    color: #333333;            /* 文字颜色 */
+}
+
+/* 悬停状态：鼠标放上去时轻微变灰 */
+QPushButton:hover {
+    background-color: #e8e8e8;
+    border: 1px solid #bdbdbd;
+}
+
+
+QPushButton:checked {
+    background-color: #4caf50; /* 主绿色 */
+    border: 1px solid #388e3c; /* 深绿色边框 */
+    color: #ffffff;            /* 文字变白，更醒目 */
+}
+
+QPushButton:checked:hover {
+    background-color: #388e3c;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="6">
+        <widget class="QPushButton" name="pushButton_63">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    /* 基础样式：浅灰圆形 */
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    font-size: 12px;
+    color: #333333;            /* 文字颜色 */
+}
+
+/* 悬停状态：鼠标放上去时轻微变灰 */
+QPushButton:hover {
+    background-color: #e8e8e8;
+    border: 1px solid #bdbdbd;
+}
+
+
+QPushButton:checked {
+    background-color: #4caf50; /* 主绿色 */
+    border: 1px solid #388e3c; /* 深绿色边框 */
+    color: #ffffff;            /* 文字变白，更醒目 */
+}
+
+QPushButton:checked:hover {
+    background-color: #388e3c;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="5">
+        <widget class="QPushButton" name="pushButton_62">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    /* 基础样式：浅灰圆形 */
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    font-size: 12px;
+    color: #333333;            /* 文字颜色 */
+}
+
+/* 悬停状态：鼠标放上去时轻微变灰 */
+QPushButton:hover {
+    background-color: #e8e8e8;
+    border: 1px solid #bdbdbd;
+}
+
+
+QPushButton:checked {
+    background-color: #4caf50; /* 主绿色 */
+    border: 1px solid #388e3c; /* 深绿色边框 */
+    color: #ffffff;            /* 文字变白，更醒目 */
+}
+
+QPushButton:checked:hover {
+    background-color: #388e3c;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pushButton_49">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    /* 基础样式：浅灰圆形 */
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;       /* 圆形关键：宽高相等时，半径设为一半 */
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    font-size: 12px;
+    color: #333333;            /* 文字颜色 */
+}
+
+/* 悬停状态：鼠标放上去时轻微变灰 */
+QPushButton:hover {
+    background-color: #e8e8e8;
+    border: 1px solid #bdbdbd;
+}
+
+
+QPushButton:checked {
+    background-color: #4caf50; /* 主绿色 */
+    border: 1px solid #388e3c; /* 深绿色边框 */
+    color: #ffffff;            /* 文字变白，更醒目 */
+}
+
+QPushButton:checked:hover {
+    background-color: #388e3c;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="pushButton_53">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -4296,13 +3657,6 @@ QPushButton:checked:hover {
         <widget class="QLabel" name="label_41">
          <property name="text">
           <string>DI1</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_40">
-         <property name="text">
-          <string>DI2</string>
          </property>
         </widget>
        </item>

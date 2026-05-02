@@ -206,67 +206,49 @@ public:
     QGroupBox *groupBox_7;
     QWidget *layoutWidget2;
     QGridLayout *gridLayout_2;
-    QPushButton *btn_do1_1;
-    QPushButton *btn_do0_1;
-    QPushButton *btn_do1_7;
-    QPushButton *btn_do1_6;
-    QPushButton *btn_do0_5;
-    QPushButton *btn_do2_5;
-    QPushButton *btn_do0_0;
-    QPushButton *btn_do0_6;
-    QPushButton *btn_do2_1;
-    QPushButton *btn_do0_4;
-    QPushButton *btn_do2_4;
-    QPushButton *btn_do2_6;
-    QPushButton *btn_do2_7;
-    QPushButton *btn_do2_0;
-    QPushButton *btn_do1_0;
     QPushButton *btn_do1_2;
-    QPushButton *btn_do0_3;
-    QPushButton *btn_do1_4;
-    QPushButton *btn_do2_3;
-    QPushButton *btn_do2_2;
-    QPushButton *btn_do0_2;
-    QPushButton *btn_do0_7;
-    QPushButton *btn_do1_3;
+    QPushButton *btn_do0_0;
     QPushButton *btn_do1_5;
+    QPushButton *btn_do1_0;
+    QPushButton *btn_do0_6;
+    QPushButton *btn_do1_6;
+    QPushButton *btn_do0_2;
+    QPushButton *btn_do1_3;
+    QPushButton *btn_do1_4;
+    QPushButton *btn_do0_4;
+    QPushButton *btn_do0_3;
+    QPushButton *btn_do0_5;
+    QPushButton *btn_do1_1;
+    QPushButton *btn_do1_7;
+    QPushButton *btn_do0_1;
+    QPushButton *btn_do0_7;
     QWidget *layoutWidget3;
     QVBoxLayout *verticalLayout;
     QLabel *label_30;
     QLabel *label_31;
-    QLabel *label_32;
     QGroupBox *groupBox_8;
     QWidget *layoutWidget4;
     QGridLayout *gridLayout_4;
-    QPushButton *pushButton_58;
-    QPushButton *pushButton_62;
     QPushButton *pushButton_51;
-    QPushButton *pushButton_68;
-    QPushButton *pushButton_53;
-    QPushButton *pushButton_60;
-    QPushButton *pushButton_72;
     QPushButton *pushButton_54;
-    QPushButton *pushButton_50;
-    QPushButton *pushButton_64;
-    QPushButton *pushButton_71;
-    QPushButton *pushButton_57;
-    QPushButton *pushButton_67;
-    QPushButton *pushButton_56;
-    QPushButton *pushButton_70;
-    QPushButton *pushButton_55;
-    QPushButton *pushButton_49;
-    QPushButton *pushButton_52;
     QPushButton *pushButton_59;
-    QPushButton *pushButton_63;
+    QPushButton *pushButton_55;
+    QPushButton *pushButton_52;
+    QPushButton *pushButton_60;
+    QPushButton *pushButton_50;
+    QPushButton *pushButton_57;
     QPushButton *pushButton_61;
-    QPushButton *pushButton_65;
-    QPushButton *pushButton_69;
-    QPushButton *pushButton_66;
+    QPushButton *pushButton_64;
+    QPushButton *pushButton_58;
+    QPushButton *pushButton_56;
+    QPushButton *pushButton_63;
+    QPushButton *pushButton_62;
+    QPushButton *pushButton_49;
+    QPushButton *pushButton_53;
     QWidget *layoutWidget5;
     QVBoxLayout *verticalLayout_3;
     QLabel *label_39;
     QLabel *label_41;
-    QLabel *label_40;
     QPushButton *btn_open_port_2;
     QPushButton *btn_scope;
     QPushButton *btn_RunTime;
@@ -1191,9 +1173,9 @@ public:
         gridLayout_2 = new QGridLayout(layoutWidget2);
         gridLayout_2->setObjectName("gridLayout_2");
         gridLayout_2->setContentsMargins(0, 0, 0, 0);
-        btn_do1_1 = new QPushButton(layoutWidget2);
-        btn_do1_1->setObjectName("btn_do1_1");
-        btn_do1_1->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+        btn_do1_2 = new QPushButton(layoutWidget2);
+        btn_do1_2->setObjectName("btn_do1_2");
+        btn_do1_2->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -1224,182 +1206,7 @@ public:
 "    background-color: #388e3c;\n"
 "}"));
 
-        gridLayout_2->addWidget(btn_do1_1, 1, 1, 1, 1);
-
-        btn_do0_1 = new QPushButton(layoutWidget2);
-        btn_do0_1->setObjectName("btn_do0_1");
-        btn_do0_1->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_2->addWidget(btn_do0_1, 0, 1, 1, 1);
-
-        btn_do1_7 = new QPushButton(layoutWidget2);
-        btn_do1_7->setObjectName("btn_do1_7");
-        btn_do1_7->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_2->addWidget(btn_do1_7, 1, 7, 1, 1);
-
-        btn_do1_6 = new QPushButton(layoutWidget2);
-        btn_do1_6->setObjectName("btn_do1_6");
-        btn_do1_6->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_2->addWidget(btn_do1_6, 1, 6, 1, 1);
-
-        btn_do0_5 = new QPushButton(layoutWidget2);
-        btn_do0_5->setObjectName("btn_do0_5");
-        btn_do0_5->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_2->addWidget(btn_do0_5, 0, 5, 1, 1);
-
-        btn_do2_5 = new QPushButton(layoutWidget2);
-        btn_do2_5->setObjectName("btn_do2_5");
-        btn_do2_5->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_2->addWidget(btn_do2_5, 2, 5, 1, 1);
+        gridLayout_2->addWidget(btn_do1_2, 1, 2, 1, 1);
 
         btn_do0_0 = new QPushButton(layoutWidget2);
         btn_do0_0->setObjectName("btn_do0_0");
@@ -1437,9 +1244,9 @@ public:
 
         gridLayout_2->addWidget(btn_do0_0, 0, 0, 1, 1);
 
-        btn_do0_6 = new QPushButton(layoutWidget2);
-        btn_do0_6->setObjectName("btn_do0_6");
-        btn_do0_6->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+        btn_do1_5 = new QPushButton(layoutWidget2);
+        btn_do1_5->setObjectName("btn_do1_5");
+        btn_do1_5->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -1470,217 +1277,7 @@ public:
 "    background-color: #388e3c;\n"
 "}"));
 
-        gridLayout_2->addWidget(btn_do0_6, 0, 6, 1, 1);
-
-        btn_do2_1 = new QPushButton(layoutWidget2);
-        btn_do2_1->setObjectName("btn_do2_1");
-        btn_do2_1->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_2->addWidget(btn_do2_1, 2, 1, 1, 1);
-
-        btn_do0_4 = new QPushButton(layoutWidget2);
-        btn_do0_4->setObjectName("btn_do0_4");
-        btn_do0_4->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_2->addWidget(btn_do0_4, 0, 4, 1, 1);
-
-        btn_do2_4 = new QPushButton(layoutWidget2);
-        btn_do2_4->setObjectName("btn_do2_4");
-        btn_do2_4->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_2->addWidget(btn_do2_4, 2, 4, 1, 1);
-
-        btn_do2_6 = new QPushButton(layoutWidget2);
-        btn_do2_6->setObjectName("btn_do2_6");
-        btn_do2_6->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_2->addWidget(btn_do2_6, 2, 6, 1, 1);
-
-        btn_do2_7 = new QPushButton(layoutWidget2);
-        btn_do2_7->setObjectName("btn_do2_7");
-        btn_do2_7->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_2->addWidget(btn_do2_7, 2, 7, 1, 1);
-
-        btn_do2_0 = new QPushButton(layoutWidget2);
-        btn_do2_0->setObjectName("btn_do2_0");
-        btn_do2_0->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_2->addWidget(btn_do2_0, 2, 0, 1, 1);
+        gridLayout_2->addWidget(btn_do1_5, 1, 5, 1, 1);
 
         btn_do1_0 = new QPushButton(layoutWidget2);
         btn_do1_0->setObjectName("btn_do1_0");
@@ -1717,9 +1314,9 @@ public:
 
         gridLayout_2->addWidget(btn_do1_0, 1, 0, 1, 1);
 
-        btn_do1_2 = new QPushButton(layoutWidget2);
-        btn_do1_2->setObjectName("btn_do1_2");
-        btn_do1_2->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+        btn_do0_6 = new QPushButton(layoutWidget2);
+        btn_do0_6->setObjectName("btn_do0_6");
+        btn_do0_6->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -1750,11 +1347,11 @@ public:
 "    background-color: #388e3c;\n"
 "}"));
 
-        gridLayout_2->addWidget(btn_do1_2, 1, 2, 1, 1);
+        gridLayout_2->addWidget(btn_do0_6, 0, 6, 1, 1);
 
-        btn_do0_3 = new QPushButton(layoutWidget2);
-        btn_do0_3->setObjectName("btn_do0_3");
-        btn_do0_3->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+        btn_do1_6 = new QPushButton(layoutWidget2);
+        btn_do1_6->setObjectName("btn_do1_6");
+        btn_do1_6->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -1785,112 +1382,7 @@ public:
 "    background-color: #388e3c;\n"
 "}"));
 
-        gridLayout_2->addWidget(btn_do0_3, 0, 3, 1, 1);
-
-        btn_do1_4 = new QPushButton(layoutWidget2);
-        btn_do1_4->setObjectName("btn_do1_4");
-        btn_do1_4->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_2->addWidget(btn_do1_4, 1, 4, 1, 1);
-
-        btn_do2_3 = new QPushButton(layoutWidget2);
-        btn_do2_3->setObjectName("btn_do2_3");
-        btn_do2_3->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_2->addWidget(btn_do2_3, 2, 3, 1, 1);
-
-        btn_do2_2 = new QPushButton(layoutWidget2);
-        btn_do2_2->setObjectName("btn_do2_2");
-        btn_do2_2->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_2->addWidget(btn_do2_2, 2, 2, 1, 1);
+        gridLayout_2->addWidget(btn_do1_6, 1, 6, 1, 1);
 
         btn_do0_2 = new QPushButton(layoutWidget2);
         btn_do0_2->setObjectName("btn_do0_2");
@@ -1927,41 +1419,6 @@ public:
 
         gridLayout_2->addWidget(btn_do0_2, 0, 2, 1, 1);
 
-        btn_do0_7 = new QPushButton(layoutWidget2);
-        btn_do0_7->setObjectName("btn_do0_7");
-        btn_do0_7->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_2->addWidget(btn_do0_7, 0, 7, 1, 1);
-
         btn_do1_3 = new QPushButton(layoutWidget2);
         btn_do1_3->setObjectName("btn_do1_3");
         btn_do1_3->setStyleSheet(QString::fromUtf8("QPushButton {\n"
@@ -1997,9 +1454,9 @@ public:
 
         gridLayout_2->addWidget(btn_do1_3, 1, 3, 1, 1);
 
-        btn_do1_5 = new QPushButton(layoutWidget2);
-        btn_do1_5->setObjectName("btn_do1_5");
-        btn_do1_5->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+        btn_do1_4 = new QPushButton(layoutWidget2);
+        btn_do1_4->setObjectName("btn_do1_4");
+        btn_do1_4->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -2030,7 +1487,252 @@ public:
 "    background-color: #388e3c;\n"
 "}"));
 
-        gridLayout_2->addWidget(btn_do1_5, 1, 5, 1, 1);
+        gridLayout_2->addWidget(btn_do1_4, 1, 4, 1, 1);
+
+        btn_do0_4 = new QPushButton(layoutWidget2);
+        btn_do0_4->setObjectName("btn_do0_4");
+        btn_do0_4->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
+"    background-color: #f5f5f5;\n"
+"    border: 1px solid #e0e0e0;\n"
+"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
+"    min-width: 50px;\n"
+"    min-height: 50px;\n"
+"    max-width: 50px;\n"
+"    max-height: 50px;\n"
+"    font-size: 12px;\n"
+"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
+"QPushButton:hover {\n"
+"    background-color: #e8e8e8;\n"
+"    border: 1px solid #bdbdbd;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:checked {\n"
+"    backgroun"
+                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
+"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
+"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
+"}\n"
+"\n"
+"QPushButton:checked:hover {\n"
+"    background-color: #388e3c;\n"
+"}"));
+
+        gridLayout_2->addWidget(btn_do0_4, 0, 4, 1, 1);
+
+        btn_do0_3 = new QPushButton(layoutWidget2);
+        btn_do0_3->setObjectName("btn_do0_3");
+        btn_do0_3->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
+"    background-color: #f5f5f5;\n"
+"    border: 1px solid #e0e0e0;\n"
+"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
+"    min-width: 50px;\n"
+"    min-height: 50px;\n"
+"    max-width: 50px;\n"
+"    max-height: 50px;\n"
+"    font-size: 12px;\n"
+"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
+"QPushButton:hover {\n"
+"    background-color: #e8e8e8;\n"
+"    border: 1px solid #bdbdbd;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:checked {\n"
+"    backgroun"
+                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
+"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
+"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
+"}\n"
+"\n"
+"QPushButton:checked:hover {\n"
+"    background-color: #388e3c;\n"
+"}"));
+
+        gridLayout_2->addWidget(btn_do0_3, 0, 3, 1, 1);
+
+        btn_do0_5 = new QPushButton(layoutWidget2);
+        btn_do0_5->setObjectName("btn_do0_5");
+        btn_do0_5->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
+"    background-color: #f5f5f5;\n"
+"    border: 1px solid #e0e0e0;\n"
+"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
+"    min-width: 50px;\n"
+"    min-height: 50px;\n"
+"    max-width: 50px;\n"
+"    max-height: 50px;\n"
+"    font-size: 12px;\n"
+"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
+"QPushButton:hover {\n"
+"    background-color: #e8e8e8;\n"
+"    border: 1px solid #bdbdbd;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:checked {\n"
+"    backgroun"
+                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
+"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
+"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
+"}\n"
+"\n"
+"QPushButton:checked:hover {\n"
+"    background-color: #388e3c;\n"
+"}"));
+
+        gridLayout_2->addWidget(btn_do0_5, 0, 5, 1, 1);
+
+        btn_do1_1 = new QPushButton(layoutWidget2);
+        btn_do1_1->setObjectName("btn_do1_1");
+        btn_do1_1->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
+"    background-color: #f5f5f5;\n"
+"    border: 1px solid #e0e0e0;\n"
+"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
+"    min-width: 50px;\n"
+"    min-height: 50px;\n"
+"    max-width: 50px;\n"
+"    max-height: 50px;\n"
+"    font-size: 12px;\n"
+"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
+"QPushButton:hover {\n"
+"    background-color: #e8e8e8;\n"
+"    border: 1px solid #bdbdbd;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:checked {\n"
+"    backgroun"
+                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
+"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
+"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
+"}\n"
+"\n"
+"QPushButton:checked:hover {\n"
+"    background-color: #388e3c;\n"
+"}"));
+
+        gridLayout_2->addWidget(btn_do1_1, 1, 1, 1, 1);
+
+        btn_do1_7 = new QPushButton(layoutWidget2);
+        btn_do1_7->setObjectName("btn_do1_7");
+        btn_do1_7->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
+"    background-color: #f5f5f5;\n"
+"    border: 1px solid #e0e0e0;\n"
+"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
+"    min-width: 50px;\n"
+"    min-height: 50px;\n"
+"    max-width: 50px;\n"
+"    max-height: 50px;\n"
+"    font-size: 12px;\n"
+"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
+"QPushButton:hover {\n"
+"    background-color: #e8e8e8;\n"
+"    border: 1px solid #bdbdbd;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:checked {\n"
+"    backgroun"
+                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
+"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
+"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
+"}\n"
+"\n"
+"QPushButton:checked:hover {\n"
+"    background-color: #388e3c;\n"
+"}"));
+
+        gridLayout_2->addWidget(btn_do1_7, 1, 7, 1, 1);
+
+        btn_do0_1 = new QPushButton(layoutWidget2);
+        btn_do0_1->setObjectName("btn_do0_1");
+        btn_do0_1->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
+"    background-color: #f5f5f5;\n"
+"    border: 1px solid #e0e0e0;\n"
+"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
+"    min-width: 50px;\n"
+"    min-height: 50px;\n"
+"    max-width: 50px;\n"
+"    max-height: 50px;\n"
+"    font-size: 12px;\n"
+"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
+"QPushButton:hover {\n"
+"    background-color: #e8e8e8;\n"
+"    border: 1px solid #bdbdbd;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:checked {\n"
+"    backgroun"
+                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
+"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
+"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
+"}\n"
+"\n"
+"QPushButton:checked:hover {\n"
+"    background-color: #388e3c;\n"
+"}"));
+
+        gridLayout_2->addWidget(btn_do0_1, 0, 1, 1, 1);
+
+        btn_do0_7 = new QPushButton(layoutWidget2);
+        btn_do0_7->setObjectName("btn_do0_7");
+        btn_do0_7->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
+"    background-color: #f5f5f5;\n"
+"    border: 1px solid #e0e0e0;\n"
+"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
+"    min-width: 50px;\n"
+"    min-height: 50px;\n"
+"    max-width: 50px;\n"
+"    max-height: 50px;\n"
+"    font-size: 12px;\n"
+"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
+"QPushButton:hover {\n"
+"    background-color: #e8e8e8;\n"
+"    border: 1px solid #bdbdbd;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:checked {\n"
+"    backgroun"
+                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
+"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
+"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
+"}\n"
+"\n"
+"QPushButton:checked:hover {\n"
+"    background-color: #388e3c;\n"
+"}"));
+
+        gridLayout_2->addWidget(btn_do0_7, 0, 7, 1, 1);
 
         layoutWidget3 = new QWidget(groupBox_7);
         layoutWidget3->setObjectName("layoutWidget3");
@@ -2048,11 +1750,6 @@ public:
 
         verticalLayout->addWidget(label_31);
 
-        label_32 = new QLabel(layoutWidget3);
-        label_32->setObjectName("label_32");
-
-        verticalLayout->addWidget(label_32);
-
         groupBox_8 = new QGroupBox(page_dio);
         groupBox_8->setObjectName("groupBox_8");
         groupBox_8->setGeometry(QRect(750, 10, 741, 221));
@@ -2062,78 +1759,6 @@ public:
         gridLayout_4 = new QGridLayout(layoutWidget4);
         gridLayout_4->setObjectName("gridLayout_4");
         gridLayout_4->setContentsMargins(0, 0, 0, 0);
-        pushButton_58 = new QPushButton(layoutWidget4);
-        pushButton_58->setObjectName("pushButton_58");
-        pushButton_58->setEnabled(false);
-        pushButton_58->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_4->addWidget(pushButton_58, 1, 1, 1, 1);
-
-        pushButton_62 = new QPushButton(layoutWidget4);
-        pushButton_62->setObjectName("pushButton_62");
-        pushButton_62->setEnabled(false);
-        pushButton_62->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_4->addWidget(pushButton_62, 1, 5, 1, 1);
-
         pushButton_51 = new QPushButton(layoutWidget4);
         pushButton_51->setObjectName("pushButton_51");
         pushButton_51->setEnabled(false);
@@ -2169,149 +1794,6 @@ public:
 "}"));
 
         gridLayout_4->addWidget(pushButton_51, 0, 1, 1, 1);
-
-        pushButton_68 = new QPushButton(layoutWidget4);
-        pushButton_68->setObjectName("pushButton_68");
-        pushButton_68->setEnabled(false);
-        pushButton_68->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_4->addWidget(pushButton_68, 2, 3, 1, 1);
-
-        pushButton_53 = new QPushButton(layoutWidget4);
-        pushButton_53->setObjectName("pushButton_53");
-        pushButton_53->setEnabled(false);
-        pushButton_53->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_4->addWidget(pushButton_53, 0, 2, 1, 1);
-
-        pushButton_60 = new QPushButton(layoutWidget4);
-        pushButton_60->setObjectName("pushButton_60");
-        pushButton_60->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_4->addWidget(pushButton_60, 1, 3, 1, 1);
-
-        pushButton_72 = new QPushButton(layoutWidget4);
-        pushButton_72->setObjectName("pushButton_72");
-        pushButton_72->setEnabled(false);
-        pushButton_72->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_4->addWidget(pushButton_72, 2, 7, 1, 1);
 
         pushButton_54 = new QPushButton(layoutWidget4);
         pushButton_54->setObjectName("pushButton_54");
@@ -2349,10 +1831,10 @@ public:
 
         gridLayout_4->addWidget(pushButton_54, 0, 3, 1, 1);
 
-        pushButton_50 = new QPushButton(layoutWidget4);
-        pushButton_50->setObjectName("pushButton_50");
-        pushButton_50->setEnabled(false);
-        pushButton_50->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+        pushButton_59 = new QPushButton(layoutWidget4);
+        pushButton_59->setObjectName("pushButton_59");
+        pushButton_59->setEnabled(false);
+        pushButton_59->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -2383,223 +1865,7 @@ public:
 "    background-color: #388e3c;\n"
 "}"));
 
-        gridLayout_4->addWidget(pushButton_50, 0, 7, 1, 1);
-
-        pushButton_64 = new QPushButton(layoutWidget4);
-        pushButton_64->setObjectName("pushButton_64");
-        pushButton_64->setEnabled(false);
-        pushButton_64->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_4->addWidget(pushButton_64, 1, 7, 1, 1);
-
-        pushButton_71 = new QPushButton(layoutWidget4);
-        pushButton_71->setObjectName("pushButton_71");
-        pushButton_71->setEnabled(false);
-        pushButton_71->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_4->addWidget(pushButton_71, 2, 6, 1, 1);
-
-        pushButton_57 = new QPushButton(layoutWidget4);
-        pushButton_57->setObjectName("pushButton_57");
-        pushButton_57->setEnabled(false);
-        pushButton_57->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_4->addWidget(pushButton_57, 1, 0, 1, 1);
-
-        pushButton_67 = new QPushButton(layoutWidget4);
-        pushButton_67->setObjectName("pushButton_67");
-        pushButton_67->setEnabled(false);
-        pushButton_67->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_4->addWidget(pushButton_67, 2, 2, 1, 1);
-
-        pushButton_56 = new QPushButton(layoutWidget4);
-        pushButton_56->setObjectName("pushButton_56");
-        pushButton_56->setEnabled(false);
-        pushButton_56->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_4->addWidget(pushButton_56, 0, 4, 1, 1);
-
-        pushButton_70 = new QPushButton(layoutWidget4);
-        pushButton_70->setObjectName("pushButton_70");
-        pushButton_70->setEnabled(false);
-        pushButton_70->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_4->addWidget(pushButton_70, 2, 5, 1, 1);
+        gridLayout_4->addWidget(pushButton_59, 1, 2, 1, 1);
 
         pushButton_55 = new QPushButton(layoutWidget4);
         pushButton_55->setObjectName("pushButton_55");
@@ -2637,42 +1903,6 @@ public:
 
         gridLayout_4->addWidget(pushButton_55, 0, 5, 1, 1);
 
-        pushButton_49 = new QPushButton(layoutWidget4);
-        pushButton_49->setObjectName("pushButton_49");
-        pushButton_49->setEnabled(false);
-        pushButton_49->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
-"    background-color: #f5f5f5;\n"
-"    border: 1px solid #e0e0e0;\n"
-"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
-"    min-width: 50px;\n"
-"    min-height: 50px;\n"
-"    max-width: 50px;\n"
-"    max-height: 50px;\n"
-"    font-size: 12px;\n"
-"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
-"}\n"
-"\n"
-"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
-"QPushButton:hover {\n"
-"    background-color: #e8e8e8;\n"
-"    border: 1px solid #bdbdbd;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:checked {\n"
-"    backgroun"
-                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
-"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
-"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
-"}\n"
-"\n"
-"QPushButton:checked:hover {\n"
-"    background-color: #388e3c;\n"
-"}"));
-
-        gridLayout_4->addWidget(pushButton_49, 0, 0, 1, 1);
-
         pushButton_52 = new QPushButton(layoutWidget4);
         pushButton_52->setObjectName("pushButton_52");
         pushButton_52->setEnabled(false);
@@ -2709,10 +1939,9 @@ public:
 
         gridLayout_4->addWidget(pushButton_52, 0, 6, 1, 1);
 
-        pushButton_59 = new QPushButton(layoutWidget4);
-        pushButton_59->setObjectName("pushButton_59");
-        pushButton_59->setEnabled(false);
-        pushButton_59->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+        pushButton_60 = new QPushButton(layoutWidget4);
+        pushButton_60->setObjectName("pushButton_60");
+        pushButton_60->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -2743,12 +1972,12 @@ public:
 "    background-color: #388e3c;\n"
 "}"));
 
-        gridLayout_4->addWidget(pushButton_59, 1, 2, 1, 1);
+        gridLayout_4->addWidget(pushButton_60, 1, 3, 1, 1);
 
-        pushButton_63 = new QPushButton(layoutWidget4);
-        pushButton_63->setObjectName("pushButton_63");
-        pushButton_63->setEnabled(false);
-        pushButton_63->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+        pushButton_50 = new QPushButton(layoutWidget4);
+        pushButton_50->setObjectName("pushButton_50");
+        pushButton_50->setEnabled(false);
+        pushButton_50->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -2779,7 +2008,43 @@ public:
 "    background-color: #388e3c;\n"
 "}"));
 
-        gridLayout_4->addWidget(pushButton_63, 1, 6, 1, 1);
+        gridLayout_4->addWidget(pushButton_50, 0, 7, 1, 1);
+
+        pushButton_57 = new QPushButton(layoutWidget4);
+        pushButton_57->setObjectName("pushButton_57");
+        pushButton_57->setEnabled(false);
+        pushButton_57->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
+"    background-color: #f5f5f5;\n"
+"    border: 1px solid #e0e0e0;\n"
+"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
+"    min-width: 50px;\n"
+"    min-height: 50px;\n"
+"    max-width: 50px;\n"
+"    max-height: 50px;\n"
+"    font-size: 12px;\n"
+"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
+"QPushButton:hover {\n"
+"    background-color: #e8e8e8;\n"
+"    border: 1px solid #bdbdbd;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:checked {\n"
+"    backgroun"
+                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
+"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
+"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
+"}\n"
+"\n"
+"QPushButton:checked:hover {\n"
+"    background-color: #388e3c;\n"
+"}"));
+
+        gridLayout_4->addWidget(pushButton_57, 1, 0, 1, 1);
 
         pushButton_61 = new QPushButton(layoutWidget4);
         pushButton_61->setObjectName("pushButton_61");
@@ -2817,10 +2082,10 @@ public:
 
         gridLayout_4->addWidget(pushButton_61, 1, 4, 1, 1);
 
-        pushButton_65 = new QPushButton(layoutWidget4);
-        pushButton_65->setObjectName("pushButton_65");
-        pushButton_65->setEnabled(false);
-        pushButton_65->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+        pushButton_64 = new QPushButton(layoutWidget4);
+        pushButton_64->setObjectName("pushButton_64");
+        pushButton_64->setEnabled(false);
+        pushButton_64->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -2851,12 +2116,12 @@ public:
 "    background-color: #388e3c;\n"
 "}"));
 
-        gridLayout_4->addWidget(pushButton_65, 2, 0, 1, 1);
+        gridLayout_4->addWidget(pushButton_64, 1, 7, 1, 1);
 
-        pushButton_69 = new QPushButton(layoutWidget4);
-        pushButton_69->setObjectName("pushButton_69");
-        pushButton_69->setEnabled(false);
-        pushButton_69->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+        pushButton_58 = new QPushButton(layoutWidget4);
+        pushButton_58->setObjectName("pushButton_58");
+        pushButton_58->setEnabled(false);
+        pushButton_58->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -2887,12 +2152,12 @@ public:
 "    background-color: #388e3c;\n"
 "}"));
 
-        gridLayout_4->addWidget(pushButton_69, 2, 4, 1, 1);
+        gridLayout_4->addWidget(pushButton_58, 1, 1, 1, 1);
 
-        pushButton_66 = new QPushButton(layoutWidget4);
-        pushButton_66->setObjectName("pushButton_66");
-        pushButton_66->setEnabled(false);
-        pushButton_66->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+        pushButton_56 = new QPushButton(layoutWidget4);
+        pushButton_56->setObjectName("pushButton_56");
+        pushButton_56->setEnabled(false);
+        pushButton_56->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
 "    background-color: #f5f5f5;\n"
 "    border: 1px solid #e0e0e0;\n"
@@ -2923,7 +2188,151 @@ public:
 "    background-color: #388e3c;\n"
 "}"));
 
-        gridLayout_4->addWidget(pushButton_66, 2, 1, 1, 1);
+        gridLayout_4->addWidget(pushButton_56, 0, 4, 1, 1);
+
+        pushButton_63 = new QPushButton(layoutWidget4);
+        pushButton_63->setObjectName("pushButton_63");
+        pushButton_63->setEnabled(false);
+        pushButton_63->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
+"    background-color: #f5f5f5;\n"
+"    border: 1px solid #e0e0e0;\n"
+"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
+"    min-width: 50px;\n"
+"    min-height: 50px;\n"
+"    max-width: 50px;\n"
+"    max-height: 50px;\n"
+"    font-size: 12px;\n"
+"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
+"QPushButton:hover {\n"
+"    background-color: #e8e8e8;\n"
+"    border: 1px solid #bdbdbd;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:checked {\n"
+"    backgroun"
+                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
+"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
+"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
+"}\n"
+"\n"
+"QPushButton:checked:hover {\n"
+"    background-color: #388e3c;\n"
+"}"));
+
+        gridLayout_4->addWidget(pushButton_63, 1, 6, 1, 1);
+
+        pushButton_62 = new QPushButton(layoutWidget4);
+        pushButton_62->setObjectName("pushButton_62");
+        pushButton_62->setEnabled(false);
+        pushButton_62->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
+"    background-color: #f5f5f5;\n"
+"    border: 1px solid #e0e0e0;\n"
+"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
+"    min-width: 50px;\n"
+"    min-height: 50px;\n"
+"    max-width: 50px;\n"
+"    max-height: 50px;\n"
+"    font-size: 12px;\n"
+"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
+"QPushButton:hover {\n"
+"    background-color: #e8e8e8;\n"
+"    border: 1px solid #bdbdbd;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:checked {\n"
+"    backgroun"
+                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
+"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
+"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
+"}\n"
+"\n"
+"QPushButton:checked:hover {\n"
+"    background-color: #388e3c;\n"
+"}"));
+
+        gridLayout_4->addWidget(pushButton_62, 1, 5, 1, 1);
+
+        pushButton_49 = new QPushButton(layoutWidget4);
+        pushButton_49->setObjectName("pushButton_49");
+        pushButton_49->setEnabled(false);
+        pushButton_49->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
+"    background-color: #f5f5f5;\n"
+"    border: 1px solid #e0e0e0;\n"
+"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
+"    min-width: 50px;\n"
+"    min-height: 50px;\n"
+"    max-width: 50px;\n"
+"    max-height: 50px;\n"
+"    font-size: 12px;\n"
+"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
+"QPushButton:hover {\n"
+"    background-color: #e8e8e8;\n"
+"    border: 1px solid #bdbdbd;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:checked {\n"
+"    backgroun"
+                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
+"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
+"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
+"}\n"
+"\n"
+"QPushButton:checked:hover {\n"
+"    background-color: #388e3c;\n"
+"}"));
+
+        gridLayout_4->addWidget(pushButton_49, 0, 0, 1, 1);
+
+        pushButton_53 = new QPushButton(layoutWidget4);
+        pushButton_53->setObjectName("pushButton_53");
+        pushButton_53->setEnabled(false);
+        pushButton_53->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    /* \345\237\272\347\241\200\346\240\267\345\274\217\357\274\232\346\265\205\347\201\260\345\234\206\345\275\242 */\n"
+"    background-color: #f5f5f5;\n"
+"    border: 1px solid #e0e0e0;\n"
+"    border-radius: 25px;       /* \345\234\206\345\275\242\345\205\263\351\224\256\357\274\232\345\256\275\351\253\230\347\233\270\347\255\211\346\227\266\357\274\214\345\215\212\345\276\204\350\256\276\344\270\272\344\270\200\345\215\212 */\n"
+"    min-width: 50px;\n"
+"    min-height: 50px;\n"
+"    max-width: 50px;\n"
+"    max-height: 50px;\n"
+"    font-size: 12px;\n"
+"    color: #333333;            /* \346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"/* \346\202\254\345\201\234\347\212\266\346\200\201\357\274\232\351\274\240\346\240\207\346\224\276\344\270\212\345\216\273\346\227\266\350\275\273\345\276\256\345\217\230\347\201\260 */\n"
+"QPushButton:hover {\n"
+"    background-color: #e8e8e8;\n"
+"    border: 1px solid #bdbdbd;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:checked {\n"
+"    backgroun"
+                        "d-color: #4caf50; /* \344\270\273\347\273\277\350\211\262 */\n"
+"    border: 1px solid #388e3c; /* \346\267\261\347\273\277\350\211\262\350\276\271\346\241\206 */\n"
+"    color: #ffffff;            /* \346\226\207\345\255\227\345\217\230\347\231\275\357\274\214\346\233\264\351\206\222\347\233\256 */\n"
+"}\n"
+"\n"
+"QPushButton:checked:hover {\n"
+"    background-color: #388e3c;\n"
+"}"));
+
+        gridLayout_4->addWidget(pushButton_53, 0, 2, 1, 1);
 
         layoutWidget5 = new QWidget(groupBox_8);
         layoutWidget5->setObjectName("layoutWidget5");
@@ -2940,11 +2349,6 @@ public:
         label_41->setObjectName("label_41");
 
         verticalLayout_3->addWidget(label_41);
-
-        label_40 = new QLabel(layoutWidget5);
-        label_40->setObjectName("label_40");
-
-        verticalLayout_3->addWidget(label_40);
 
         stackedWidget_2->addWidget(page_dio);
         btn_open_port_2 = new QPushButton(Widget);
@@ -3211,61 +2615,43 @@ public:
         label_23->setText(QCoreApplication::translate("Widget", "\347\212\266\346\200\201", nullptr));
         btn_clear_alarm->setText(QCoreApplication::translate("Widget", "\346\270\205\351\231\244\346\212\245\350\255\246", nullptr));
         groupBox_7->setTitle(QCoreApplication::translate("Widget", "DO", nullptr));
-        btn_do1_1->setText(QString());
-        btn_do0_1->setText(QString());
-        btn_do1_7->setText(QString());
-        btn_do1_6->setText(QString());
-        btn_do0_5->setText(QString());
-        btn_do2_5->setText(QString());
-        btn_do0_0->setText(QString());
-        btn_do0_6->setText(QString());
-        btn_do2_1->setText(QString());
-        btn_do0_4->setText(QString());
-        btn_do2_4->setText(QString());
-        btn_do2_6->setText(QString());
-        btn_do2_7->setText(QString());
-        btn_do2_0->setText(QString());
-        btn_do1_0->setText(QString());
         btn_do1_2->setText(QString());
-        btn_do0_3->setText(QString());
-        btn_do1_4->setText(QString());
-        btn_do2_3->setText(QString());
-        btn_do2_2->setText(QString());
-        btn_do0_2->setText(QString());
-        btn_do0_7->setText(QString());
-        btn_do1_3->setText(QString());
+        btn_do0_0->setText(QString());
         btn_do1_5->setText(QString());
+        btn_do1_0->setText(QString());
+        btn_do0_6->setText(QString());
+        btn_do1_6->setText(QString());
+        btn_do0_2->setText(QString());
+        btn_do1_3->setText(QString());
+        btn_do1_4->setText(QString());
+        btn_do0_4->setText(QString());
+        btn_do0_3->setText(QString());
+        btn_do0_5->setText(QString());
+        btn_do1_1->setText(QString());
+        btn_do1_7->setText(QString());
+        btn_do0_1->setText(QString());
+        btn_do0_7->setText(QString());
         label_30->setText(QCoreApplication::translate("Widget", "DO0", nullptr));
         label_31->setText(QCoreApplication::translate("Widget", "DO1", nullptr));
-        label_32->setText(QCoreApplication::translate("Widget", "DO2", nullptr));
         groupBox_8->setTitle(QCoreApplication::translate("Widget", "DI", nullptr));
-        pushButton_58->setText(QString());
-        pushButton_62->setText(QString());
         pushButton_51->setText(QString());
-        pushButton_68->setText(QString());
-        pushButton_53->setText(QString());
-        pushButton_60->setText(QString());
-        pushButton_72->setText(QString());
         pushButton_54->setText(QString());
-        pushButton_50->setText(QString());
-        pushButton_64->setText(QString());
-        pushButton_71->setText(QString());
-        pushButton_57->setText(QString());
-        pushButton_67->setText(QString());
-        pushButton_56->setText(QString());
-        pushButton_70->setText(QString());
-        pushButton_55->setText(QString());
-        pushButton_49->setText(QString());
-        pushButton_52->setText(QString());
         pushButton_59->setText(QString());
-        pushButton_63->setText(QString());
+        pushButton_55->setText(QString());
+        pushButton_52->setText(QString());
+        pushButton_60->setText(QString());
+        pushButton_50->setText(QString());
+        pushButton_57->setText(QString());
         pushButton_61->setText(QString());
-        pushButton_65->setText(QString());
-        pushButton_69->setText(QString());
-        pushButton_66->setText(QString());
+        pushButton_64->setText(QString());
+        pushButton_58->setText(QString());
+        pushButton_56->setText(QString());
+        pushButton_63->setText(QString());
+        pushButton_62->setText(QString());
+        pushButton_49->setText(QString());
+        pushButton_53->setText(QString());
         label_39->setText(QCoreApplication::translate("Widget", "DI0", nullptr));
         label_41->setText(QCoreApplication::translate("Widget", "DI1", nullptr));
-        label_40->setText(QCoreApplication::translate("Widget", "DI2", nullptr));
         btn_open_port_2->setText(QCoreApplication::translate("Widget", "\346\211\223\345\274\200\344\270\262\345\217\243", nullptr));
         btn_scope->setText(QCoreApplication::translate("Widget", "Scope", nullptr));
         btn_RunTime->setText(QCoreApplication::translate("Widget", "RunTime", nullptr));

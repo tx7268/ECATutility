@@ -262,6 +262,16 @@ QByteArray Protocol::switch_op(uint8_t axis)
     return packCommand(FRAME_TYPE_REQ, CMD_TO_OP, axis, m_seq, QByteArray());
 }
 
+QByteArray Protocol::setDioOutput(uint8_t slave, uint16_t outputMask)
+{
+    return packCommand(FRAME_TYPE_REQ, CMD_DIO_SET_OUTPUT, slave, m_seq, uint16ToBytes(outputMask));
+}
+
+QByteArray Protocol::readDioInput(uint8_t slave)
+{
+    return packCommand(FRAME_TYPE_REQ, CMD_DIO_READ_INPUT, slave, m_seq, QByteArray());
+}
+
 
 // 32位整数转字节数组（小端序：低字节在前）
 QByteArray Protocol::int32ToBytes(qint32 value)
