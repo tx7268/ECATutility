@@ -548,7 +548,7 @@ QPushButton#btn_set:checked:hover
 }</string>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="page_Link">
     <widget class="QGroupBox" name="groupBox_3">
@@ -2090,17 +2090,61 @@ li.checked::marker { content: &quot;\2612&quot;; }
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_22">
-         <property name="text">
-          <string>伺服状态字</string>
+       <item row="1" column="4">
+        <widget class="QLineEdit" name="lineEdit_actpos">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>120</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_12">
+       <item row="1" column="9">
+        <widget class="QPushButton" name="btn_clear_alarm">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
          <property name="text">
-          <string>Axis ID</string>
+          <string>清除报警</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="5">
+        <widget class="QLineEdit" name="lineEdit_targetpos">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>120</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="7">
+        <widget class="QLabel" name="label_32">
+         <property name="text">
+          <string>实际速度指令</string>
          </property>
         </widget>
        </item>
@@ -2111,52 +2155,33 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </property>
         </widget>
        </item>
-       <item row="1" column="6">
-        <widget class="QLineEdit" name="lineEdit_errorpos">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>120</width>
-           <height>16777215</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="QLineEdit" name="lineEdit_cmdpos">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>120</width>
-           <height>16777215</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="5">
-        <widget class="QLabel" name="label_26">
+       <item row="0" column="2">
+        <widget class="QLabel" name="label_23">
          <property name="text">
-          <string>指令位置（target pos）</string>
+          <string>状态</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="7">
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="lineEdit_stateword">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>120</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="9">
         <widget class="QLabel" name="label_29">
          <property name="maximumSize">
           <size>
@@ -2188,34 +2213,22 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </property>
         </widget>
        </item>
-       <item row="0" column="6">
-        <widget class="QLabel" name="label_27">
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_22">
          <property name="text">
-          <string>误差位置（error pos）</string>
+          <string>伺服状态字</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="5">
-        <widget class="QLineEdit" name="lineEdit_targetpos">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>120</width>
-           <height>16777215</height>
-          </size>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Axis ID</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="4">
-        <widget class="QLineEdit" name="lineEdit_actpos">
+       <item row="1" column="6">
+        <widget class="QLineEdit" name="lineEdit_errorpos">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -2246,6 +2259,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </property>
         </widget>
        </item>
+       <item row="0" column="5">
+        <widget class="QLabel" name="label_26">
+         <property name="text">
+          <string>指令位置（target pos）</string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="4">
         <widget class="QLabel" name="label_25">
          <property name="text">
@@ -2253,28 +2273,60 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
-        <widget class="QLabel" name="label_23">
-         <property name="text">
-          <string>状态</string>
+       <item row="1" column="3">
+        <widget class="QLineEdit" name="lineEdit_cmdpos">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
-        </widget>
-       </item>
-       <item row="1" column="7">
-        <widget class="QPushButton" name="btn_clear_alarm">
          <property name="minimumSize">
           <size>
            <width>0</width>
            <height>50</height>
           </size>
          </property>
-         <property name="text">
-          <string>清除报警</string>
+         <property name="maximumSize">
+          <size>
+           <width>120</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="lineEdit_stateword">
+       <item row="0" column="6">
+        <widget class="QLabel" name="label_27">
+         <property name="text">
+          <string>误差位置（error pos）</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="8">
+        <widget class="QLabel" name="label_34">
+         <property name="text">
+          <string>实际速度反馈</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="7">
+        <widget class="QLineEdit" name="lineEdit_velDemand">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>120</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="8">
+        <widget class="QLineEdit" name="lineEdit_velActual">
          <property name="enabled">
           <bool>false</bool>
          </property>

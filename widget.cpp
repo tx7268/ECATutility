@@ -758,7 +758,7 @@ void Widget::serialReadData(const QByteArray &data)
 
         // ====================== 周期监视上传帧 ======================
         if (type == FRAME_TYPE_DATA && cmd == CMD_UPLOAD_MONITOR &&
-            (payload.size() == 30 || payload.size() == 32))
+            (payload.size() == 32 || payload.size() == 40))
         {
             qint32 actpos = readI32(payload, 0);
             qint32 cmdpos = readI32(payload, 4);
@@ -766,9 +766,11 @@ void Widget::serialReadData(const QByteArray &data)
             qint16 state = readI16(payload, 12);
             quint16 stateword = readU16(payload, 14);
             qint32 targetpos = readI32(payload, 16);
-            qint32 dc = readI32(payload, 20);
-            quint32 freq = readU32(payload, 24);
-            quint16 slavestate = readU16(payload, 28);
+            qint32 runvel = readI32(payload, 20);
+            qint32 velcmd = readI32(payload, 24);
+            qint32 dc = readI32(payload, 28);
+            quint32 freq = readU32(payload, 32);
+            quint16 slavestate = readU16(payload, 36);
 
             ui->lineEdit_actpos->setText(QString::number(actpos));
             ui->lineEdit_cmdpos->setText(QString::number(cmdpos));
@@ -777,15 +779,14 @@ void Widget::serialReadData(const QByteArray &data)
             ui->lineEdit_stateword->setText(
                 QString("0x%1").arg(stateword, 4, 16, QChar('0')).toUpper());
             ui->lineEdit_targetpos->setText(QString::number(targetpos));
+            ui->lineEdit_velDemand->setText(QString::number(velcmd));
+            ui->lineEdit_velActual->setText(QString::number(runvel));
 
             ui->textEdit_dc->setPlainText(QString::number(dc));
             ui->textEdit_freq->setPlainText(QString("%1 ").arg(freq));
             ui->textEdit_slavestate->setPlainText(ethercatStateToString(slavestate));
 
-            if (payload.size() >= 32)
-            {
-                applyDiMask(readU16(payload, 30));
-            }
+            applyDiMask(readU16(payload, 38));
 
             // 把频率传给RunTime绘图
             m_runTime->onEcatFreqUpdated(freq);

@@ -117,6 +117,25 @@
 
 #define CMD_UPLOAD_MONITOR   0x60// 周期监视上传
 
+
+#pragma pack(push, 1)
+typedef struct
+{
+    qint32  actpos;
+    qint32  cmdpos;
+    qint32  errorpos;
+    qint16  state;
+    quint16 stateword;
+    qint32  targetpos;
+    qint32  runvel;
+    qint32  velcmd;
+    qint32  dc;
+    quint32 freq;
+    quint16 slavestate;
+    quint16 di_input;
+} MonitorUpload_t;
+#pragma pack(pop)
+
 class Protocol : public QObject
 {
     Q_OBJECT
