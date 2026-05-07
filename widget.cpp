@@ -108,7 +108,7 @@ Widget::Widget(QWidget *parent)
     for (int i = 0; i < dioButtons.size(); ++i)
     {
         QPushButton* btn = dioButtons.at(i);
-        btn->setProperty("dioBit", i); // 给按钮绑定自定义属性：标记对应的IO位号
+        btn->setProperty("dioBit", i); // 给按钮绑定自定义属性：标记对应的IO位号0~15
 
         // 绑定按钮切换信号：点击按钮时发送IO输出指令
         connect(btn, &QPushButton::toggled, this, [this](bool) {
@@ -117,30 +117,32 @@ Widget::Widget(QWidget *parent)
                 return;// 正在更新按钮状态时，不执行操作
             }
 
+            // 获取当前所有DO按钮状态生成的16位掩码
             const uint16_t mask = currentDoMask();
 
-            if (m_waitingDoAck)
+            if (m_waitingDoAck) // 防重复发送，忽略本次点击
             {
-                appendlog("DO command pending, ignore this click");
+                appendlog("指令等待中，忽略点击");
                 applyDoMask(m_lastDoMask);
                 return;
             }
 
+            // 保存待发送的掩码，标记等待硬件应答
             m_pendingDoMask = mask;
             m_waitingDoAck = true;
 
-            // Keep UI at the last confirmed state until the ACK arrives.
             applyDoMask(m_lastDoMask);
 
             appendlog(QString("设置IO输出: 0x%1").arg(mask, 4, 16, QChar('0')).toUpper());
             sendCmdWithLog(proto->setDioOutput(currentDioSlave(), mask), "dio_set_output", mask);
 
+            // 指令超时处理：800ms超时定时器，若硬件未应答则重置状态
             QTimer::singleShot(800, this, [this, mask]() {
                 if (m_waitingDoAck && m_pendingDoMask == mask)
                 {
                     m_waitingDoAck = false;
                     applyDoMask(m_lastDoMask);
-                    appendlog("DO ACK timeout, keep last confirmed UI state");
+                    appendlog("DO ACK timeout");
                 }
                 });
             });
@@ -1769,6 +1771,10 @@ QWidget *Widget::findScopeChartContainer() const
 
 
 //**********************************************DIO界面**********************************************//
+/**
+ * @brief 获取所有数字输出(DO)按钮
+ * @return QList<QPushButton*> 16个DO按钮固定列表（2组，每组8路）
+ */
 QList<QPushButton *> Widget::doButtons() const
 {
     return {
@@ -1779,44 +1785,61 @@ QList<QPushButton *> Widget::doButtons() const
     };
 }
 
+/**
+ * @brief 动态获取所有数字输入(DI)按钮
+ * @return QList<QPushButton*> 排序后的DI按钮列表，获取失败返回空列表
+ */
 QList<QPushButton *> Widget::diButtons() const
 {
+    // 获取堆叠窗口中第1页（索引从0开始）的DIO页面控件
     QWidget *dioPage = ui->stackedWidget_2->widget(1);
     if (!dioPage)
     {
-        return {};
+        return {};// 控件不存在，直接返回空列表
     }
-
+    // 在DIO页面中查找名称为groupBox_8的DI分组控件
     QGroupBox *diGroup = dioPage->findChild<QGroupBox *>("groupBox_8");
     if (!diGroup)
     {
-        return {};
+        return {};// 分组不存在，直接返回空列表
     }
 
+     // 调用工具函数，获取分组内排序后的所有DI按钮
     QList<QPushButton *> buttons = sortedButtons(diGroup);
     return buttons;
 }
 
+/**
+ * @brief 根据DO按钮选中状态，生成16位DO状态掩码
+ * @return uint16_t 16位掩码：bit0~bit15 对应第0~15个DO按钮的状态（1=选中，0=未选中）
+ */
 uint16_t Widget::currentDoMask() const
 {
-    uint16_t mask = 0;
-    const QList<QPushButton *> buttons = doButtons();
+    uint16_t mask = 0;// 初始化掩码为0（所有通道默认关闭）
+    const QList<QPushButton *> buttons = doButtons();// 获取所有DO按钮
 
+    // 遍历按钮，最多遍历16个（匹配16位掩码）
     for (int i = 0; i < buttons.size() && i < 16; ++i)
     {
-        if (buttons.at(i) && buttons.at(i)->isChecked())
+        if (buttons.at(i) && buttons.at(i)->isChecked())// 按钮有效 且 按钮被选中
         {
-            mask |= static_cast<uint16_t>(1U << i);
+            mask |= static_cast<uint16_t>(1U << i);// 将对应bit位置1：1左移i位，强制转换为16位无符号数
         }
     }
 
     return mask;
 }
 
+/**
+ * @brief 获取当前选择的DIO从机地址
+ * @return uint8_t 从机地址（默认返回1，转换失败/非法值时兜底）
+ */
 uint8_t Widget::currentDioSlave() const
 {
     bool ok = false;
+    // 从下拉框获取绑定的数值型从机地址,待仔细检查，这个下拉框好像没有更新
     const int slave = ui->comboBox_slave_num->currentData().toInt(&ok);
+
     if (!ok || slave <= 0)
     {
         return 1;
@@ -1825,9 +1848,14 @@ uint8_t Widget::currentDioSlave() const
     return static_cast<uint8_t>(slave);
 }
 
+/**
+ * @brief 根据16位掩码，批量设置DO按钮的选中状态
+ * @param mask 16位DO输出掩码
+ */
 void Widget::applyDoMask(uint16_t mask)
 {
     const QList<QPushButton *> buttons = doButtons();
+    // 标记：开始更新按钮状态，防止按钮状态变化触发循环逻辑
     m_updatingDioButtons = true;
 
     for (int i = 0; i < buttons.size(); ++i)
@@ -1835,7 +1863,7 @@ void Widget::applyDoMask(uint16_t mask)
         QPushButton *button = buttons.at(i);
         if (!button)
         {
-            continue;
+            continue; // 跳过空指针按钮
         }
 
         button->setChecked((mask & static_cast<uint16_t>(1U << i)) != 0U);
@@ -1844,6 +1872,10 @@ void Widget::applyDoMask(uint16_t mask)
     m_updatingDioButtons = false;
 }
 
+/**
+ * @brief 根据16位掩码，批量设置DI按钮的选中状态+提示文本
+ * @param mask 16位DI输入掩码
+ */
 void Widget::applyDiMask(uint16_t mask)
 {
     const QList<QPushButton *> buttons = diButtons();
