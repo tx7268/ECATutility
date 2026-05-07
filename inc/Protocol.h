@@ -109,8 +109,10 @@
 #define CMD_SDO_READ_8       0x43
 #define CMD_SDO_READ_16      0x44
 #define CMD_SDO_READ_32      0x45
+#define CMD_ECAT_UNLINK      0x46
 #define CMD_TO_SAFEOP        0x47
 #define CMD_TO_OP            0x48
+#define CMD_ECAT_RESCAN      0x49
 #define CMD_READ_SLAVE_INFO  0x50
 #define CMD_DIO_SET_OUTPUT   0x51
 #define CMD_DIO_READ_INPUT   0x52
@@ -197,6 +199,8 @@ public:
     QByteArray read_slaveinfo(uint8_t axis);  // 读取从站信息
     QByteArray switch_safeop(uint8_t axis);
     QByteArray switch_op(uint8_t axis);
+    QByteArray unlinkEcat();
+    QByteArray rescanEcat();
     QByteArray setDioOutput(uint8_t slave, uint16_t outputMask);
     QByteArray readDioInput(uint8_t slave);
 public slots:

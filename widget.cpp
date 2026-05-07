@@ -623,6 +623,18 @@ void Widget::closeSerialPort()
 }
 
 
+void Widget::on_btn_unlink_clicked()
+{
+    appendlog("EtherCAT unlink request");
+    sendCmdWithLog(proto->unlinkEcat(), "ecat_unlink", 0);
+}
+
+void Widget::on_btn_rescan_clicked()
+{
+    appendlog("EtherCAT rescan request");
+    sendCmdWithLog(proto->rescanEcat(), "ecat_rescan", 0);
+}
+
 //**********************************************日志信息界面**********************************************//
 
 //******************************清空日志按键******************************
@@ -941,6 +953,17 @@ void Widget::serialReadData(const QByteArray &data)
                 }
             }
             break;
+
+            case 0xC6:
+                appendlog("EtherCAT unlink success");
+                ui->checkBox_axis0enable->blockSignals(true);
+                ui->checkBox_axis0enable->setChecked(false);
+                ui->checkBox_axis0enable->blockSignals(false);
+                break;
+
+            case 0xC9:
+                appendlog("EtherCAT rescan and reconnect success");
+                break;
 
             case 0xD1: // DO输出成功
             {
@@ -1898,3 +1921,7 @@ void Widget::requestDioInput()
 {
     sendCmdWithLog(proto->readDioInput(currentDioSlave()), "dio_read_input", 0);
 }
+
+
+
+

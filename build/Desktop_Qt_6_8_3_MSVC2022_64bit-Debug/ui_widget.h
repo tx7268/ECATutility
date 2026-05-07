@@ -647,7 +647,7 @@ public:
         btn_unlink->setGeometry(QRect(360, 340, 131, 51));
         btn_rescan = new QPushButton(page_Link);
         btn_rescan->setObjectName("btn_rescan");
-        btn_rescan->setEnabled(false);
+        btn_rescan->setEnabled(true);
         btn_rescan->setGeometry(QRect(520, 340, 131, 51));
         stackedWidget->addWidget(page_Link);
         page_Set = new QWidget();
@@ -2500,7 +2500,7 @@ public:
 
         retranslateUi(Widget);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(Widget);

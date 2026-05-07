@@ -548,7 +548,7 @@ QPushButton#btn_set:checked:hover
 }</string>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page_Link">
     <widget class="QGroupBox" name="groupBox_3">
@@ -732,7 +732,7 @@ QPushButton#btn_disable:pressed {
     </widget>
     <widget class="QPushButton" name="btn_unlink">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="geometry">
       <rect>
@@ -748,7 +748,7 @@ QPushButton#btn_disable:pressed {
     </widget>
     <widget class="QPushButton" name="btn_rescan">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="geometry">
       <rect>

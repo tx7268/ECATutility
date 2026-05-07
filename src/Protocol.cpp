@@ -262,6 +262,16 @@ QByteArray Protocol::switch_op(uint8_t axis)
     return packCommand(FRAME_TYPE_REQ, CMD_TO_OP, axis, m_seq, QByteArray());
 }
 
+QByteArray Protocol::unlinkEcat()
+{
+    return packCommand(FRAME_TYPE_REQ, CMD_ECAT_UNLINK, 0x00, m_seq, QByteArray());
+}
+
+QByteArray Protocol::rescanEcat()
+{
+    return packCommand(FRAME_TYPE_REQ, CMD_ECAT_RESCAN, 0x00, m_seq, QByteArray());
+}
+
 QByteArray Protocol::setDioOutput(uint8_t slave, uint16_t outputMask)
 {
     return packCommand(FRAME_TYPE_REQ, CMD_DIO_SET_OUTPUT, slave, m_seq, uint16ToBytes(outputMask));

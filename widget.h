@@ -108,6 +108,8 @@ private slots:
     void on_btn_RunTime_clearlog_clicked();
     void on_btn_RunTime_outlog_clicked();
 
+    void on_btn_rescan_clicked();
+    void on_btn_unlink_clicked();
 private:
     Ui::Widget* ui;
     Link* m_link;
