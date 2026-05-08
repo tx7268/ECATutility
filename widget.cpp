@@ -765,6 +765,7 @@ void Widget::serialReadData(const QByteArray &data)
         quint8 type = u8(rxBuf[1]);
         quint8 cmd = u8(rxBuf[2]);
         quint8 axis = u8(rxBuf[3]);
+        quint8 seq = u8(rxBuf[4]);
         Q_UNUSED(axis);
         QByteArray payload = rxBuf.mid(6, len);
 
@@ -815,7 +816,7 @@ void Widget::serialReadData(const QByteArray &data)
         // ====================== 普通应答/错误帧，可选记录日志 ======================
         else if (type == FRAME_TYPE_ACK)
         {
-            updateLogRow(0, "OK");
+            updateLogRow(seq, cmd, 0, "OK");
             switch (cmd)
             {
             case 0x81:
@@ -1002,7 +1003,7 @@ void Widget::serialReadData(const QByteArray &data)
             if (payload.size() >= 1)
             {
                 quint8 err = u8(payload[0]);
-                updateLogRow(err, "ERROR");
+                updateLogRow(seq, cmd, err, "ERROR");
                 appendlog(QString("错误应答: cmd=0x%1 err=0x%2").arg(cmd, 2, 16, QChar('0')).arg(err, 2, 16, QChar('0')).toUpper());
             
                 if (cmd == 0xD1)
@@ -1565,11 +1566,11 @@ void Widget::on_btn_clear_XMLfile_clicked()
 
 //****************************************************RunTime界面功能函数****************************************************
 
-void Widget::updateLogRow(int retValue, const QString& status)
+void Widget::updateLogRow(int protoSeq, int protoCmd, int retValue, const QString& status)
 {
     if (m_runTime)
     {
-        m_runTime->updateLogRow(retValue, status);
+        m_runTime->updateLogRow(protoSeq, protoCmd, retValue, status);
     }
 }
 
@@ -1919,7 +1920,8 @@ void Widget::applyDiMask(uint16_t mask)
 
 void Widget::requestDioInput()
 {
-    sendCmdWithLog(proto->readDioInput(currentDioSlave()), "dio_read_input", 0);
+    //sendCmdWithLog(proto->readDioInput(currentDioSlave()), "dio_read_input", 0);
+    m_link->sendSerialData(proto->readDioInput(currentDioSlave()));
 }
 
 

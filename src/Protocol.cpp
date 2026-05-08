@@ -33,6 +33,15 @@ QByteArray Protocol::packCommand(uint8_t type, uint8_t cmd, uint8_t axis, uint8_
 
     frame.append(crc);
 
+    if (type == FRAME_TYPE_REQ)
+    {
+        ++m_seq;
+        if (m_seq == 0)
+        {
+            m_seq = 1;
+        }
+    }
+
     return frame;
 }
 

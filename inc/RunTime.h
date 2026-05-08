@@ -23,6 +23,8 @@ class QTimer;
 struct LogSendInfo
 {
     int seq;         // 序号
+    int protoSeq;    // 协议序列号
+    int protoCmd;    // 协议命令码
     QString cmdName; // 命令
     int sendValue;   // 发送值
     qint64 sendTime; // 发送时间戳
@@ -103,7 +105,7 @@ signals:
 public slots:
 
     void sendCmdWithLog(const QByteArray& data, const QString& cmdName, int sendValue = 0);
-    void updateLogRow(int retValue, const QString& status);
+    void updateLogRow(int protoSeq, int protoCmd, int retValue, const QString& status);
     void checkTimeoutCommands();
     void filterRunTimeLog(int index);// 过滤运行时日志
     void clearLog();
@@ -117,6 +119,7 @@ private:
     // 添加日志行到表格
     void addLogRow(QString time, int seq, QString cmd, int send, int ret, double delay, QString status);
     void calculateStats(); // 计算所有统计指标（核心）
+    int findPendingCommandIndex(int protoSeq, int protoCmd) const;
 
     void createChart();    // 创建图表
 

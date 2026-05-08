@@ -129,7 +129,7 @@ private:
     bool set_motion_para(uint16_t slaveIndex, int32_t vel, int32_t acc, int32_t dec);
     bool set_home_para(uint16_t slaveIndex, int8_t home_mode, int32_t sw_vel, int32_t zero_vel);
 
-    void updateLogRow(int retValue, const QString& status);
+    void updateLogRow(int protoSeq, int protoCmd, int retValue, const QString& status);
     void updateScopeConfig();
     QWidget* findScopeChartContainer() const;
 

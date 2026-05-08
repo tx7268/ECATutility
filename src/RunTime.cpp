@@ -345,6 +345,19 @@ void RunTime::addLogRow(QString time, int seq, QString cmd, int send, int ret, d
     m_tableWidget->scrollToBottom();
 }
 
+int RunTime::findPendingCommandIndex(int protoSeq, int protoCmd) const
+{
+    for (int i = 0; i < m_sendLogQueue.size(); ++i)
+    {
+        const LogSendInfo& info = m_sendLogQueue.at(i);
+        if (info.protoSeq == protoSeq && info.protoCmd == protoCmd)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
 
 // 发送命令并记录日志
 void RunTime::sendCmdWithLog(const QByteArray& data, const QString& cmdName, int sendValue)
@@ -353,6 +366,8 @@ void RunTime::sendCmdWithLog(const QByteArray& data, const QString& cmdName, int
 
     LogSendInfo info;
     info.seq = ++m_logSeq;
+    info.protoSeq = (data.size() >= 5) ? static_cast<unsigned char>(data[4]) : -1;
+    info.protoCmd = (data.size() >= 3) ? static_cast<unsigned char>(data[2]) : -1;
     info.cmdName = cmdName;
     info.sendValue = sendValue;
     info.sendTime = QDateTime::currentMSecsSinceEpoch();
@@ -369,11 +384,18 @@ void RunTime::sendCmdWithLog(const QByteArray& data, const QString& cmdName, int
 
 
 // 接收响应 + 更新成功/错误统计
-void RunTime::updateLogRow(int retValue, const QString& status)
+void RunTime::updateLogRow(int protoSeq, int protoCmd, int retValue, const QString& status)
 {
     if (!m_tableWidget || m_sendLogQueue.isEmpty()) return;
 
-    LogSendInfo info = m_sendLogQueue.dequeue();
+    const int requestCmd = (protoCmd >= 0x80) ? (protoCmd & 0x7F) : protoCmd;
+    const int queueIndex = findPendingCommandIndex(protoSeq, requestCmd);
+    if (queueIndex < 0)
+    {
+        return;
+    }
+
+    LogSendInfo info = m_sendLogQueue.takeAt(queueIndex);
     double delay = (QDateTime::currentMSecsSinceEpoch() - info.sendTime);
     int row = info.seq - 1;
     if (row < 0 || row >= m_tableWidget->rowCount()) return;

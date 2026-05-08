@@ -643,7 +643,7 @@ public:
         btn_link_device->setGeometry(QRect(200, 340, 131, 51));
         btn_unlink = new QPushButton(page_Link);
         btn_unlink->setObjectName("btn_unlink");
-        btn_unlink->setEnabled(false);
+        btn_unlink->setEnabled(true);
         btn_unlink->setGeometry(QRect(360, 340, 131, 51));
         btn_rescan = new QPushButton(page_Link);
         btn_rescan->setObjectName("btn_rescan");
