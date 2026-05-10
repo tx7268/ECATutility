@@ -22,6 +22,12 @@ class RunTime;
 class Scope;
 
 struct RunTimeStats;
+struct SlaveUiInfo
+{
+    quint8 slaveId = 0;
+    quint8 slaveType = 0;
+    QString name;
+};
 
 #define op_mode_no   0            // 无模式
 #define op_mode_pp   1            // Profile Position（位置规划）
@@ -140,11 +146,14 @@ private:
     void applyDoMask(uint16_t mask);
     void applyDiMask(uint16_t mask);
     void requestDioInput();
+    void updateSlaveUi(const QVector<SlaveUiInfo>& slaves);
+    void logSlaveInfo();
 
     bool m_updatingDioButtons = false;
     bool m_waitingDoAck = false;
     uint16_t m_lastDoMask = 0;
     uint16_t m_pendingDoMask = 0;
+    QVector<SlaveUiInfo> m_slaveInfos;
 };
 
 #endif // WIDGET_H

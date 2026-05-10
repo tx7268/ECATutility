@@ -10,6 +10,7 @@
 #include <QTextStream>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QSignalBlocker>
 
 #include "inc/Link.h"
 #include "inc/Protocol.h"
@@ -735,6 +736,15 @@ void Widget::serialReadData(const QByteArray &data)
         if (st & 0x01) return QString("INIT (0x%1)").arg(st, 4, 16, QChar('0')).toUpper();
         return QString("UNKNOWN (0x%1)").arg(st, 4, 16, QChar('0')).toUpper();
         };
+
+    auto slaveTypeToString = [](quint8 type) -> QString {
+        switch (type)
+        {
+        case 1: return QStringLiteral("伺服从站");
+        case 2: return QStringLiteral("IO从站");
+        default: return QStringLiteral("未知从站");
+        }
+        };
     while (rxBuf.size() >= 7)
     {
         // 1 找帧头
@@ -789,8 +799,7 @@ void Widget::serialReadData(const QByteArray &data)
             ui->lineEdit_cmdpos->setText(QString::number(cmdpos));
             ui->lineEdit_errorpos->setText(QString::number(errorpos));
             ui->lineEdit_state->setText(QString::number(state));
-            ui->lineEdit_stateword->setText(
-                QString("0x%1").arg(stateword, 4, 16, QChar('0')).toUpper());
+            ui->lineEdit_stateword->setText(QString("0x%1").arg(stateword, 4, 16, QChar('0')).toUpper());
             ui->lineEdit_targetpos->setText(QString::number(targetpos));
             ui->lineEdit_velDemand->setText(QString::number(velcmd));
             ui->lineEdit_velActual->setText(QString::number(runvel));
@@ -812,6 +821,40 @@ void Widget::serialReadData(const QByteArray &data)
                     ui->btn_stop_scope->setEnabled(false);
                 }
             }
+        }
+        else if (type == FRAME_TYPE_DATA && cmd == CMD_READ_SLAVE_INFO && payload.size() >= 4)
+        {
+            const quint8 totalSlaveNum = u8(payload[0]);
+            const quint8 servoSlaveNum = u8(payload[1]);
+            const quint8 ioSlaveNum = u8(payload[2]);
+            int offset = 4;
+            QVector<SlaveUiInfo> slaves;
+
+            while (offset + 3 <= payload.size())
+            {
+                const quint8 slaveId = u8(payload[offset++]);
+                const quint8 slaveType = u8(payload[offset++]);
+                const quint8 nameLen = u8(payload[offset++]);
+
+                if (offset + nameLen > payload.size())
+                {
+                    break;
+                }
+
+                SlaveUiInfo info;
+                info.slaveId = slaveId;
+                info.slaveType = slaveType;
+                info.name = QString::fromLatin1(payload.constData() + offset, nameLen).trimmed();
+                offset += nameLen;
+                slaves.append(info);
+            }
+
+            m_slaveInfos = slaves;
+            updateSlaveUi(slaves);
+            appendlog(QString("已同步从站信息: 总数=%1, 伺服=%2, IO=%3")
+                .arg(totalSlaveNum)
+                .arg(servoSlaveNum)
+                .arg(ioSlaveNum));
         }
         // ====================== 普通应答/错误帧，可选记录日志 ======================
         else if (type == FRAME_TYPE_ACK)
@@ -960,6 +1003,10 @@ void Widget::serialReadData(const QByteArray &data)
                 ui->checkBox_axis0enable->blockSignals(true);
                 ui->checkBox_axis0enable->setChecked(false);
                 ui->checkBox_axis0enable->blockSignals(false);
+                break;
+
+            case 0xD0:
+                appendlog("从站信息读取完成");
                 break;
 
             case 0xC9:
@@ -1272,15 +1319,67 @@ void Widget::on_btn_read_slaveinfo_clicked()
 {
     bool ok;
     uint16_t slave = ui->comboBox_slave_num->currentData().toInt(&ok);
-    if (!ok)
+    if (!ok || slave == 0)
     {
-        ui->textEdit_SDO_log->append("从站号选择异常");
         this->appendlog("从站号选择异常");
         return;
     }
 
-    this->appendlog(QString("读取从站 %1 信息").arg(slave));
+    Q_UNUSED(slave);
+    if (!m_slaveInfos.isEmpty())
+    {
+        logSlaveInfo();
+        return;
+    }
+
+    this->appendlog("本地未缓存从站信息，向下位机请求同步");
     sendCmdWithLog(proto->read_slaveinfo(slave), "read_slaveinfo", 0);
+}
+
+void Widget::updateSlaveUi(const QVector<SlaveUiInfo>& slaves)
+{
+    QSignalBlocker blocker(ui->comboBox_slave_num);
+    const QVariant currentData = ui->comboBox_slave_num->currentData();
+
+    ui->comboBox_slave_num->clear();
+    for (const SlaveUiInfo& slave : slaves)
+    {
+        const QString typeText = (slave.slaveType == 2) ? QStringLiteral("IO") : QStringLiteral("SERVO");
+        const QString label = QString("%1 - %2 (%3)")
+            .arg(slave.slaveId)
+            .arg(slave.name.isEmpty() ? QStringLiteral("UNKNOWN") : slave.name)
+            .arg(typeText);
+        ui->comboBox_slave_num->addItem(label, slave.slaveId);
+    }
+
+    int index = ui->comboBox_slave_num->findData(currentData);
+    if (index < 0)
+    {
+        index = 0;
+    }
+    if (index >= 0)
+    {
+        ui->comboBox_slave_num->setCurrentIndex(index);
+    }
+}
+
+void Widget::logSlaveInfo()
+{
+    if (m_slaveInfos.isEmpty())
+    {
+        appendlog("当前没有缓存的从站信息");
+        return;
+    }
+
+    appendlog("========== 从站信息 ==========");
+    for (const SlaveUiInfo& slave : m_slaveInfos)
+    {
+        appendlog(QString("编号=%1, 类型=%2, 名称=%3")
+            .arg(slave.slaveId)
+            .arg(slave.slaveType == 1 ? QStringLiteral("伺服从站") :
+                (slave.slaveType == 2 ? QStringLiteral("IO从站") : QStringLiteral("未知从站")))
+            .arg(slave.name.isEmpty() ? QStringLiteral("UNKNOWN") : slave.name));
+    }
 }
 
 //******************************清除ECAT错误按键******************************

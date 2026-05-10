@@ -548,7 +548,7 @@ QPushButton#btn_set:checked:hover
 }</string>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="page_Link">
     <widget class="QGroupBox" name="groupBox_3">
@@ -1079,8 +1079,8 @@ QPushButton#btn_disable:pressed {
        <rect>
         <x>30</x>
         <y>50</y>
-        <width>91</width>
-        <height>41</height>
+        <width>100</width>
+        <height>50</height>
        </rect>
       </property>
       <property name="html">
@@ -1102,8 +1102,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <rect>
         <x>210</x>
         <y>50</y>
-        <width>91</width>
-        <height>41</height>
+        <width>100</width>
+        <height>50</height>
        </rect>
       </property>
      </widget>
@@ -1115,8 +1115,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <rect>
         <x>210</x>
         <y>140</y>
-        <width>91</width>
-        <height>41</height>
+        <width>100</width>
+        <height>50</height>
        </rect>
       </property>
      </widget>
@@ -1128,8 +1128,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <rect>
         <x>30</x>
         <y>140</y>
-        <width>91</width>
-        <height>41</height>
+        <width>100</width>
+        <height>50</height>
        </rect>
       </property>
      </widget>
@@ -1149,8 +1149,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <widget class="QPushButton" name="btn_read_slaveinfo">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>110</y>
+        <x>50</x>
+        <y>120</y>
         <width>111</width>
         <height>71</height>
        </rect>
@@ -1162,8 +1162,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <widget class="QPushButton" name="btn_clear_slave_error">
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>110</y>
+        <x>220</x>
+        <y>120</y>
         <width>111</width>
         <height>71</height>
        </rect>
@@ -1175,8 +1175,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <widget class="QPushButton" name="btn_to_op">
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>210</y>
+        <x>220</x>
+        <y>220</y>
         <width>111</width>
         <height>71</height>
        </rect>
@@ -1188,8 +1188,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <widget class="QPushButton" name="btn_to_safeop">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>210</y>
+        <x>50</x>
+        <y>220</y>
         <width>111</width>
         <height>71</height>
        </rect>
@@ -1201,8 +1201,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <widget class="QPushButton" name="btn_read_XMLfile">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>20</y>
+        <x>50</x>
+        <y>30</y>
         <width>111</width>
         <height>71</height>
        </rect>
@@ -1214,8 +1214,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <widget class="QPushButton" name="btn_clear_XMLfile">
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>20</y>
+        <x>220</x>
+        <y>30</y>
         <width>111</width>
         <height>71</height>
        </rect>
@@ -1242,7 +1242,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <rect>
         <x>20</x>
         <y>140</y>
-        <width>121</width>
+        <width>150</width>
         <height>31</height>
        </rect>
       </property>
@@ -1250,7 +1250,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <widget class="QLabel" name="label_8">
       <property name="geometry">
        <rect>
-        <x>170</x>
+        <x>210</x>
         <y>120</y>
         <width>121</width>
         <height>16</height>
@@ -1263,9 +1263,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <widget class="QTextEdit" name="textEdit_sdo_subindex">
       <property name="geometry">
        <rect>
-        <x>170</x>
+        <x>210</x>
         <y>140</y>
-        <width>131</width>
+        <width>150</width>
         <height>31</height>
        </rect>
       </property>
@@ -1299,7 +1299,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <widget class="QLabel" name="label_11">
       <property name="geometry">
        <rect>
-        <x>170</x>
+        <x>210</x>
         <y>30</y>
         <width>54</width>
         <height>16</height>
@@ -1312,9 +1312,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <widget class="QComboBox" name="comboBox_data_type">
       <property name="geometry">
        <rect>
-        <x>170</x>
+        <x>210</x>
         <y>50</y>
-        <width>131</width>
+        <width>150</width>
         <height>31</height>
        </rect>
       </property>
@@ -1324,7 +1324,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <rect>
         <x>20</x>
         <y>50</y>
-        <width>131</width>
+        <width>150</width>
         <height>31</height>
        </rect>
       </property>
@@ -1355,7 +1355,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <widget class="QPushButton" name="btn_read_sdo">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>60</x>
         <y>290</y>
         <width>111</width>
         <height>72</height>
@@ -1368,7 +1368,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <widget class="QPushButton" name="btn_write_sdo">
       <property name="geometry">
        <rect>
-        <x>170</x>
+        <x>240</x>
         <y>290</y>
         <width>111</width>
         <height>72</height>
@@ -1383,8 +1383,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <rect>
         <x>20</x>
         <y>380</y>
-        <width>261</width>
-        <height>141</height>
+        <width>381</width>
+        <height>191</height>
        </rect>
       </property>
      </widget>
@@ -2115,6 +2115,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <size>
            <width>0</width>
            <height>50</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>16777215</height>
           </size>
          </property>
          <property name="text">

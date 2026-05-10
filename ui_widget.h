@@ -730,52 +730,52 @@ public:
         textEdit_cycle = new QTextEdit(groupBox_4);
         textEdit_cycle->setObjectName("textEdit_cycle");
         textEdit_cycle->setEnabled(false);
-        textEdit_cycle->setGeometry(QRect(30, 50, 91, 41));
+        textEdit_cycle->setGeometry(QRect(30, 50, 100, 50));
         textEdit_freq = new QTextEdit(groupBox_4);
         textEdit_freq->setObjectName("textEdit_freq");
         textEdit_freq->setEnabled(false);
-        textEdit_freq->setGeometry(QRect(210, 50, 91, 41));
+        textEdit_freq->setGeometry(QRect(210, 50, 100, 50));
         textEdit_slavestate = new QTextEdit(groupBox_4);
         textEdit_slavestate->setObjectName("textEdit_slavestate");
         textEdit_slavestate->setEnabled(false);
-        textEdit_slavestate->setGeometry(QRect(210, 140, 91, 41));
+        textEdit_slavestate->setGeometry(QRect(210, 140, 100, 50));
         textEdit_dc = new QTextEdit(groupBox_4);
         textEdit_dc->setObjectName("textEdit_dc");
         textEdit_dc->setEnabled(false);
-        textEdit_dc->setGeometry(QRect(30, 140, 91, 41));
+        textEdit_dc->setGeometry(QRect(30, 140, 100, 50));
         groupBox_5 = new QGroupBox(page_ECAT);
         groupBox_5->setObjectName("groupBox_5");
         groupBox_5->setGeometry(QRect(20, 310, 381, 331));
         btn_read_slaveinfo = new QPushButton(groupBox_5);
         btn_read_slaveinfo->setObjectName("btn_read_slaveinfo");
-        btn_read_slaveinfo->setGeometry(QRect(20, 110, 111, 71));
+        btn_read_slaveinfo->setGeometry(QRect(50, 120, 111, 71));
         btn_clear_slave_error = new QPushButton(groupBox_5);
         btn_clear_slave_error->setObjectName("btn_clear_slave_error");
-        btn_clear_slave_error->setGeometry(QRect(190, 110, 111, 71));
+        btn_clear_slave_error->setGeometry(QRect(220, 120, 111, 71));
         btn_to_op = new QPushButton(groupBox_5);
         btn_to_op->setObjectName("btn_to_op");
-        btn_to_op->setGeometry(QRect(190, 210, 111, 71));
+        btn_to_op->setGeometry(QRect(220, 220, 111, 71));
         btn_to_safeop = new QPushButton(groupBox_5);
         btn_to_safeop->setObjectName("btn_to_safeop");
-        btn_to_safeop->setGeometry(QRect(20, 210, 111, 71));
+        btn_to_safeop->setGeometry(QRect(50, 220, 111, 71));
         btn_read_XMLfile = new QPushButton(groupBox_5);
         btn_read_XMLfile->setObjectName("btn_read_XMLfile");
-        btn_read_XMLfile->setGeometry(QRect(20, 20, 111, 71));
+        btn_read_XMLfile->setGeometry(QRect(50, 30, 111, 71));
         btn_clear_XMLfile = new QPushButton(groupBox_5);
         btn_clear_XMLfile->setObjectName("btn_clear_XMLfile");
-        btn_clear_XMLfile->setGeometry(QRect(190, 20, 111, 71));
+        btn_clear_XMLfile->setGeometry(QRect(220, 30, 111, 71));
         groupBox_6 = new QGroupBox(page_ECAT);
         groupBox_6->setObjectName("groupBox_6");
         groupBox_6->setGeometry(QRect(420, 60, 411, 581));
         textEdit_sdo_index = new QTextEdit(groupBox_6);
         textEdit_sdo_index->setObjectName("textEdit_sdo_index");
-        textEdit_sdo_index->setGeometry(QRect(20, 140, 121, 31));
+        textEdit_sdo_index->setGeometry(QRect(20, 140, 150, 31));
         label_8 = new QLabel(groupBox_6);
         label_8->setObjectName("label_8");
-        label_8->setGeometry(QRect(170, 120, 121, 16));
+        label_8->setGeometry(QRect(210, 120, 121, 16));
         textEdit_sdo_subindex = new QTextEdit(groupBox_6);
         textEdit_sdo_subindex->setObjectName("textEdit_sdo_subindex");
-        textEdit_sdo_subindex->setGeometry(QRect(170, 140, 131, 31));
+        textEdit_sdo_subindex->setGeometry(QRect(210, 140, 150, 31));
         label_9 = new QLabel(groupBox_6);
         label_9->setObjectName("label_9");
         label_9->setGeometry(QRect(20, 120, 121, 16));
@@ -784,13 +784,13 @@ public:
         label_10->setGeometry(QRect(20, 30, 111, 16));
         label_11 = new QLabel(groupBox_6);
         label_11->setObjectName("label_11");
-        label_11->setGeometry(QRect(170, 30, 54, 16));
+        label_11->setGeometry(QRect(210, 30, 54, 16));
         comboBox_data_type = new QComboBox(groupBox_6);
         comboBox_data_type->setObjectName("comboBox_data_type");
-        comboBox_data_type->setGeometry(QRect(170, 50, 131, 31));
+        comboBox_data_type->setGeometry(QRect(210, 50, 150, 31));
         comboBox_slave_num = new QComboBox(groupBox_6);
         comboBox_slave_num->setObjectName("comboBox_slave_num");
-        comboBox_slave_num->setGeometry(QRect(20, 50, 131, 31));
+        comboBox_slave_num->setGeometry(QRect(20, 50, 150, 31));
         textEdit_sdo_value = new QTextEdit(groupBox_6);
         textEdit_sdo_value->setObjectName("textEdit_sdo_value");
         textEdit_sdo_value->setGeometry(QRect(20, 210, 271, 31));
@@ -799,13 +799,13 @@ public:
         label_13->setGeometry(QRect(20, 190, 171, 16));
         btn_read_sdo = new QPushButton(groupBox_6);
         btn_read_sdo->setObjectName("btn_read_sdo");
-        btn_read_sdo->setGeometry(QRect(20, 290, 111, 72));
+        btn_read_sdo->setGeometry(QRect(60, 290, 111, 72));
         btn_write_sdo = new QPushButton(groupBox_6);
         btn_write_sdo->setObjectName("btn_write_sdo");
-        btn_write_sdo->setGeometry(QRect(170, 290, 111, 72));
+        btn_write_sdo->setGeometry(QRect(240, 290, 111, 72));
         textEdit_SDO_log = new QTextEdit(groupBox_6);
         textEdit_SDO_log->setObjectName("textEdit_SDO_log");
-        textEdit_SDO_log->setGeometry(QRect(20, 380, 261, 141));
+        textEdit_SDO_log->setGeometry(QRect(20, 380, 381, 191));
         stackedWidget->addWidget(page_ECAT);
         groupBox_6->raise();
         label_3->raise();
@@ -1075,6 +1075,7 @@ public:
         btn_clear_alarm = new QPushButton(layoutWidget1);
         btn_clear_alarm->setObjectName("btn_clear_alarm");
         btn_clear_alarm->setMinimumSize(QSize(0, 50));
+        btn_clear_alarm->setMaximumSize(QSize(150, 16777215));
 
         gridLayout->addWidget(btn_clear_alarm, 1, 9, 1, 1);
 
@@ -2500,7 +2501,7 @@ public:
 
         retranslateUi(Widget);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(Widget);
