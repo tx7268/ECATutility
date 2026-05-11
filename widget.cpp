@@ -174,8 +174,9 @@ Widget::Widget(QWidget *parent)
 
     ui->comboBox_mode_chose->addItem("ABS", QVariant(0));  // 0: 绝对位置运动
     ui->comboBox_mode_chose->addItem("REL", QVariant(1));  // 1: 相对位置运动
-    ui->comboBox_mode_chose->addItem("DEG", QVariant(2));  // 1: 相对位置运动
-    ui->comboBox_mode_chose->addItem("HOME", QVariant(3)); // 2: 回零运动
+    ui->comboBox_mode_chose->addItem("DEG", QVariant(2));  // 2: 角度运动
+    ui->comboBox_mode_chose->addItem("HOME", QVariant(3)); // 3: 回零运动
+    ui->comboBox_mode_chose->addItem("Repeat", QVariant(4)); // 4: 往复相对运动
     ui->comboBox_mode_chose->setCurrentIndex(0);           // 默认ABS模式
 
 
@@ -344,6 +345,7 @@ Widget::Widget(QWidget *parent)
             "checkBox_actpos",
             "checkBox_targetpos",
             "checkBox_vel",
+            "checkBox_realvel",
             "checkBox_acc",
             "checkBox_cursor"
         };
@@ -814,7 +816,7 @@ void Widget::serialReadData(const QByteArray &data)
             m_runTime->onEcatFreqUpdated(freq);
             if (m_scope)
             {
-                m_scope->appendSample(actpos, targetpos, freq);
+                m_scope->appendSample(actpos, targetpos, runvel, freq);
                 if (!m_scope->isRunning())
                 {
                     ui->btn_begin_scope->setEnabled(true);
@@ -912,6 +914,10 @@ void Widget::serialReadData(const QByteArray &data)
 
             case 0x92: // 相对运动成功
                 appendlog(QString("轴%1角度运动成功").arg(axis));
+                break;
+
+            case 0x93:
+                appendlog(QString("轴%1往复运动启动成功").arg(axis));
                 break;
 
             case 0xA0: // 速度设置成功
@@ -1191,7 +1197,17 @@ void Widget::on_btn_run_clicked()
         this->appendlog(QString("执行回零运动：mode:%1").arg(home_mode));
         break;
     }
-
+    case 4: // 往复运动
+    {
+        if (motion_value == 0)
+        {
+            QMessageBox::warning(this, "输入错误", "Repeat 运动值不能为0");
+            return;
+        }
+        sendCmdWithLog(proto->moverepeat(0, motion_value), "axis0 moverepeat", motion_value);
+        this->appendlog(QString("执行往复运动：Repeat:%1").arg(motion_value));
+        break;
+    }
     default:
     {
         QMessageBox::warning(this, "操作错误", "未知运动模式！");
@@ -1800,7 +1816,7 @@ void Widget::updateScopeConfig()
     }
 
     // 获取 Scope 页面的 Widget 指针
-    QWidget *scopePage = ui->stackedWidget->widget(3);
+    QWidget* scopePage = ui->stackedWidget->widget(3);
 
     // 读取显示通道配置
     if (!scopePage)
@@ -1811,6 +1827,7 @@ void Widget::updateScopeConfig()
     const bool showActual = checkBoxChecked(scopePage, { "checkBox_actpos" }, true);
     const bool showTarget = checkBoxChecked(scopePage, { "checkBox_targetpos" }, true);
     const bool showVelocity = checkBoxChecked(scopePage, { "checkBox_vel" }, false);
+    const bool showRealVelocity = checkBoxChecked(scopePage, { "checkBox_realvel" }, false);
     const bool showAcceleration = checkBoxChecked(scopePage, { "checkBox_acc" }, false);
     const bool cursorEnabled = checkBoxChecked(scopePage, { "checkBox_cursor" }, false);
 
@@ -1838,7 +1855,7 @@ void Widget::updateScopeConfig()
     m_scope->setProperty("cursorEnabled", cursorEnabled);
 
     // 将上述所有配置应用到 m_scope 对象
-    m_scope->configure(showActual, showTarget, showVelocity, showAcceleration,
+    m_scope->configure(showActual, showTarget, showVelocity, showRealVelocity, showAcceleration,
         timeBaseMs, totalSeconds, range, triggerMode);
 }
 

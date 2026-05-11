@@ -97,6 +97,7 @@
 #define CMD_MOVE_ABS        0x10
 #define CMD_MOVE_REL        0x11
 #define CMD_MOVE_DEG        0x12
+#define CMD_MOVE_REPEAT     0x13
 #define CMD_SET_VEL         0x20
 #define CMD_SET_ACC         0x21
 #define CMD_SET_DEC         0x22
@@ -169,7 +170,7 @@ public:
     QByteArray moveabs(uint8_t axis, qint32 position);  // 绝对位置运动
     QByteArray moverel(uint8_t axis, qint32 offset);    // 相对位置运动
     QByteArray movedeg(uint8_t axis, qint32 offset);    // 角度运动
-
+    QByteArray moverepeat(uint8_t axis, qint32 offset); // 往复相对运动
     // ====================== 参数设置指令 ======================
     QByteArray setvel(uint8_t axis, qint16 speed); // 设置速度
     QByteArray setacc(uint8_t axis, qint16 acc);   // 设置加速度

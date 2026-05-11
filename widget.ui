@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1500</width>
+    <width>1485</width>
     <height>950</height>
    </rect>
   </property>
@@ -548,7 +548,7 @@ QPushButton#btn_set:checked:hover
 }</string>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="page_Link">
     <widget class="QGroupBox" name="groupBox_3">
@@ -1401,7 +1401,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <x>16</x>
        <y>80</y>
        <width>151</width>
-       <height>141</height>
+       <height>171</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1422,7 +1422,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <item>
        <widget class="QCheckBox" name="checkBox_vel">
         <property name="text">
-         <string>速度 (vel)</string>
+         <string>计算速度 (calcu vel)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_realvel">
+        <property name="text">
+         <string>实时速度(real vel)</string>
         </property>
        </widget>
       </item>
@@ -1527,9 +1534,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>230</y>
+       <y>260</y>
        <width>168</width>
-       <height>241</height>
+       <height>211</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">

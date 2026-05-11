@@ -130,6 +130,7 @@ public:
     QCheckBox *checkBox_actpos;
     QCheckBox *checkBox_targetpos;
     QCheckBox *checkBox_vel;
+    QCheckBox *checkBox_realvel;
     QCheckBox *checkBox_acc;
     QFrame *line;
     QLabel *label_54;
@@ -261,7 +262,7 @@ public:
     {
         if (Widget->objectName().isEmpty())
             Widget->setObjectName("Widget");
-        Widget->resize(1500, 950);
+        Widget->resize(1485, 950);
         textEdit_log_info = new QTextEdit(Widget);
         textEdit_log_info->setObjectName("textEdit_log_info");
         textEdit_log_info->setGeometry(QRect(1010, 50, 471, 661));
@@ -815,7 +816,7 @@ public:
         page_Scope->setObjectName("page_Scope");
         verticalLayoutWidget = new QWidget(page_Scope);
         verticalLayoutWidget->setObjectName("verticalLayoutWidget");
-        verticalLayoutWidget->setGeometry(QRect(16, 80, 151, 141));
+        verticalLayoutWidget->setGeometry(QRect(16, 80, 151, 171));
         verticalLayout_2 = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout_2->setObjectName("verticalLayout_2");
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
@@ -833,6 +834,11 @@ public:
         checkBox_vel->setObjectName("checkBox_vel");
 
         verticalLayout_2->addWidget(checkBox_vel);
+
+        checkBox_realvel = new QCheckBox(verticalLayoutWidget);
+        checkBox_realvel->setObjectName("checkBox_realvel");
+
+        verticalLayout_2->addWidget(checkBox_realvel);
 
         checkBox_acc = new QCheckBox(verticalLayoutWidget);
         checkBox_acc->setObjectName("checkBox_acc");
@@ -864,7 +870,7 @@ public:
         btn_out_scope->setGeometry(QRect(10, 630, 151, 41));
         layoutWidget = new QWidget(page_Scope);
         layoutWidget->setObjectName("layoutWidget");
-        layoutWidget->setGeometry(QRect(10, 230, 168, 241));
+        layoutWidget->setGeometry(QRect(10, 260, 168, 211));
         gridLayout_3 = new QGridLayout(layoutWidget);
         gridLayout_3->setObjectName("gridLayout_3");
         gridLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -2501,7 +2507,7 @@ public:
 
         retranslateUi(Widget);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(Widget);
@@ -2588,7 +2594,8 @@ public:
         btn_write_sdo->setText(QCoreApplication::translate("Widget", "\345\206\231\345\205\245SDO", nullptr));
         checkBox_actpos->setText(QCoreApplication::translate("Widget", "\345\256\236\351\231\205\344\275\215\347\275\256\357\274\210actpos\357\274\211", nullptr));
         checkBox_targetpos->setText(QCoreApplication::translate("Widget", "\346\214\207\344\273\244\344\275\215\347\275\256 (target pos)", nullptr));
-        checkBox_vel->setText(QCoreApplication::translate("Widget", "\351\200\237\345\272\246 (vel)", nullptr));
+        checkBox_vel->setText(QCoreApplication::translate("Widget", "\350\256\241\347\256\227\351\200\237\345\272\246 (calcu vel)", nullptr));
+        checkBox_realvel->setText(QCoreApplication::translate("Widget", "\345\256\236\346\227\266\351\200\237\345\272\246(real vel)", nullptr));
         checkBox_acc->setText(QCoreApplication::translate("Widget", "\345\212\240\351\200\237\345\272\246\357\274\210acc\357\274\211", nullptr));
         label_54->setText(QCoreApplication::translate("Widget", "\350\275\264\351\200\211\346\213\251", nullptr));
         btn_begin_scope->setText(QCoreApplication::translate("Widget", "\345\274\200\345\247\213\347\273\230\345\210\266", nullptr));

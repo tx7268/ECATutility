@@ -319,6 +319,10 @@ void Scope::init(QWidget* chartContainer)
                     {
                         referenceSeries = m_velocitySeries;
                     }
+                    else if (m_showRealVelocity && m_realVelocitySeries && m_realVelocitySeries->count() > 0)
+                    {
+                        referenceSeries = m_realVelocitySeries;
+                    }
                     else if (m_showAcceleration && m_accelerationSeries && m_accelerationSeries->count() > 0)
                     {
                         referenceSeries = m_accelerationSeries;
@@ -436,6 +440,7 @@ void Scope::init(QWidget* chartContainer)
 void Scope::configure(bool actualPositionEnabled,
     bool targetPositionEnabled,
     bool velocityEnabled,
+    bool realVelocityEnabled,
     bool accelerationEnabled,
     int timeBaseMs,
     int totalSeconds,
@@ -445,6 +450,7 @@ void Scope::configure(bool actualPositionEnabled,
     m_showActualPosition = actualPositionEnabled;
     m_showTargetPosition = targetPositionEnabled;
     m_showVelocity = velocityEnabled;
+    m_showRealVelocity = realVelocityEnabled;
     m_showAcceleration = accelerationEnabled;
     m_timeBaseMs = qMax(10, timeBaseMs);
     m_totalSeconds = qMax(0, totalSeconds);
@@ -461,6 +467,7 @@ void Scope::configure(bool actualPositionEnabled,
     if (m_actualSeries) m_actualSeries->setVisible(m_showActualPosition);
     if (m_targetSeries) m_targetSeries->setVisible(m_showTargetPosition);
     if (m_velocitySeries) m_velocitySeries->setVisible(m_showVelocity);
+    if (m_realVelocitySeries) m_realVelocitySeries->setVisible(m_showRealVelocity);
     if (m_accelerationSeries) m_accelerationSeries->setVisible(m_showAcceleration);
 
     if (!state->cursorEnabled)
@@ -529,6 +536,7 @@ void Scope::clear()
     if (m_actualSeries) m_actualSeries->clear();
     if (m_targetSeries) m_targetSeries->clear();
     if (m_velocitySeries) m_velocitySeries->clear();
+    if (m_realVelocitySeries) m_realVelocitySeries->clear();
     if (m_accelerationSeries) m_accelerationSeries->clear();
 
     m_lastSampleMs = -1;
@@ -591,7 +599,7 @@ bool Scope::isRunning() const
     return m_running;// 仅返回当前运行态标志，不代表图上是否已有历史数据。
 }
 
-void Scope::appendSample(qint32 actualPosition, qint32 targetPosition, quint32 feedbackFreq)
+void Scope::appendSample(qint32 actualPosition, qint32 targetPosition, qint32 realVelocity, quint32 feedbackFreq)
 {
     if (!m_running || !hasVisibleChannel())
     {
@@ -629,6 +637,7 @@ void Scope::appendSample(qint32 actualPosition, qint32 targetPosition, quint32 f
     appendPoint(m_actualSeries, x, actualPosition, true);
     appendPoint(m_targetSeries, x, targetPosition, true);
     appendPoint(m_velocitySeries, x, velocity, true);
+    appendPoint(m_realVelocitySeries, x, realVelocity, true);
     appendPoint(m_accelerationSeries, x, acceleration, true);
 
     m_lastActualPosition = actualPosition;
@@ -673,7 +682,7 @@ double Scope::visibleWindowSeconds() const
     return qMax(1.0, static_cast<double>(m_timeBaseMs) / 1000.0);
 }
 
-// 创建四条曲线并设置图例名称。
+// 创建五条曲线并设置图例名称。
 void Scope::setupSeries()
 {
     m_actualSeries = new QLineSeries();
@@ -685,6 +694,9 @@ void Scope::setupSeries()
     m_velocitySeries = new QLineSeries();
     m_velocitySeries->setName(QStringLiteral("vel"));
 
+    m_realVelocitySeries = new QLineSeries();
+    m_realVelocitySeries->setName(QStringLiteral("real vel"));
+
     m_accelerationSeries = new QLineSeries();
     m_accelerationSeries->setName(QStringLiteral("acc"));
 
@@ -692,6 +704,7 @@ void Scope::setupSeries()
         m_actualSeries,
         m_targetSeries,
         m_velocitySeries,
+        m_realVelocitySeries,
         m_accelerationSeries
     };
 
@@ -704,6 +717,7 @@ void Scope::setupSeries()
     }
 
     m_velocitySeries->setVisible(m_showVelocity);
+    m_realVelocitySeries->setVisible(m_showRealVelocity);
     m_accelerationSeries->setVisible(m_showAcceleration);
 }
 
@@ -755,5 +769,5 @@ void Scope::refreshAxes(double x)
 // 至少有一条曲线可见时，Scope 才有实际绘图意义。
 bool Scope::hasVisibleChannel() const
 {
-    return m_showActualPosition || m_showTargetPosition || m_showVelocity || m_showAcceleration;
+    return m_showActualPosition || m_showTargetPosition || m_showVelocity || m_showRealVelocity || m_showAcceleration;
 }

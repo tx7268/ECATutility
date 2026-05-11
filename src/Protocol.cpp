@@ -209,6 +209,11 @@ QByteArray Protocol::movedeg(uint8_t axis, qint32 offset)
     return packCommand(FRAME_TYPE_REQ, CMD_MOVE_DEG, axis, m_seq, int32ToBytes(offset));
 }
 
+QByteArray Protocol::moverepeat(uint8_t axis, qint32 offset)
+{
+    return packCommand(FRAME_TYPE_REQ, CMD_MOVE_REPEAT, axis, m_seq, int32ToBytes(offset));
+}
+
 // 设置轴速度，指令：0xAA 20 AXIS 02 VEL(2B)
 QByteArray Protocol::setvel(uint8_t axis, qint16 vel)
 {
